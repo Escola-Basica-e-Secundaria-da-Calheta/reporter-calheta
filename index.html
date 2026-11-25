@@ -134,6 +134,63 @@ body.tvmode header.mast{display:none}body.tvmode .wrap{max-width:none;padding:0}
 @media(max-width:600px){.tvqr{grid-template-columns:1fr}}
 
 /* v1.3 */
+/* v1.5 — PDF e acessibilidade */
+.pdfprog{height:10px;border-radius:5px;background:var(--bg);border:1px solid var(--line);overflow:hidden;margin-top:12px}.pdfprog span{display:block;height:100%;background:var(--blue);transition:width .3s}
+.pdfprev{margin-top:12px}.pdfarts{display:grid;gap:8px;max-height:min(70vh,640px);overflow:auto;padding:2px}
+.pdfa{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px}.pdfa.fraco{opacity:.7}
+.pdfa input{padding:7px 9px;font-size:15px}
+.lmodo{margin:4px 0 12px}
+.pdfbar2{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:8px;background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:8px 0;font-weight:600}
+.pdfs{display:grid;gap:12px}
+.pp{position:relative;background:#fff;border-radius:6px;box-shadow:0 1px 6px rgba(0,0,0,.18);overflow:hidden;cursor:zoom-in}
+.pp:not(.pronta){background:linear-gradient(100deg,#f1f0ec 30%,#fafaf8 50%,#f1f0ec 70%);background-size:300% 100%;animation:brilho 1.4s infinite}
+@keyframes brilho{to{background-position:-150% 0}}
+.pp canvas{display:block;width:100%;height:100%}
+.ppn{position:absolute;bottom:6px;right:8px;background:rgba(22,24,29,.75);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px;z-index:2}
+.hs{position:absolute;z-index:3;border-radius:6px;outline:2px dashed rgba(224,168,0,.85);outline-offset:2px;text-decoration:none}
+.hs span{position:absolute;top:-12px;right:-6px;background:var(--hl);color:#16181d;font:700 12px "Source Sans 3",sans-serif;border-radius:999px;padding:2px 8px;box-shadow:0 1px 4px rgba(0,0,0,.25);white-space:nowrap}
+.hs:focus-visible{outline:3px solid var(--blue)}
+.sem-scroll{overflow:hidden}
+.lt-ov{position:fixed;inset:0;z-index:70;background:#111;color:#fff;display:grid;grid-template-rows:auto 1fr auto}
+.lt-top,.lt-bot{display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px;background:#111}
+.lt-bot{padding:8px 12px calc(10px + env(safe-area-inset-bottom))}
+.lt-x{width:44px;height:44px;border-radius:50%;border:1.5px solid #555;background:#222;color:#fff;font-size:18px;cursor:pointer}
+.lt-n{flex:1;text-align:center;font-weight:700}.lt-esp{width:44px}
+.lt-palco{position:relative;overflow:hidden;display:grid;place-items:center;touch-action:none}
+.lt-pag{position:relative;transform-origin:center center;background:#fff;box-shadow:0 4px 30px rgba(0,0,0,.5)}.lt-pag canvas{display:block;width:100%;height:100%}
+.lt-hs{position:absolute;inset:0}
+.lt-bot .btn{border-color:#666;color:#fff;min-width:48px}.lt-bot .btn:disabled{opacity:.3}
+.lt-chips{flex:1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.lt-chips .chip{background:var(--hl);color:#16181d;border:0;white-space:nowrap;font-weight:600}
+.lt-art .lt-t{font-size:22px;margin:10px 0 6px;color:var(--blue)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.saltar{position:absolute;left:8px;top:-60px;z-index:100;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}.saltar:focus{top:8px}
+.vr-box{background:var(--hls);border-radius:12px;padding:12px;margin:4px 0 6px}.vr-btn{width:100%}
+ul.decl{margin:0;padding-left:20px;display:grid;gap:8px}
+.ouvirpag{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:45;min-height:56px;padding:0 24px;border-radius:999px;border:3px solid currentColor;background:var(--ink);color:var(--bg);font:700 19px "Source Sans 3",sans-serif;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+body.combnav .ouvirpag{bottom:calc(80px + env(safe-area-inset-bottom))}
+/* modo visão reduzida */
+html[data-fs="4"] .wrap,html[data-fs="4"] header.mast{zoom:1.6}
+html[data-cores=ap]{--bg:#000;--paper:#000;--ink:#ffeb3b;--mute:#ffeb3b;--line:#ffeb3b;--blue:#ffffff;--hl:#ffeb3b;--hls:#3a3400;--ok:#7dff9b;--bad:#ff9e9e;color-scheme:dark}
+html[data-cores=bp]{--bg:#000;--paper:#000;--ink:#fff;--mute:#fff;--line:#fff;--blue:#ffeb3b;--hl:#ffeb3b;--hls:#333;--ok:#7dff9b;--bad:#ff9e9e;color-scheme:dark}
+html[data-cores=pb]{--bg:#fff;--paper:#fff;--ink:#000;--mute:#000;--line:#000;--blue:#0033a0;--hl:#ffd400;--hls:#ffe873;--ok:#006b2c;--bad:#b00000;color-scheme:light}
+html[data-cores] .tag{color:#000}html[data-cores=ap] .tag,html[data-cores=bp] .tag{background:var(--hl);color:#000}
+html[data-vr="1"] body{line-height:1.75;letter-spacing:.03em;word-spacing:.14em}
+html[data-vr="1"] p,html[data-vr="1"] li{margin-bottom:1em}
+html[data-vr="1"] :is(body,h2,h3,h4,.btn,.opt,input,select,textarea,button,.lt,.pg,.kpi b,.atalhos b,.folha-l b){font-family:"Atkinson Hyperlegible",system-ui,sans-serif!important}
+html[data-vr="1"] .note,html[data-vr="1"] .ls,html[data-vr="1"] small,html[data-vr="1"] .n{font-size:1em;color:var(--ink)}
+html[data-vr="1"] .card,html[data-vr="1"] .opt,html[data-vr="1"] input,html[data-vr="1"] select,html[data-vr="1"] textarea,html[data-vr="1"] .btn{border-width:2.5px;border-color:var(--ink)}
+html[data-vr="1"] a{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
+html[data-vr="1"] .btn,html[data-vr="1"] .opt,html[data-vr="1"] button{min-height:52px}
+html[data-vr="1"] :focus-visible{outline:4px solid var(--ink)!important;outline-offset:3px!important;box-shadow:0 0 0 8px var(--bg)!important}
+html[data-vr="1"] *,html[data-vr="1"] *::before,html[data-vr="1"] *::after{animation:none!important;transition:none!important}
+html[data-vr="1"] .tag{transform:none}
+html[data-vr="1"] .opt.mine,html[data-vr="1"] .react button.mine{outline:4px solid var(--ink);outline-offset:-4px}
+html[data-vr="1"] .opt .bar{background:var(--hls)}
+html[data-vr="1"] .mast h1{font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-weight:700;font-size:30px;letter-spacing:0}
+html[data-vr="1"] .bnav{background:var(--bg);border-top:3px solid var(--ink)}html[data-vr="1"] .bnav a,html[data-vr="1"] .bnav button{color:var(--ink);font-size:14px}
+html[data-vr="1"] .sopa button{font-size:clamp(16px,5vw,24px)}
+@media (forced-colors:active){.btn,.opt,.card,.hs{border:1px solid CanvasText}.bnav .on svg{outline:2px solid Highlight}}
+
 /* v1.4 — telemóvel primeiro */
 .bnav{display:none}
 .artnav{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-top:22px;align-items:stretch}
@@ -254,7 +311,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.4</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -416,6 +473,7 @@ function route(){
  if(h==='cartas')return verCartas();
  if(h==='mapa')return verMapa();
  if(h==='agenda')return verAgenda();
+ if(h==='acessibilidade')return verAcessibilidade();
  const mc=h.match(/^caca-(\d+)-(.+)$/);if(mc)return verCaca(Number(mc[1]),mc[2]);
  const mx=h.match(/^e(\d+)-(top|ler|relatorio)$/);if(mx){const ee=edicao(Number(mx[1]));if(ee){atual=null;main.classList.remove('wide');$('#edmeta').textContent='N.º'+ee.n+' · '+(ee.titulo||'');window.scrollTo(0,0);return ({top:verTop,ler:verLer,relatorio:verRelatorio})[mx[2]](ee)}}
  const m=h.match(/^e(\d+)(?:-(.+))?$/);
@@ -439,7 +497,7 @@ function verIndice(e){
  <div id="v13i"></div>
  <ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}</span></span><span class="n">${a.b.map(b=>TIPOS[b.t]).filter((v,i,s)=>s.indexOf(v)===i).slice(0,2).join(' · ')}</span></a></li>`).join('')}</ul>
  ${outras.length?`<p class="note" style="margin-top:20px">Edições anteriores: ${outras.map(x=>`<a href="#e${x.n}">N.º${x.n} (${esc(x.titulo)})</a>`).join(' · ')}</p>`:''}
- <p class="note" style="margin-top:28px"><a href="#redacao">Redação: enviar um artigo para o jornal</a> · <a href="#painel">Painel do professor</a>${modo==='demo'?' · modo demonstração: os votos ficam só neste aparelho':''}</p>`;
+ <p class="note" style="margin-top:28px"><a href="#redacao">Redação: enviar um artigo para o jornal</a> · <a href="#painel">Painel do professor</a> · <a href="#acessibilidade">Acessibilidade</a>${modo==='demo'?' · modo demonstração: os votos ficam só neste aparelho':''}</p>`;
  posIndice(e);v13Indice(e);
 }
 
@@ -582,10 +640,11 @@ const bindSel=f=>{const s=$('#selEd');if(s)s.onchange=()=>{edSel=Number(s.value)
 /* --- Edições: lista, importar, editar --- */
 function pEdicoes(){
  if(rasc)return editor();
- pane().innerHTML=`<div class="row"><h3 style="flex:1 1 auto;margin:0">Edições do jornal</h3><button class="btn pri" id="nova" style="flex:0 0 auto">Importar nova edição</button></div>
+ pane().innerHTML=`<div class="row"><h3 style="flex:1 1 auto;margin:0">Edições do jornal</h3><button class="btn pri" id="novapdf" style="flex:0 0 auto">Nova edição a partir do PDF</button><button class="btn" id="nova" style="flex:0 0 auto">Importar índice ou JSON</button></div>
  ${eds.map(e=>`<div class="card"><div class="row" style="align-items:center"><div style="flex:2 1 260px"><span class="tag">N.º${e.n}</span> <b>${esc(e.titulo)}</b> <span class="note">· ${e.artigos.length} artigos ${e.n===dest?'· <b>em destaque</b>':''}</span></div>
   <div style="flex:0 0 auto;display:flex;gap:6px;flex-wrap:wrap">${e.n!==dest?`<button class="btn sm" data-dest="${e.n}">Pôr em destaque</button>`:''}<button class="btn sm" data-edit="${e.n}">Editar</button><button class="btn sm" data-json="${e.n}">Copiar JSON</button><button class="btn sm" data-del="${e.n}">${confirmar==='del'+e.n?'Confirmar apagar?':'Apagar'}</button></div></div></div>`).join('')||'<p class="note">Ainda não há edições.</p>'}
  <p class="note">A edição em destaque é a que abre na página inicial. As anteriores continuam acessíveis pelos QR já impressos.</p>`;
+ $('#novapdf').onclick=()=>{rasc={n:(eds.reduce((m,e)=>Math.max(m,e.n),0)+1),titulo:'',ano:eds.length?eds[eds.length-1].ano:'',artigos:[],novo:true};abrirPDF=true;painel()};
  $('#nova').onclick=()=>{rasc={n:(eds.reduce((m,e)=>Math.max(m,e.n),0)+1),titulo:'',ano:eds.length?eds[eds.length-1].ano:'',artigos:[],novo:true};painel()};
  pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
   if(d.dest){await db.setDestaque(Number(d.dest));dest=Number(d.dest);painel()}
@@ -602,7 +661,8 @@ function parseImport(txt){
   let id=slug(ti),k=2;while(usados.has(id))id=slug(ti)+'-'+k++;usados.add(id);
   return {id,p:pag.replace(/\D/g,'')||pag,s:sec||'Notícias',ti,b:[{t:'reacoes'},{t:'comentario',q:'Deixa a tua opinião'}]}});
 }
-function alertaEd(t){setTimeout(()=>{const m=$('#gMsg');if(m){m.className='msg err';m.textContent=t}},0)}
+let abrirPDF=false;
+function alertaEd(t){setTimeout(()=>{const m=$('#gMsg');if(m){m.className=/^Feito/.test(t)?'msg ok':'msg err';m.textContent=t;m.scrollIntoView({block:'center',behavior:'smooth'})}},0)}
 function editor(){
  const r=rasc;
  pane().innerHTML=`<h3>${r.novo?'Importar nova edição':'Editar edição N.º'+r.n}</h3>
@@ -1146,31 +1206,7 @@ function verArquivo(){
  ['aq','as','ae'].forEach(id=>$('#'+id).addEventListener('input',draw));draw();
 }
 
-/* --- 21, 22: página para partilhar e edição digital (PDF) --- */
-function verLer(e){
- main.innerHTML=`<span class="tag">${esc(e.ano||'')} · N.º${e.n}</span><h2 class="t">Repórter da Calheta n.º${e.n}</h2>
- <p class="lead">${esc(e.titulo||'')} · Jornal da Escola Básica e Secundária da Calheta, São Jorge.</p>
- ${e.pdf?'<div id="pdfv" class="pdfv"><p class="note">A abrir o jornal…</p></div>':'<p class="note">A versão digital (PDF) desta edição ainda não foi publicada.</p>'}
- <h3 style="margin-top:22px">Nesta edição</h3><ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}${a.r?' · '+esc(a.r):''}</span></span><span class="n">Participar</span></a></li>`).join('')}</ul>
- <div class="row" style="margin-top:16px"><button class="btn" id="partilhar" style="flex:0 0 auto">Copiar a ligação desta página</button><a class="btn" href="#e${e.n}" style="flex:0 0 auto;text-decoration:none;line-height:26px">Participar</a></div>`;
- $('#partilhar').onclick=async ev=>{const u=(cfg.base||location.href.split('#')[0])+'#e'+e.n+'-ler';try{await navigator.clipboard.writeText(u);ev.target.textContent='Copiada!'}catch(err){ev.target.textContent=u}};
- if(e.pdf)mostrarPDF(e);
-}
-async function mostrarPDF(e){
- const box=$('#pdfv');
- try{
-  if(!window.pdfjsLib){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'}
-  const doc=await window.pdfjsLib.getDocument(await urlMedia(e.pdf)).promise;if(!$('#pdfv'))return;
-  box.innerHTML=`<div class="pdfbar"><button class="btn sm" id="pp" aria-label="Página anterior">←</button><span id="pn"></span><button class="btn sm" id="px" aria-label="Página seguinte">→</button></div><canvas id="pc"></canvas><div class="chips" id="parts"></div>`;
-  let pg=1;
-  const draw=async()=>{const page=await doc.getPage(pg),v0=page.getViewport({scale:1}),sc=Math.min(2.5,(box.clientWidth||700)/v0.width)*(window.devicePixelRatio||1),vp=page.getViewport({scale:sc}),c=$('#pc');if(!c)return;c.width=vp.width;c.height=vp.height;await page.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
-   $('#pn').textContent=`pág. ${pg} de ${doc.numPages}`;$('#parts').innerHTML=e.artigos.filter(a=>String(a.p)===String(pg)).map(a=>`<a class="chip" href="#e${e.n}-${esc(a.id)}">Participar: ${esc(a.ti)}</a>`).join('')};
-  $('#pp').onclick=()=>{if(pg>1){pg--;draw()}};$('#px').onclick=()=>{if(pg<doc.numPages){pg++;draw()}};
-  box.tabIndex=0;box.onkeydown=ev=>{if(ev.key==='ArrowLeft')$('#pp').click();if(ev.key==='ArrowRight')$('#px').click()};
-  draw();
- }catch(err){console.warn(err);if($('#pdfv'))box.innerHTML='<p class="note">Não foi possível abrir o PDF.</p>'}
-}
-
+/* --- 21, 22: página para partilhar e edição digital (PDF): ver v1.5 --- */
 /* --- 23: mural das famílias --- */
 async function verFamilias(){
  atual=null;main.classList.remove('wide');$('#edmeta').textContent='Famílias';window.scrollTo(0,0);
@@ -1344,11 +1380,11 @@ async function publicarAudios(r,btn){
 /* --- 4, 7, 22, 2: extras do editor de edições --- */
 function extrasEdicao(r){
  const c=r.capa||{},cc=r.caca||[];
- return `<div class="card"><h3>Pergunta da capa</h3><p class="note" style="margin-top:0">Aparece no topo da página da edição, a que o QR da capa abre. O resultado mostra-se no número seguinte.</p><div class="row"><div style="flex:2 1 260px"><label for="cq">Pergunta</label><input id="cq" value="${esc(c.q||'')}" maxlength="160"></div><div style="flex:2 1 260px"><label for="co">Opções, separadas por vírgula</label><input id="co" value="${esc((c.o||[]).join(', '))}"></div></div></div>
+ return `<div class="card" id="pdfcard"><h3>Edição completa a partir do PDF</h3><p class="note" style="margin-top:0">Exporta o jornal do Canva em <b>PDF Padrão</b> e carrega-o aqui (até 50 MB). A app lê o PDF, encontra os artigos (título, secção, página, texto, autores e fotografias) e cria-os na Participa, prontos a rever. O PDF fica também na página "Ler o jornal", com os títulos tocáveis.</p><div class="row" style="align-items:center"><span style="flex:2 1 200px">${r.pdf?'<span class="ok">PDF carregado.</span>':'Sem PDF.'}</span><button type="button" class="btn sm ${r.pdf?'':'pri'}" id="pdfb" style="flex:0 0 auto">${r.pdf?'Trocar e voltar a ler o PDF':'Carregar o PDF da edição'}</button>${r.pdf?'<button type="button" class="btn sm" id="pdfrm" style="flex:0 0 auto">Retirar</button>':''}<input type="file" id="pdff" accept="application/pdf" class="hide"><span class="msg" id="pdfmsg"></span></div><div id="pdfprevw">${previaPDF(r)}</div></div>
+ <div class="card"><h3>Pergunta da capa</h3><p class="note" style="margin-top:0">Aparece no topo da página da edição, a que o QR da capa abre. O resultado mostra-se no número seguinte.</p><div class="row"><div style="flex:2 1 260px"><label for="cq">Pergunta</label><input id="cq" value="${esc(c.q||'')}" maxlength="160"></div><div style="flex:2 1 260px"><label for="co">Opções, separadas por vírgula</label><input id="co" value="${esc((c.o||[]).join(', '))}"></div></div></div>
  <div class="card"><h3>Caça ao QR (${cc.length} ${cc.length===1?'pista':'pistas'})</h3><p class="note" style="margin-top:0">Esconde códigos QR pela escola. Cada pista tem uma pergunta sobre um artigo e as respostas certas dão pontos à turma. Os QR aparecem em Códigos QR.</p>
  ${cc.map((p,i)=>`<div class="row" style="align-items:end"><div style="flex:1 1 140px"><label for="cc${i}l">Onde fica</label><input id="cc${i}l" data-cc="${i}" data-k="local" value="${esc(p.local)}" placeholder="ex.: Biblioteca"></div><div style="flex:2 1 220px"><label for="cc${i}q">Pergunta</label><input id="cc${i}q" data-cc="${i}" data-k="q" value="${esc(p.q)}"></div><div style="flex:2 1 220px"><label for="cc${i}o">Opções (* na certa)</label><input id="cc${i}o" data-cc="${i}" data-k="o" value="${esc((p.o||[]).filter(Boolean).map((o,j)=>(j===p.c?'*':'')+o).join(', '))}"></div><button type="button" class="btn sm" data-ccrm="${i}" style="flex:0 0 auto">Remover</button></div>`).join('')}
  <button type="button" class="btn sm" id="ccadd" style="margin-top:10px">+ Pista</button></div>
- <div class="card"><h3>Edição digital (PDF)</h3><p class="note" style="margin-top:0">Exporta o jornal do Canva em PDF e carrega-o aqui (até 50 MB). Fica na página "Ler o jornal", com ligações aos artigos de cada página.</p><div class="row" style="align-items:center"><span style="flex:2 1 200px">${r.pdf?'<span class="ok">PDF carregado.</span>':'Sem PDF.'}</span><button type="button" class="btn sm" id="pdfb" style="flex:0 0 auto">${r.pdf?'Trocar PDF':'Carregar PDF'}</button>${r.pdf?'<button type="button" class="btn sm" id="pdfrm" style="flex:0 0 auto">Retirar</button>':''}<input type="file" id="pdff" accept="application/pdf" class="hide"><span class="msg" id="pdfmsg"></span></div></div>
  <div class="row" style="margin:6px 0 14px"><button type="button" class="btn sm" id="quized" style="flex:0 0 auto">+ Artigo "Quiz da edição"</button><span class="note" style="flex:3 1 240px;margin:0">Cria um artigo só com perguntas sobre os outros artigos; depois junta-lhe blocos de quiz.</span></div>`;
 }
 function bindExtras(r,sync){
@@ -1360,7 +1396,12 @@ function bindExtras(r,sync){
  pane().querySelectorAll('[data-ccrm]').forEach(b=>b.onclick=()=>{tudo();r.caca.splice(Number(b.dataset.ccrm),1);editor()});
  $('#quized').onclick=()=>{tudo();if(!r.artigos.some(a=>a.s==='Quiz da edição'))r.artigos.push({id:'quiz-da-edicao',p:'',s:'Quiz da edição',ti:'Quiz da edição: leste o jornal todo?',b:[]});editor()};
  $('#pdfb').onclick=()=>$('#pdff').click();
- $('#pdff').onchange=async()=>{const f=$('#pdff').files[0];if(!f)return;const m=$('#pdfmsg');m.className='msg';m.textContent='A carregar…';try{tudo();r.pdf=await db.subirPublico(f,'pdf');editor()}catch(e){console.warn(e);m.className='msg err';m.textContent='Não foi possível carregar.'}};
+ $('#pdff').onchange=()=>{const f=$('#pdff').files[0];if(!f)return;tudo();importarPDF(r,f,()=>{editor();const c=$('#pdfcard');if(c&&r._pdf&&!r._pdf.prog)c.scrollIntoView({block:'start',behavior:'smooth'})})};
+ const pc=$('#pdfcriar');if(pc)pc.onclick=()=>{tudo();const A=r._pdf.arts;pane().querySelectorAll('[data-pt]').forEach(x=>A[x.dataset.pt].ti=x.value.trim()||A[x.dataset.pt].ti);pane().querySelectorAll('[data-ps]').forEach(x=>A[x.dataset.ps].s=x.value.trim()||'Notícias');pane().querySelectorAll('[data-pp]').forEach(x=>A[x.dataset.pp].p=parseInt(x.value)||A[x.dataset.pp].p);
+  const sel=A.filter((a,k)=>{const c=pane().querySelector(`[data-pk="${k}"]`);return c&&c.checked});const res=juntarPDF(r,sel);r._pdf=null;editor();alertaEd(`Feito: ${res.novos} ${res.novos===1?'artigo criado':'artigos criados'}${res.atual?' e '+res.atual+' atualizados':''}. Revê os blocos e carrega em Guardar edição.`);const g=$('#gMsg');if(g){g.className='msg ok';setTimeout(()=>{g.className='msg ok'},5)}};
+ const pdd=$('#pdfdesc');if(pdd)pdd.onclick=()=>{tudo();r._pdf=null;editor()};
+ pane().querySelectorAll('[data-pk]').forEach(c=>c.onchange=()=>{const n=pane().querySelectorAll('[data-pk]:checked').length;const b=$('#pdfcriar');if(b)b.textContent=`Criar ${n} ${n===1?'artigo':'artigos'} na Participa`});
+ if(abrirPDF){abrirPDF=false;setTimeout(()=>$('#pdff').click(),50)}
  const rm=$('#pdfrm');if(rm)rm.onclick=()=>{tudo();r.pdf='';editor()};
 }
 function extrasQR(e,base){
@@ -1555,7 +1596,7 @@ function painelAcc(){
  p.querySelector('button').focus();
 }
 aplicarAcc();
-{const b=document.createElement('button');b.id='accb';b.type='button';b.className='accb';b.innerHTML='<b>Aa</b> Leitura';b.title='Opções de leitura';b.setAttribute('aria-label','Opções de leitura: tamanho da letra, cores e tipo de letra');b.onclick=painelAcc;const mt=document.querySelector('header.mast .meta');mt.insertBefore(b,mt.lastElementChild)}
+{const b=document.createElement('button');b.id='accb';b.type='button';b.className='accb';b.innerHTML='<b>Aa</b> Leitura';b.title='Opções de leitura';b.setAttribute('aria-label','Opções de leitura: tamanho da letra, cores, tipo de letra e modo visão reduzida');b.onclick=()=>painelAcc();const mt=document.querySelector('header.mast .meta');mt.insertBefore(b,mt.lastElementChild)}
 
 /* --- 7: passatempos (sopa de letras e palavras cruzadas) --- */
 const limpaPal=w=>norm(w).toUpperCase().replace(/[^A-Z]/g,'');
@@ -1926,15 +1967,16 @@ function menuMais(){
  if($('#folha'))return fecharFolha();
  const e=edAtual(),pz=pzDe(e),ios=/iphone|ipad|ipod/i.test(navigator.userAgent),inst=window.matchMedia&&matchMedia('(display-mode: standalone)').matches;
  const L=[pz?['#e'+e.n+'-'+pz.id,'Passatempos','Sopa de letras e palavras cruzadas']:['#agenda','Agenda','O que vem aí na escola'],['#concurso','Concurso de fotografia','Envia e vota nas fotos'],['#cartas','Cartas ao jornal','Escreve à redação'],['#mapa','Mapa','As notícias da ilha'],
-  ['#e'+e.n+'-ler','Ler o jornal','A edição completa no ecrã'],['#arquivo','Arquivo','Procura nas edições antigas'],['#familias','Famílias','O mural das famílias'],['#redacao','Redação','Escreve para o jornal'],['#painel','Painel do professor','Só para professores']];
+  ['#e'+e.n+'-ler','Ler o jornal','A edição completa no ecrã'],['#arquivo','Arquivo','Procura nas edições antigas'],['#familias','Famílias','O mural das famílias'],['#redacao','Redação','Escreve para o jornal'],['#acessibilidade','Acessibilidade','Declaração e contacto'],['#painel','Painel do professor','Só para professores']];
  const f=document.createElement('div');f.id='folha';f.className='folha-fundo';
  f.innerHTML=`<div class="folha" role="dialog" aria-modal="true" aria-label="Mais opções"><div class="pega" aria-hidden="true"></div>
  <div class="folha-l">${L.map(([u,t,s])=>`<a href="${u}"><b>${esc(t)}</b><span>${esc(s)}</span></a>`).join('')}</div>
- <div class="folha-b">${instalar?'<button type="button" class="btn pri" id="f-inst">Instalar a app</button>':(!inst&&ios?'<p class="note" style="margin:0">Para instalar: toca em <b>Partilhar</b> e depois em <b>Adicionar ao ecrã principal</b>.</p>':'')}<button type="button" class="btn" id="f-acc"><b>Aa</b> Opções de leitura</button></div></div>`;
+ <div class="folha-b">${instalar?'<button type="button" class="btn pri" id="f-inst">Instalar a app</button>':(!inst&&ios?'<p class="note" style="margin:0">Para instalar: toca em <b>Partilhar</b> e depois em <b>Adicionar ao ecrã principal</b>.</p>':'')}<button type="button" class="btn" id="f-vr">${ACC.vr?'✓ Modo visão reduzida ligado':'Modo visão reduzida'}</button><button type="button" class="btn" id="f-acc"><b>Aa</b> Opções de leitura</button></div></div>`;
  document.body.appendChild(f);requestAnimationFrame(()=>f.classList.add('aberta'));
  f.onclick=ev=>{if(ev.target===f||ev.target.closest('a'))fecharFolha()};
  const fi=$('#f-inst');if(fi)fi.onclick=async()=>{fecharFolha();instalar.prompt();try{await instalar.userChoice}catch(e){}instalar=null};
  $('#f-acc').onclick=()=>{fecharFolha();painelAcc()};
+ $('#f-vr').onclick=()=>{fecharFolha();ligarVR(!ACC.vr)};
  f.addEventListener('keydown',ev=>{if(ev.key==='Escape')fecharFolha()});
  f.querySelector('a').focus();
 }
@@ -1999,6 +2041,325 @@ function cruzPista(box,b){
  box.addEventListener('keydown',ev=>{if(ev.key.startsWith('Arrow'))box.dataset.dir=(ev.key==='ArrowDown'||ev.key==='ArrowUp')?'v':'h'});
  box.addEventListener('dblclick',ev=>{if(ev.target.closest('input[data-rc]')){box.dataset.dir=box.dataset.dir==='v'?'h':'v';ev.target.blur();ev.target.focus()}});
 }
+
+/* ======================= v1.5: importar a edição a partir do PDF e ler o PDF no telemóvel ======================= */
+const PDFJS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+async function pdfLib(){if(!window.pdfjsLib){await loadScript(PDFJS+'pdf.min.js');window.pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+'pdf.worker.min.js'}return window.pdfjsLib}
+const MESES='janeiro|fevereiro|março|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro';
+
+/* --- 1. ler o PDF: linhas de texto (com tamanho e posição) e fotografias de cada página --- */
+async function lerPDF(data,prog){
+ const lib=await pdfLib(),doc=await lib.getDocument({data}).promise,O=lib.OPS,pags=[];
+ const mul=(a,b)=>[a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
+ for(let i=1;i<=doc.numPages;i++){
+  if(prog)prog(i,doc.numPages);
+  const pg=await doc.getPage(i),vp=pg.getViewport({scale:1}),W=vp.width,H=vp.height,tc=await pg.getTextContent();
+  const its=tc.items.filter(t=>t.str&&t.str.trim()).map(t=>{const T=lib.Util.transform(vp.transform,t.transform),h=Math.hypot(T[2],T[3])||Math.abs(t.transform[3]);return {s:t.str,x:T[4],y:T[5],h,w:t.width*(vp.scale||1),f:t.fontName}});
+  const L=[];let c=null;
+  for(const t of its){
+   if(c&&Math.abs(t.y-c.y)<c.h*.45&&Math.abs(t.h-c.h)<c.h*.2&&t.x>c.x0-c.h&&t.x<c.x1+c.h*3){const gap=t.x-c.x1;c.s+=(gap>c.h*.12&&!/\s$/.test(c.s)&&!/^\s/.test(t.s)?' ':'')+t.s;c.x1=Math.max(c.x1,t.x+t.w)}
+   else{c={s:t.s,x0:t.x,x1:t.x+t.w,y:t.y,h:t.h,f:t.f};L.push(c)}
+  }
+  let fotos=0;
+  try{const ops=await pg.getOperatorList();let m=[1,0,0,1,0,0];const st=[];
+   for(let k=0;k<ops.fnArray.length;k++){const f=ops.fnArray[k],a=ops.argsArray[k];
+    if(f===O.save)st.push(m.slice());else if(f===O.restore)m=st.pop()||[1,0,0,1,0,0];else if(f===O.transform)m=mul(m,a);
+    else if(f===O.paintFormXObjectBegin){st.push(m.slice());if(a&&a[0])m=mul(m,a[0])}else if(f===O.paintFormXObjectEnd)m=st.pop()||[1,0,0,1,0,0];
+    else if(f===O.paintImageXObject||f===O.paintJpegXObject||f===O.paintInlineImageXObject||f===O.paintImageXObjectRepeat){const ar=Math.hypot(m[0],m[1])*Math.hypot(m[2],m[3])/(W*H);if(ar>.018&&ar<.8)fotos++}}}catch(e){console.warn(e)}
+  pags.push({n:i,W,H,fotos,linhas:L.map(l=>Object.assign(l,{s:l.s.replace(/\s+/g,' ').trim()})).filter(l=>l.s)});
+  pg.cleanup();
+ }
+ doc.destroy();return pags;
+}
+
+/* --- 2. perceber a edição: capa, artigos, secções, autores, texto e fotos --- */
+function analisarPDF(pags){
+ const hist={},freq={},fontes={};
+ pags.forEach(p=>{const vis=new Set();p.linhas.forEach(l=>{const k=Math.round(l.h*2)/2;hist[k]=(hist[k]||0)+l.s.length;fontes[l.f]=(fontes[l.f]||0)+l.s.length;const n=norm(l.s);if(!vis.has(n)){vis.add(n);freq[n]=(freq[n]||0)+1}})});
+ const corpo=Number((Object.entries(hist).sort((a,b)=>b[1]-a[1])[0]||[10])[0])||10,fCorpo=(Object.entries(fontes).sort((a,b)=>b[1]-a[1])[0]||[''])[0];
+ const T=corpo*1.55,conhec=new Map(secoes().map(s=>[norm(s),s]));
+ const repetida=s=>{const n=norm(s);return pags.length>3&&freq[n]>=Math.max(3,pags.length*.3)};
+ const lixo=l=>/^\d{1,3}$/.test(l.s)||/^p[áa]g\.?\s*\d+$/i.test(l.s)||/rep[óo]rter da calheta/i.test(l.s)&&l.h>T||repetida(l.s);
+ const capa=pags[0]?pags[0].linhas.map(l=>l.s).join(' \n '):'';
+ const info={n:(capa.match(/n\.?\s*[º°o]\s*(\d{1,3})\b/i)||[])[1],ano:(capa.match(/\bano\s+([IVXLC]{1,6})\b/i)||[])[1],
+  titulo:((capa.match(new RegExp(`((?:${MESES})(?:\\s*[|/–-]\\s*(?:${MESES}))?\\s*(?:de\\s*)?\\d{4})`,'i'))||[])[1]||'').toLowerCase().replace(/\s*([|/–-])\s*/,' | ').replace(/\s+de\s+/,' ')};
+ const arts=[];let ultimaSec='',pendSec='';
+ for(const p of pags){
+  const Ls=p.linhas.filter(l=>!lixo(l)),daPag=[];let cur=null,ultTit=null;
+  const novo=(l)=>{cur={p:p.n,ti:l.s,s:pendSec||'',au:'',cred:'',L:[],box:[l.x0,l.y-l.h,l.x1,l.y+l.h*.25],tsz:l.h};pendSec='';daPag.push(cur);arts.push(cur);ultTit=l};
+  for(const l of Ls){
+   const pal=palavras(l.s),sec=conhec.get(norm(l.s).replace(/[:·•]+$/,''));
+   if(l.h>=T&&/\p{L}/u.test(l.s)&&pal<=18){
+    if(cur&&ultTit&&!cur.L.length&&Math.abs(l.h-cur.tsz)<cur.tsz*.18&&Math.abs(l.y-ultTit.y)<l.h*1.9){cur.ti+=' '+l.s;cur.box=[Math.min(cur.box[0],l.x0),Math.min(cur.box[1],l.y-l.h),Math.max(cur.box[2],l.x1),Math.max(cur.box[3],l.y+l.h*.25)];ultTit=l;continue}
+    novo(l);continue}
+   if(sec&&pal<=5){if(cur&&!cur.L.length&&!cur.s)cur.s=sec;else pendSec=sec;continue}
+   const m=l.s.match(/^(texto|textos|por|reportagem|entrevista|autor(?:a|es|as)?)\s*(?:de|:|-|–)?\s*(.+)$/i);
+   if(m&&pal<=14&&cur){cur.au=(cur.au?cur.au+', ':'')+m[2].replace(/^[:\s]+/,'');continue}
+   const fm=l.s.match(/^(fotografias?|fotos?|imagens?)\s*(?:de|:|-|–)\s*(.+)$/i);if(fm&&pal<=12){if(cur)cur.cred=fm[2];continue}
+   if(!cur&&pal<=4&&l.h>corpo*1.05&&l.h<T&&l.f!==fCorpo){pendSec=l.s.replace(/[:·•]+$/,'');continue}
+   if(l.h<corpo*.72)continue;
+   if(cur)cur.L.push(l);
+   else if(arts.length&&!daPag.length&&l.h<corpo*1.3)arts[arts.length-1].L.push(Object.assign({},l,{np:true}));
+  }
+  daPag.forEach(a=>{if(!a.s)a.s=pendSec&&!daPag.length?pendSec:ultimaSec;});
+  if(daPag.length){const alvo=daPag.slice().sort((x,y)=>y.L.length-x.L.length)[0];alvo.fotos=(alvo.fotos||0)+p.fotos;ultimaSec=daPag[daPag.length-1].s||ultimaSec}
+  else if(arts.length&&p.fotos)arts[arts.length-1].fotos=(arts[arts.length-1].fotos||0)+p.fotos;
+  daPag.forEach(a=>{a.pb=[a.box[0]/p.W,a.box[1]/p.H,(a.box[2]-a.box[0])/p.W,(a.box[3]-a.box[1])/p.H].map(v=>Math.round(Math.max(0,Math.min(1,v))*1000)/1000)});
+ }
+ const texto=L=>{let out='',prev=null;for(const l of L){if(prev){const gap=Math.abs(l.y-prev.y);const novoPar=l.np&&!prev.np||gap>prev.h*1.9||gap<prev.h*.3&&l.x0<prev.x0-prev.h;
+   if(/-$/.test(out)&&/^\p{Ll}/u.test(l.s)&&!novoPar)out=out.slice(0,-1);else out+=novoPar?'\n\n':' '}out+=l.s;prev=l}return out.replace(/ +/g,' ').trim()};
+ const res=arts.map((a,i)=>{const tx=texto(a.L),pw=palavras(tx),fr=((tx.match(/^([^]{20,220}?[.!?])(?=\s+[A-ZÁÉÍÓÚÂÊÔÀÇ"«]|\s*$)/)||[])[1]||'').replace(/\s+/g,' ');
+  return {i,p:a.p,s:a.s||'Notícias',ti:a.ti.replace(/\s+/g,' ').trim(),au:a.au,cred:a.cred,tx,r:fr,palavras:pw,fotos:a.fotos||0,pb:a.pb,ok:pw>=25||a.fotos>0}});
+ return {info,arts:res,corpo,paginas:pags.length};
+}
+function blocosPara(a){
+ const s=norm(a.s),b=[];
+ if(/cronica|escrita criativa|opiniao|poesia|conto|riso|humor/.test(s))b.push({t:'estrelas',q:/riso|humor/.test(s)?'Quanto te fez rir?':'Que nota dás a este texto?'});else b.push({t:'reacoes'});
+ if(a.fotos>=2)b.push({t:'fotos',n:Math.min(40,a.fotos)});
+ b.push({t:'comentario',q:a.au?'Deixa uma mensagem aos autores':'Deixa a tua opinião'});
+ return b;
+}
+function juntarPDF(r,sel){
+ const mesmo=(x,y)=>{const a=norm(x).replace(/[^a-z0-9 ]/g,''),b=norm(y).replace(/[^a-z0-9 ]/g,'');return a===b||(a.length>12&&b.includes(a))||(b.length>12&&a.includes(b))};
+ let novos=0,atual=0;
+ sel.forEach(a=>{const ex=r.artigos.find(x=>mesmo(x.ti,a.ti));
+  if(ex){ex.p=ex.p||String(a.p);if(!ex.tx&&a.tx)ex.tx=a.tx;if(!ex.r&&a.r)ex.r=a.r;if(!ex.au&&a.au)ex.au=a.au;ex.pb=a.pb;ex.pp=a.p;if(a.fotos>=2&&!ex.b.some(b=>b.t==='fotos'))ex.b.splice(1,0,{t:'fotos',n:a.fotos});atual++}
+  else{r.artigos.push({id:slug(a.ti),p:String(a.p),s:a.s,ti:a.ti,r:a.r,au:a.au,tx:a.tx,pb:a.pb,pp:a.p,b:blocosPara(a)});novos++}});
+ r.artigos.sort((x,y)=>(parseInt(x.p)||999)-(parseInt(y.p)||999));
+ return {novos,atual};
+}
+function previaPDF(r){
+ const z=r._pdf;if(!z)return '';
+ if(z.erro)return `<p class="err">${esc(z.erro)}</p>`;
+ if(z.prog)return `<div class="pdfprog"><span style="width:${Math.round(z.prog*100)}%"></span></div><p class="note">${esc(z.msg||'A ler o PDF…')}</p>`;
+ const A=z.arts,sel=A.filter(a=>a.ok).length;
+ return `<div class="pdfprev"><p><b>Li ${z.paginas} páginas e encontrei ${A.length} ${A.length===1?'artigo':'artigos'}.</b>${z.info.n||z.info.titulo?` Capa: ${z.info.n?'n.º'+esc(z.info.n):''}${z.info.titulo?' · '+esc(z.info.titulo):''}${z.info.ano?' · Ano '+esc(z.info.ano):''}.`:''} Confirma os títulos e as secções; os que têm pouco texto vêm desmarcados.</p>
+ <div class="pdfarts">${A.map((a,k)=>`<div class="pdfa ${a.ok?'':'fraco'}"><label class="chk" style="margin:0"><input type="checkbox" data-pk="${k}" ${a.ok?'checked':''} aria-label="Importar ${esc(a.ti)}"></label>
+  <div class="pdfa-c"><div class="row" style="gap:6px"><input data-pp="${k}" value="${esc(a.p)}" aria-label="Página" style="flex:0 0 60px"><input data-ps="${k}" value="${esc(a.s)}" list="p-sl2" aria-label="Secção" style="flex:1 1 120px"></div>
+  <input data-pt="${k}" value="${esc(a.ti)}" aria-label="Título" style="margin-top:6px;font-weight:600">
+  <p class="note" style="margin:4px 0 0">${a.palavras} palavras${a.fotos?' · '+a.fotos+(a.fotos===1?' foto':' fotos'):''}${a.au?' · '+esc(a.au):''}${a.r?' · «'+esc(a.r.slice(0,90))+(a.r.length>90?'…':'')+'»':''}</p></div></div>`).join('')}</div>
+ <datalist id="p-sl2">${secoes().map(s=>`<option value="${esc(s)}">`).join('')}</datalist>
+ <div class="row" style="margin-top:12px"><button type="button" class="btn pri" id="pdfcriar" style="flex:0 0 auto">Criar ${sel} ${sel===1?'artigo':'artigos'} na Participa</button><button type="button" class="btn" id="pdfdesc" style="flex:0 0 auto">Fechar</button></div>
+ <p class="note">Cada artigo fica com reações (ou estrelas, nas crónicas e textos criativos), gostos nas fotos e comentários, mais o texto para ler, ouvir e pesquisar. Os títulos ficam tocáveis no PDF. Depois podes juntar perguntas e quizzes a cada um.</p></div>`;
+}
+async function importarPDF(r,f,redesenhar){
+ r._pdf={prog:.02,msg:'A carregar o PDF…'};redesenhar();
+ try{
+  const buf=await f.arrayBuffer();
+  const up=db.subirPublico(f,'pdf').then(u=>{r.pdf=u}).catch(e=>{console.warn(e);r._pdfUpErr=true});
+  const pags=await lerPDF(new Uint8Array(buf.slice(0)),(i,n)=>{r._pdf={prog:.05+.85*i/n,msg:`A ler a página ${i} de ${n}…`};const el=$('#pdfprevw');if(el)el.innerHTML=previaPDF(r)});
+  const an=analisarPDF(pags);await up;
+  if(r._pdfUpErr){r._pdf={erro:'Li o PDF mas não consegui guardá-lo online. Verifica a ligação e tenta outra vez.'};return redesenhar()}
+  if(!an.arts.length){r._pdf={erro:'O PDF ficou guardado, mas não encontrei texto nele (talvez tenha sido exportado como imagem). No Canva, exporta em "PDF Padrão" com o texto como texto.'};return redesenhar()}
+  if(an.info.n&&(r.novo||!r.artigos.length))r.n=Number(an.info.n);
+  if(an.info.titulo&&!r.titulo)r.titulo=an.info.titulo;if(an.info.ano&&!r.ano)r.ano='Ano '+an.info.ano.toUpperCase();
+  r._pdf=an;redesenhar();
+ }catch(e){console.warn(e);r._pdf={erro:'Não consegui ler este PDF. Experimenta exportá-lo outra vez do Canva.'};redesenhar()}
+}
+
+/* --- 3. ler o jornal no telemóvel --- */
+let pdfCache={url:null,doc:null};
+async function abrirDoc(e){const u=await urlMedia(e.pdf);if(pdfCache.url===u&&pdfCache.doc)return pdfCache.doc;const lib=await pdfLib();const doc=await lib.getDocument({url:u,rangeChunkSize:262144}).promise;pdfCache={url:u,doc};return doc}
+function hotspots(e,n){return e.artigos.filter(a=>Number(a.pp||a.p)===n).map(a=>a.pb?`<a class="hs" href="#e${e.n}-${esc(a.id)}" style="left:${a.pb[0]*100}%;top:${a.pb[1]*100}%;width:${Math.max(a.pb[2]*100,18)}%;height:${Math.max(a.pb[3]*100,3)}%" aria-label="Participar: ${esc(a.ti)}"><span>Participar</span></a>`:'').join('')}
+function verLer(e){
+ const modo=LS.get('rc-lermodo',ACC.vr?'txt':'pag'),temTx=e.artigos.some(a=>a.tx);
+ main.innerHTML=`<span class="tag">${esc(e.ano||'')} · N.º${e.n}</span><h2 class="t">Repórter da Calheta n.º${e.n}</h2>
+ <p class="lead">${esc(e.titulo||'')} · Jornal da Escola Básica e Secundária da Calheta, São Jorge.</p>
+ ${e.pdf||temTx?`<div class="seg lmodo" role="tablist">${e.pdf?`<button type="button" class="btn sm ${modo!=='txt'||!temTx?'on':''}" data-lm="pag" role="tab">Páginas</button>`:''}${temTx?`<button type="button" class="btn sm ${modo==='txt'||!e.pdf?'on':''}" data-lm="txt" role="tab">Só texto</button>`:''}</div>`:''}
+ <div id="leitor"></div>
+ <h3 style="margin-top:22px">Nesta edição</h3><ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}${a.r?' · '+esc(a.r):''}</span></span><span class="n">Participar</span></a></li>`).join('')}</ul>
+ <div class="row" style="margin-top:16px"><button class="btn" id="partilhar" style="flex:0 0 auto">Partilhar esta edição</button>${e.pdf?'<button class="btn" id="pdfdl" style="flex:0 0 auto">Descarregar o PDF</button>':''}<a class="btn" href="#e${e.n}" style="flex:0 0 auto;text-decoration:none;line-height:26px">Participar</a></div>`;
+ $('#partilhar').onclick=ev=>partilhar('Repórter da Calheta n.º'+e.n,(cfg.base||location.href.split('#')[0])+'#e'+e.n+'-ler',ev.target);
+ const dl=$('#pdfdl');if(dl)dl.onclick=async()=>{dl.disabled=true;try{const u=await urlMedia(e.pdf),bl=await (await fetch(u)).blob();await baixar(bl,'Reporter-da-Calheta-n'+e.n+'.pdf')}catch(err){console.warn(err);window.open(e.pdf,'_blank')}dl.disabled=false};
+ main.querySelectorAll('[data-lm]').forEach(b=>b.onclick=()=>{LS.set('rc-lermodo',b.dataset.lm);verLer(e)});
+ const txt=(modo==='txt'&&temTx)||!e.pdf;
+ if(txt)lerTexto(e);else if(e.pdf)mostrarPDF(e);
+}
+function lerTexto(e){
+ const box=$('#leitor'),A=e.artigos.filter(a=>a.tx||a.r);
+ box.innerHTML=A.length?A.map(a=>`<article class="card lt-art" id="lt-${esc(a.id)}"><span class="tag">pág. ${esc(a.p)} · ${esc(a.s)}</span><h3 class="lt-t">${esc(a.ti)}</h3>${a.r&&a.tx&&!a.tx.startsWith(a.r)?`<p><b>${esc(a.r)}</b></p>`:''}<div class="txt">${esc(a.tx||a.r)}</div>${a.au?`<p class="note">Texto: ${esc(a.au)}</p>`:''}<a class="btn sm pri" href="#e${e.n}-${esc(a.id)}" style="text-decoration:none;line-height:26px;display:inline-block;margin-top:8px">Participar</a></article>`).join(''):'<p class="note">Esta edição ainda não tem o texto dos artigos.</p>';
+ box.querySelectorAll('.lt-art').forEach(c=>{const a=e.artigos.find(x=>'lt-'+x.id===c.id);ouvirUI(c,[a.ti,a.tx||a.r].join('. '),'pt-PT')});
+}
+async function mostrarPDF(e){
+ const box=$('#leitor');box.innerHTML='<div class="pdfv"><p class="note">A abrir o jornal…</p></div>';
+ let doc;try{doc=await abrirDoc(e)}catch(err){console.warn(err);if($('#leitor'))box.innerHTML='<p class="note">Não foi possível abrir o PDF.</p>';return}
+ if(!$('#leitor'))return;
+ const N=doc.numPages,p1=await doc.getPage(1),v1=p1.getViewport({scale:1}),ar=v1.width/v1.height,K='rc-pag-'+e.n,ult=Number(LS.get(K,1))||1;
+ box.innerHTML=`<div class="pdfbar2"><span id="pn2">pág. 1 de ${N}</span><button type="button" class="btn sm" id="pfs">Ecrã inteiro</button></div>
+ ${ult>1?`<button type="button" class="btn sm" id="pcont" style="margin:0 0 10px">Continuar na pág. ${ult}</button>`:''}
+ <div class="pdfs">${Array.from({length:N},(_,i)=>`<div class="pp" data-pg="${i+1}" style="aspect-ratio:${ar}"><span class="ppn">${i+1}</span>${hotspots(e,i+1)}</div>`).join('')}</div>
+ <p class="note">Toca numa página para a veres em ecrã inteiro, com zoom. Os títulos com a etiqueta amarela abrem a página para participares.</p>`;
+ const pagsEl=[...box.querySelectorAll('.pp')],feitas=new Map();
+ const render=async el=>{const n=Number(el.dataset.pg);if(feitas.has(n))return;feitas.set(n,1);try{const pg=await doc.getPage(n),w=el.clientWidth||360,dpr=Math.min(2,window.devicePixelRatio||1),v0=pg.getViewport({scale:1}),vp=pg.getViewport({scale:w*dpr/v0.width});const c=document.createElement('canvas');c.width=vp.width;c.height=vp.height;await pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;el.prepend(c);el.classList.add('pronta')}catch(err){console.warn(err);feitas.delete(n)}};
+ const solta=el=>{const n=Number(el.dataset.pg),c=el.querySelector('canvas');if(c){c.width=c.height=0;c.remove()}feitas.delete(n);el.classList.remove('pronta')};
+ const io=new IntersectionObserver(ents=>ents.forEach(en=>{if(en.isIntersecting)render(en.target);else if(Math.abs(en.boundingClientRect.top)>window.innerHeight*4)solta(en.target)}),{rootMargin:'800px 0px'});
+ pagsEl.forEach(el=>io.observe(el));
+ const vis=new IntersectionObserver(ents=>ents.forEach(en=>{if(en.isIntersecting&&en.intersectionRatio>.4){const n=Number(en.target.dataset.pg);const t=$('#pn2');if(t)t.textContent=`pág. ${n} de ${N}`;LS.set(K,n)}}),{threshold:[.4]});
+ pagsEl.forEach(el=>vis.observe(el));
+ const pc=$('#pcont');if(pc)pc.onclick=()=>{pagsEl[ult-1].scrollIntoView({behavior:'smooth',block:'start'});pc.remove()};
+ $('#pfs').onclick=()=>leitorTotal(e,doc,Number(LS.get(K,1))||1);
+ box.querySelector('.pdfs').onclick=ev=>{if(ev.target.closest('.hs'))return;const el=ev.target.closest('.pp');if(el)leitorTotal(e,doc,Number(el.dataset.pg))};
+ window.addEventListener('hashchange',()=>{io.disconnect();vis.disconnect()},{once:true});
+}
+/* ecrã inteiro: uma página de cada vez, deslizar, beliscar para zoom, duplo toque */
+function leitorTotal(e,doc,n0){
+ const N=doc.numPages,K='rc-pag-'+e.n;let n=n0,z=1,tx=0,ty=0,tarefa=null;
+ const ov=document.createElement('div');ov.className='lt-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Jornal em ecrã inteiro');
+ ov.innerHTML=`<div class="lt-top"><button type="button" class="lt-x" aria-label="Fechar">✕</button><span class="lt-n" aria-live="polite"></span><span class="lt-esp"></span></div><div class="lt-palco"><div class="lt-pag"><canvas></canvas><div class="lt-hs"></div></div></div><div class="lt-bot"><button type="button" class="btn sm lt-a" aria-label="Página anterior">←</button><div class="lt-chips"></div><button type="button" class="btn sm lt-s" aria-label="Página seguinte">→</button></div>`;
+ document.body.appendChild(ov);document.body.classList.add('sem-scroll');
+ const palco=ov.querySelector('.lt-palco'),pag=ov.querySelector('.lt-pag'),cv=ov.querySelector('canvas'),hs=ov.querySelector('.lt-hs');
+ const aplicar=(anim)=>{pag.style.transition=anim?'transform .2s ease':'none';pag.style.transform=`translate(${tx}px,${ty}px) scale(${z})`};
+ const limites=()=>{const r=palco.getBoundingClientRect(),w=pag.offsetWidth*z,h=pag.offsetHeight*z,mx=Math.max(0,(w-r.width)/2),my=Math.max(0,(h-r.height)/2);tx=Math.max(-mx,Math.min(mx,tx));ty=Math.max(-my,Math.min(my,ty))};
+ const desenhar=async(nitido)=>{const pg=await doc.getPage(n),v0=pg.getViewport({scale:1}),r=palco.getBoundingClientRect(),fit=Math.min(r.width/v0.width,(r.height-8)/v0.height),dpr=Math.min(2.5,window.devicePixelRatio||1);
+  const esc2=Math.min(fit*dpr*(nitido?Math.min(z,3):1),4096/Math.max(v0.width,v0.height));const vp=pg.getViewport({scale:esc2});
+  if(tarefa)try{tarefa.cancel()}catch(err){}
+  const c2=document.createElement('canvas');c2.width=vp.width;c2.height=vp.height;tarefa=pg.render({canvasContext:c2.getContext('2d'),viewport:vp});
+  try{await tarefa.promise}catch(err){return}tarefa=null;
+  cv.width=c2.width;cv.height=c2.height;cv.getContext('2d').drawImage(c2,0,0);pag.style.width=v0.width*fit+'px';pag.style.height=v0.height*fit+'px'};
+ const ir=async k=>{if(k<1||k>N)return;n=k;z=1;tx=ty=0;aplicar();LS.set(K,n);ov.querySelector('.lt-n').textContent=`pág. ${n} de ${N}`;hs.innerHTML=hotspots(e,n);
+  const A=e.artigos.filter(a=>Number(a.pp||a.p)===n);ov.querySelector('.lt-chips').innerHTML=A.map(a=>`<a class="chip" href="#e${e.n}-${esc(a.id)}">Participar: ${esc(a.ti.length>32?a.ti.slice(0,32)+'…':a.ti)}</a>`).join('')||`<span class="note" style="margin:0;color:#ccc">Desliza para mudar de página</span>`;
+  ov.querySelector('.lt-a').disabled=n<=1;ov.querySelector('.lt-s').disabled=n>=N;await desenhar(false)};
+ const fechar=()=>{ov.remove();document.body.classList.remove('sem-scroll');window.removeEventListener('keydown',tecla);window.removeEventListener('hashchange',fechar)};
+ const tecla=ev=>{if(ev.key==='Escape')fechar();if(ev.key==='ArrowRight'&&z===1)ir(n+1);if(ev.key==='ArrowLeft'&&z===1)ir(n-1)};
+ window.addEventListener('keydown',tecla);window.addEventListener('hashchange',fechar);
+ ov.querySelector('.lt-x').onclick=fechar;ov.querySelector('.lt-a').onclick=()=>ir(n-1);ov.querySelector('.lt-s').onclick=()=>ir(n+1);
+ let nitidoT=null;const nitidoDepois=()=>{clearTimeout(nitidoT);nitidoT=setTimeout(()=>{if(z>1.05)desenhar(true)},250)};
+ const pts=new Map();let g0=null,ult=0,ultXY=null;
+ palco.addEventListener('pointerdown',ev=>{if(ev.target.closest('.hs'))return;palco.setPointerCapture(ev.pointerId);pts.set(ev.pointerId,[ev.clientX,ev.clientY]);
+  const P=[...pts.values()];g0=P.length===2?{d:Math.hypot(P[0][0]-P[1][0],P[0][1]-P[1][1]),z,tx,ty,cx:(P[0][0]+P[1][0])/2,cy:(P[0][1]+P[1][1])/2}:{x:ev.clientX,y:ev.clientY,tx,ty,t:Date.now(),z}});
+ palco.addEventListener('pointermove',ev=>{if(!pts.has(ev.pointerId)||!g0)return;pts.set(ev.pointerId,[ev.clientX,ev.clientY]);const P=[...pts.values()];
+  if(P.length===2&&g0.d){const d=Math.hypot(P[0][0]-P[1][0],P[0][1]-P[1][1]);z=Math.max(1,Math.min(5,g0.z*d/g0.d));const r=palco.getBoundingClientRect(),cx=g0.cx-r.left-r.width/2,cy=g0.cy-r.top-r.height/2,k=z/g0.z;tx=cx-(cx-g0.tx)*k;ty=cy-(cy-g0.ty)*k;limites();aplicar()}
+  else if(P.length===1&&g0.x!=null){const dx=ev.clientX-g0.x,dy=ev.clientY-g0.y;if(z>1){tx=g0.tx+dx;ty=g0.ty+dy;limites();aplicar()}else{tx=dx*.6;aplicar()}}});
+ const solta=ev=>{if(!pts.has(ev.pointerId))return;pts.delete(ev.pointerId);
+  if(g0&&g0.d){if(pts.size===0){g0=null;if(z<1.05){z=1;tx=ty=0;aplicar(true)}else nitidoDepois()}else{const [p]=[...pts.values()];g0={x:p[0],y:p[1],tx,ty,t:0,z}}return}
+  if(!g0||g0.x==null)return;const dx=ev.clientX-g0.x,dy=ev.clientY-g0.y,dt=Date.now()-g0.t;
+  if(z===1){if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)){tx=0;aplicar(true);ir(n+(dx<0?1:-1));g0=null;return}tx=0;aplicar(true)}
+  if(Math.abs(dx)<10&&Math.abs(dy)<10&&dt<300){const agora=Date.now();if(agora-ult<320&&ultXY&&Math.hypot(ultXY[0]-ev.clientX,ultXY[1]-ev.clientY)<40){
+    if(z>1){z=1;tx=ty=0}else{const r=palco.getBoundingClientRect(),cx=ev.clientX-r.left-r.width/2,cy=ev.clientY-r.top-r.height/2;z=2.5;tx=-cx*1.5;ty=-cy*1.5;limites()}aplicar(true);nitidoDepois();ult=0}else{ult=agora;ultXY=[ev.clientX,ev.clientY]}}
+  g0=null};
+ palco.addEventListener('pointerup',solta);palco.addEventListener('pointercancel',solta);
+ palco.addEventListener('wheel',ev=>{if(!ev.ctrlKey)return;ev.preventDefault();z=Math.max(1,Math.min(5,z*(ev.deltaY<0?1.1:.9)));if(z===1)tx=ty=0;limites();aplicar();nitidoDepois()},{passive:false});
+ window.addEventListener('resize',()=>{if(ov.isConnected)desenhar(z>1.05)},{passive:true});
+ ir(n);ov.querySelector('.lt-x').focus();
+}
+
+/* ======================= Acessibilidade (EN 301 549 / WCAG 2.1 AA, DL 83/2018) ======================= */
+/* Modo visão reduzida: letra grande, contraste muito alto, espaçamento, sem animações, alvos grandes, leitura em voz alta. */
+const CORES={'':'Do sistema',pb:'Preto sobre branco',bp:'Branco sobre preto',ap:'Amarelo sobre preto'};
+Object.assign(ACC,Object.assign({vr:0,cores:''},LS.get('rc-acc',{})));
+if(LS.get('rc-acc',null)===null&&window.matchMedia&&matchMedia('(prefers-contrast: more)').matches)ACC.contraste=1;
+const aplicarAcc0=aplicarAcc;
+aplicarAcc=function(){aplicarAcc0();const r=document.documentElement;r.dataset.vr=ACC.vr?'1':'';r.dataset.cores=ACC.cores||'';
+ if(ACC.vr&&!ACC.font){const l=$('#fonte-leg');if(!l){const k=document.createElement('link');k.id='fonte-leg';k.rel='stylesheet';k.href='https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap';document.head.appendChild(k)}}
+ botaoOuvirPagina()};
+function ligarVR(on){ACC.vr=on?1:0;if(on){if(!ACC.cores)ACC.cores='ap';if(ACC.fs<2)ACC.fs=2}LS.set('rc-acc',ACC);aplicarAcc();anunciar(on?'Modo visão reduzida ligado.':'Modo visão reduzida desligado.')}
+/* o painel "Opções de leitura" ganha o modo visão reduzida, as cores, a leitura da página e a declaração */
+const painelAcc0=painelAcc;
+painelAcc=function(){
+ painelAcc0();const p=$('#accp');if(!p)return;
+ const extra=()=>{if(p.querySelector('.vr-box'))return;const h=p.querySelector('h3');
+  h.insertAdjacentHTML('afterend',`<div class="vr-box"><button type="button" class="btn ${ACC.vr?'pri':''} vr-btn" id="acc-vr" aria-pressed="${!!ACC.vr}">${ACC.vr?'✓ Modo visão reduzida ligado':'Ligar o modo visão reduzida'}</button><p class="note" style="margin:6px 0 0">Letra grande, cores de contraste máximo, mais espaço entre linhas, botões maiores e sem animações.</p></div>`);
+  const cores=p.querySelectorAll('.lbl')[2];if(cores){const seg=cores.nextElementSibling;seg.insertAdjacentHTML('afterend',`<div class="seg" style="margin-top:6px">${['pb','bp','ap'].map(k=>`<button type="button" class="btn sm ${ACC.cores===k?'on':''}" data-cores="${k}">${CORES[k]}</button>`).join('')}</div>`)}
+  const fs=p.querySelector('[data-fs="3"]');if(fs&&!p.querySelector('[data-fs="4"]'))fs.insertAdjacentHTML('afterend','<button type="button" class="btn sm '+(ACC.fs==4?'on':'')+'" data-fs="4">A+++</button>');
+  const fim=p.querySelector('.row');fim.insertAdjacentHTML('beforebegin',`<button type="button" class="btn sm" id="acc-ouvir" style="margin-top:12px;width:100%">▶ Ler esta página em voz alta</button><p class="note"><a href="#acessibilidade">Declaração de acessibilidade</a> · também podes usar o leitor de ecrã do telemóvel (TalkBack ou VoiceOver).</p>`)};
+ extra();
+ new MutationObserver(extra).observe(p,{childList:true});
+ p.addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;
+  if(b.id==='acc-vr'){ligarVR(!ACC.vr);setTimeout(()=>{const x=$('#acc-vr');if(x)x.focus()},0)}
+  if(b.dataset.cores!==undefined){ACC.cores=ACC.cores===b.dataset.cores?'':b.dataset.cores;LS.set('rc-acc',ACC);aplicarAcc()}
+  if(b.dataset.tema!==undefined){ACC.cores='';LS.set('rc-acc',ACC);aplicarAcc()}
+  if(b.id==='acc-r'){ACC.vr=0;ACC.cores='';LS.set('rc-acc',ACC);aplicarAcc()}
+  if(b.id==='acc-ouvir'){p.remove();lerPagina()}
+  if(b.dataset.cores!==undefined||b.id==='acc-vr'){const ps=p.querySelectorAll('[data-cores]');ps.forEach(x=>x.classList.toggle('on',x.dataset.cores===ACC.cores));const v=$('#acc-vr');if(v){v.classList.toggle('pri',!!ACC.vr);v.setAttribute('aria-pressed',!!ACC.vr);v.textContent=ACC.vr?'✓ Modo visão reduzida ligado':'Ligar o modo visão reduzida'}}
+ });
+};
+
+/* --- anunciar mudanças a quem usa leitor de ecrã (WCAG 4.1.3) --- */
+const vivo=document.createElement('div');vivo.className='sr';vivo.setAttribute('aria-live','polite');vivo.setAttribute('role','status');document.body.appendChild(vivo);
+function anunciar(t){vivo.textContent='';setTimeout(()=>vivo.textContent=t,60)}
+
+/* --- saltar para o conteúdo (WCAG 2.4.1) --- */
+{const a=document.createElement('a');a.href='#main';a.className='saltar';a.textContent='Saltar para o conteúdo';a.onclick=ev=>{ev.preventDefault();const h=main.querySelector('h2,h3')||main;h.setAttribute('tabindex','-1');h.focus()};document.body.prepend(a);main.setAttribute('tabindex','-1')}
+
+/* --- título da página e foco a cada mudança de página (WCAG 2.4.2, 2.4.3) --- */
+let primeiraPag=true;
+function depoisDeMudar(){
+ const h=main.querySelector('h2.t')||main.querySelector('h2,h3'),ed=$('#edmeta').textContent;
+ const t=(h?h.textContent.trim():'Participa')+' · Repórter da Calheta';document.title=t;
+ if(primeiraPag){primeiraPag=false;return}
+ if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}anunciar((h?h.textContent.trim():'Página nova')+(ed?'. '+ed:''));
+}
+let mudouT=null;window.addEventListener('hashchange',()=>{clearTimeout(mudouT);const h0=location.hash;const espera=()=>{if(location.hash!==h0)return;if(main.querySelector('h2'))depoisDeMudar();else mudouT=setTimeout(espera,150)};mudouT=setTimeout(espera,250)});
+setTimeout(()=>{const h=main.querySelector('h2.t');if(h)document.title=h.textContent.trim()+' · Repórter da Calheta'},2500);
+
+/* --- mensagens de erro e de sucesso anunciadas; imagens e controlos sem nome recebem um --- */
+new MutationObserver(()=>{
+ main.querySelectorAll('.msg:not([aria-live])').forEach(m=>{m.setAttribute('aria-live','polite');m.setAttribute('role','status')});
+ main.querySelectorAll('.pp canvas:not([role])').forEach(c=>{c.setAttribute('role','img');c.setAttribute('aria-label','Página '+c.parentElement.dataset.pg+' do jornal em papel. O texto dos artigos está no modo "Só texto".')});
+ main.querySelectorAll('.stars').forEach(s=>{if(!s.getAttribute('aria-label'))s.setAttribute('aria-label','Nota de 1 a 5 estrelas')});
+ main.querySelectorAll('.react button,.stars button,.opt').forEach(b=>{if(b.classList.contains('mine')||b.classList.contains('on'))b.setAttribute('aria-pressed','true')});
+}).observe(main,{childList:true,subtree:true});
+
+/* --- ler a página em voz alta (qualquer página) --- */
+function textoDaPagina(){
+ const c=main.cloneNode(true);c.querySelectorAll('button,input,select,textarea,script,style,.ouvir,.sr,.sopa,.cruz,canvas,svg,[aria-hidden="true"]').forEach(x=>x.remove());
+ return c.innerText.replace(/\n{2,}/g,'. ').replace(/\s+/g,' ').trim();
+}
+function lerPagina(){
+ if(!('speechSynthesis' in window)){anunciar('Este browser não consegue ler em voz alta.');return}
+ const S=speechSynthesis;if(S.speaking){S.cancel();botaoOuvirPagina();return}
+ const partes=(textoDaPagina().match(/[^.!?]+[.!?]*\s*/g)||[]);let i=0;
+ const prox=()=>{if(i>=partes.length){botaoOuvirPagina();return}const u=new SpeechSynthesisUtterance(partes[i++]);u.lang='pt-PT';const v=vozPara('pt-PT');if(v)u.voice=v;u.rate=ACC.vr?.92:1;u.onend=prox;u.onerror=()=>botaoOuvirPagina();S.speak(u)};
+ prox();botaoOuvirPagina(true);
+}
+window.addEventListener('hashchange',()=>{try{speechSynthesis.cancel()}catch(e){}botaoOuvirPagina()});
+function botaoOuvirPagina(aFalar){
+ let b=$('#ouvirpag');if(!ACC.vr||location.hash==='#painel'||location.hash==='#tv'){if(b)b.remove();return}
+ if(!b){b=document.createElement('button');b.id='ouvirpag';b.type='button';b.className='ouvirpag';b.onclick=lerPagina;document.body.appendChild(b)}
+ const f=aFalar||(window.speechSynthesis&&speechSynthesis.speaking);b.textContent=f?'■ Parar a leitura':'▶ Ouvir esta página';b.setAttribute('aria-label',f?'Parar a leitura em voz alta':'Ler esta página em voz alta');
+}
+
+/* --- declaração de acessibilidade (DL 83/2018, art. 7.º; Diretiva (UE) 2016/2102) --- */
+async function verAcessibilidade(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Acessibilidade';window.scrollTo(0,0);
+ const d=Object.assign({contacto:'',data:'2026-11-25',entidade:'Escola Básica e Secundária da Calheta'},await db.getDef('acessibilidade',{}).catch(()=>({}))||{});
+ if(location.hash!=='#acessibilidade')return;
+ const e=edicao(dest)||eds[eds.length-1],url=cfg.base||location.href.split('#')[0];
+ main.innerHTML=`<span class="tag">Acessibilidade</span><h2 class="t">Declaração de acessibilidade</h2>
+ <p class="lead">A ${esc(d.entidade)} compromete-se a tornar a Participa (${esc(url)}) acessível, de acordo com o Decreto-Lei n.º 83/2018, de 19 de outubro, que transpõe a Diretiva (UE) 2016/2102 relativa à acessibilidade dos sítios web e das aplicações móveis de organismos do setor público.</p>
+ <div class="card"><h3>I. Estado de conformidade</h3><p>A Participa está <b>parcialmente conforme</b> com a norma europeia EN 301 549 (v3.2.1), que corresponde às Diretrizes de Acessibilidade para o Conteúdo da Web (WCAG) 2.1, nível AA. Os conteúdos que ainda não cumprem estão na secção III.</p></div>
+ <div class="card"><h3>II. Elaboração desta declaração</h3><p>Declaração elaborada a ${esc(fmtData(d.data))}, com base numa avaliação feita pela equipa que desenvolve a app: testes automáticos, verificação manual com teclado, leitor de ecrã e ampliação, e testes em ecrã de telemóvel. Deve ser completada com o validador AccessMonitor e as listas de verificação publicadas em <a href="https://www.acessibilidade.gov.pt" rel="noopener">acessibilidade.gov.pt</a>, e revista pelo menos uma vez por ano.</p></div>
+ <div class="card"><h3>III. Conteúdos não acessíveis e alternativas</h3><ul class="decl">
+  <li><b>O jornal em PDF</b> (páginas como imagem): a alternativa é o modo <b>"Só texto"</b> da página "Ler o jornal", que mostra o texto de cada artigo e o pode ler em voz alta.</li>
+  <li><b>Fotografias</b>: as fotografias dos artigos não estão na app (só no jornal em papel); vota-se pelo número da foto. As fotografias do concurso têm o título dado pelo autor como texto alternativo.</li>
+  <li><b>Sopa de letras e palavras cruzadas</b>: dependem da visão. As palavras e as pistas estão escritas por baixo da grelha, e as cruzadas usam-se com o teclado e com o leitor de ecrã.</li>
+  <li><b>Mapa das notícias</b>: o mapa é visual; a mesma informação está na lista por baixo do mapa.</li>
+  <li><b>Conteúdos de terceiros</b>: o mapa usa OpenStreetMap e o corretor de texto usa o LanguageTool, que não controlamos.</li>
+  <li><b>Gráficos das estatísticas</b> (painel dos professores): os números aparecem também em tabela.</li></ul></div>
+ <div class="card"><h3>IV. Funcionalidades de acessibilidade</h3><ul class="decl">
+  <li><b>Modo visão reduzida</b>: letra até 160 %, cores de contraste máximo (amarelo ou branco sobre preto, ou preto sobre branco), mais espaço entre linhas e letras, botões maiores, sem animações e botão para ouvir a página.</li>
+  <li>Tipo de letra Atkinson Hyperlegible, pensado para baixa visão; letra maior, tema claro ou escuro e alto contraste, nas opções "Aa Leitura".</li>
+  <li>Leitura em voz alta dos artigos e de qualquer página; compatível com TalkBack (Android) e VoiceOver (iPhone).</li>
+  <li>Toda a app se usa com teclado; ligação "Saltar para o conteúdo"; o título e o foco mudam a cada página; mensagens anunciadas ao leitor de ecrã.</li>
+  <li>Os gestos (deslizar, arrastar, beliscar) têm sempre um botão alternativo.</li>
+  <li>A app respeita as definições do telemóvel: modo escuro, mais contraste e menos movimento.</li></ul></div>
+ <div class="card"><h3>V. Contacto e pedidos</h3><p>Se encontrar uma barreira de acessibilidade, ou precisar de um conteúdo num formato acessível (por exemplo, o texto de um artigo), diga-nos. Respondemos o mais depressa possível.</p>
+ ${d.contacto?`<p>Email: <a href="mailto:${esc(d.contacto)}">${esc(d.contacto)}</a></p>`:''}
+ ${e?`<form id="af"><label for="ax">Descreva o problema ou o pedido</label><textarea id="ax" maxlength="400" required></textarea><div class="row"><div><label for="an">Nome (opcional)</label><input id="an" maxlength="30" autocomplete="name"></div></div><div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar</button><span class="msg" role="status" aria-live="polite"></span></div><p class="note">Só a equipa do jornal lê estas mensagens.${d.contacto?'':' Se quiser resposta, deixe um contacto na mensagem.'}</p></form>`:''}</div>
+ <div class="card"><h3>VI. Procedimento de reclamação</h3><p>Se a resposta não for satisfatória, pode dirigir-se à direção da ${esc(d.entidade)}. Há informação sobre acessibilidade digital e os seus direitos em <a href="https://www.acessibilidade.gov.pt" rel="noopener">acessibilidade.gov.pt</a>.</p></div>
+ <p class="note">Última atualização: ${esc(fmtData(d.data))}.</p>`;
+ const f=$('#af');if(f)f.onsubmit=async ev=>{ev.preventDefault();const m=f.querySelector('.msg'),t=$('#ax').value.trim();if(t.length<5){m.className='msg err';m.textContent='Escreva um pouco mais.';return}
+  const b=f.querySelector('button');b.disabled=true;try{await db.comentar({ed:e.n,art:'_acessibilidade',tipo:'sugestao',nome:$('#an').value.trim().slice(0,30),turma:'',texto:t.slice(0,400)});f.reset();m.className='msg ok';m.textContent='Obrigado. A mensagem chegou à equipa do jornal.'}catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível enviar. Tente outra vez.'}b.disabled=false};
+}
+
+/* definições da declaração (painel → Comunidade) */
+const pComunidade0=pComunidade;
+pComunidade=async function(){await pComunidade0();const d=Object.assign({contacto:'',data:'2026-11-25',entidade:'Escola Básica e Secundária da Calheta'},await db.getDef('acessibilidade',{}).catch(()=>({}))||{});if(!pane())return;
+ pane().insertAdjacentHTML('beforeend',`<div class="card"><h3>Declaração de acessibilidade</h3><p class="note" style="margin-top:0">Obrigatória pelo Decreto-Lei n.º 83/2018. Fica em <a href="#acessibilidade">#acessibilidade</a>, com um formulário para os leitores assinalarem problemas (chegam à Moderação como sugestões).</p>
+ <div class="row"><div style="flex:2 1 240px"><label for="ad-e" style="margin-top:0">Entidade</label><input id="ad-e" maxlength="120" value="${esc(d.entidade)}"></div><div style="flex:2 1 220px"><label for="ad-c" style="margin-top:0">Email de contacto</label><input id="ad-c" type="email" value="${esc(d.contacto)}" placeholder="ex.: jornal@escola.pt"></div><div style="flex:0 1 180px"><label for="ad-d" style="margin-top:0">Última avaliação</label><input id="ad-d" type="date" value="${esc(d.data)}"></div></div>
+ <div class="row" style="margin-top:10px"><button class="btn sm pri" id="ad-s" style="flex:0 0 auto">Guardar</button><span class="msg" id="ad-m"></span></div></div>`);
+ $('#ad-s').onclick=async()=>{try{await db.setDef('acessibilidade',{entidade:$('#ad-e').value.trim()||d.entidade,contacto:$('#ad-c').value.trim(),data:$('#ad-d').value||d.data});$('#ad-m').className='msg ok';$('#ad-m').textContent='Guardado.'}catch(e){console.warn(e);$('#ad-m').className='msg err';$('#ad-m').textContent='Não foi possível guardar.'}}};
+aplicarAcc();
 
 window.addEventListener('hashchange',()=>{if(location.hash!=='#painel')main.classList.remove('wide')});
 window.addEventListener('hashchange',()=>{document.body.classList.toggle('tvmode',location.hash==='#tv');main.onclick=null});
