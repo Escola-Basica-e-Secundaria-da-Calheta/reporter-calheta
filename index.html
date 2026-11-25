@@ -80,6 +80,18 @@ textarea{min-height:96px;resize:vertical}
 .art{border-top:1.5px solid var(--line);padding-top:12px;margin-top:12px}
 .flag{background:var(--hls);border-radius:6px;padding:0 6px;font-size:13px;font-weight:700}
 .res .opt{cursor:default;min-height:38px;padding:6px 12px;font-size:15px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.th{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px;display:grid;gap:6px;align-content:start}
+.th img,.th .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:var(--paper)}
+.th .ph{display:grid;place-items:center;color:var(--mute);font-size:13px}
+.th input{padding:6px 8px;font-size:15px}
+.thb{display:flex;gap:6px;align-items:center}.thb b{flex:1 1 auto}.thb .btn{min-height:34px;min-width:34px;padding:0 8px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin-top:14px}
+.chk input{width:22px;height:22px;flex:none;margin:2px 0 0}
+.texto{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;max-height:520px;overflow:auto}
+.notaeq{background:var(--hls);border-radius:10px;padding:10px 12px;margin-top:10px}
+.est{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700;border:1.5px solid var(--line);white-space:nowrap}
+.est-recebido,.est-revisao{border-color:var(--blue);color:var(--blue)}.est-alteracoes{border-color:var(--hl);background:var(--hls)}.est-aceite,.est-publicado{border-color:var(--ok);color:var(--ok)}.est-recusado{border-color:var(--bad);color:var(--bad)}
 .hide{display:none!important}
 pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font-size:13px}
 @media(max-width:600px){.react button{min-height:64px}.list li a{grid-template-columns:48px 1fr}.list .n{display:none}}
@@ -97,7 +109,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <script>
 {
 /* ======== CONFIGURAÇÃO (preencher ao pôr a app online) ======== */
-const CONFIG={supabaseUrl:'https://pjnuoykywyvnzgwrsftq.supabase.co',supabaseKey:'sb_publishable_X2ddhD0IPo78DG6rmNAIig_FtEKcpLR',base:'https://escola-basica-e-secundaria-da-calheta.github.io/reporter-calheta/',pinDemo:'calheta'};
+const CONFIG={supabaseUrl:'https://pjnuoykywyvnzgwrsftq.supabase.co',supabaseKey:'sb_publishable_X2ddhD0IPo78DG6rmNAIig_FtEKcpLR',base:'https://escola-basica-e-secundaria-da-calheta.github.io/reporter-calheta/',pinDemo:'calheta',pinRedacao:'reporter'};
 
 const $=s=>document.querySelector(s);
 const main=$('#main');
@@ -139,6 +151,14 @@ const TIPOS={reacoes:'Reações',fotos:'Gostos nas fotos',sondagem:'Votação',e
 const REACOES=[['adoro','❤️','Adoro'],['parabens','👏','Parabéns'],['uau','😮','Uau'],['riso','😂','Divertido']];
 const MAUS=['merda','caralho','puta','foda','fdp','idiota','estupid','burr','otari','cabr'];
 
+/* ======== Fotos da redação no modo demonstração (IndexedDB) ======== */
+const idb={h:null,mem:new Map(),
+ async open(){if(this.h===null)this.h=await new Promise(ok=>{try{const r=indexedDB.open('rc-fotos',1);r.onupgradeneeded=()=>r.result.createObjectStore('f');r.onsuccess=()=>ok(r.result);r.onerror=()=>ok(false)}catch(e){ok(false)}});return this.h},
+ async put(k,v){const d=await this.open();if(!d){this.mem.set(k,v);return}await new Promise(ok=>{try{const t=d.transaction('f','readwrite');t.objectStore('f').put(v,k);t.oncomplete=ok;t.onerror=()=>{this.mem.set(k,v);ok()}}catch(e){this.mem.set(k,v);ok()}})},
+ async get(k){if(this.mem.has(k))return this.mem.get(k);const d=await this.open();if(!d)return null;return new Promise(ok=>{try{const r=d.transaction('f').objectStore('f').get(k);r.onsuccess=()=>ok(r.result||null);r.onerror=()=>ok(null)}catch(e){ok(null)}})},
+ async del(k){this.mem.delete(k);const d=await this.open();if(d)await new Promise(ok=>{try{const t=d.transaction('f','readwrite');t.objectStore('f').delete(k);t.oncomplete=ok;t.onerror=ok}catch(e){ok()}})}
+};
+
 /* ======== Base de dados: modo demonstração (só neste browser) ======== */
 const local={
  d:LS.get('rc-db',null)||{edicoes:[ED1],destaque:1,votos:{},coms:[]},
@@ -154,7 +174,24 @@ const local={
  async votar(ed,art,ch,op){const k=ed+'|'+art+'|'+ch;const v=this.d.votos[k]=this.d.votos[k]||{};if(op==null)delete v[dev];else v[dev]=op;this.save()},
  async comentar(c){this.d.coms.push(Object.assign({},c,{id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),estado:'pendente',criado:new Date().toISOString()}));this.save()},
  async comentarios(f){return this.d.coms.filter(x=>(!f.ed||x.ed===f.ed)&&(!f.art||x.art===f.art)&&(!f.estado||x.estado===f.estado)&&(!f.tipo||x.tipo===f.tipo)).sort((a,b)=>a.criado<b.criado?1:-1)},
- async moderar(id,estado){const c=this.d.coms.find(x=>x.id===id);if(c){c.estado=estado;this.save()}}
+ async moderar(id,estado){const c=this.d.coms.find(x=>x.id===id);if(c){c.estado=estado;this.save()}},
+ L(){return this.d.subs||(this.d.subs=[])},
+ async eRedator(){return !!LS.get('rc-redator',false)},
+ async entrarRedacao(c){if(String(c).trim().toLowerCase()!==String(this.d.codigoRedacao||cfg.pinRedacao).toLowerCase())return false;LS.set('rc-redator',true);return true},
+ async redacaoInfo(){return this.d.redacao||{}},
+ async setRedacaoInfo(o){this.d.redacao=o;this.save()},
+ async codigoRedacao(){return this.d.codigoRedacao||cfg.pinRedacao},
+ async setCodigoRedacao(c){this.d.codigoRedacao=c;this.save()},
+ async limparRedatores(){LS.set('rc-redator',false)},
+ async submeter(s){const t=new Date().toISOString(),id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);this.L().push(Object.assign({},s,{id,autor:dev,estado:'recebido',nota_equipa:null,pagina:null,criado:t,atualizado:t}));this.save();return id},
+ async editarSub(id,s){const x=this.L().find(y=>y.id===id);if(!x)return;const c=Object.assign({},s);if(!prof){delete c.nota_equipa;delete c.pagina;delete c.edicao;c.estado='recebido'}Object.assign(x,c,{atualizado:new Date().toISOString()});this.save()},
+ async minhas(){return this.L().filter(x=>x.autor===dev).sort((a,b)=>a.criado<b.criado?1:-1)},
+ async subs(){return this.L().slice().sort((a,b)=>a.criado<b.criado?1:-1)},
+ async apagarSub(s){for(const f of s.fotos||[])await idb.del(f.path);this.d.subs=this.L().filter(y=>y.id!==s.id);this.save()},
+ async subirFoto(b,ext){const p=dev+'/'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)+'.'+ext;await idb.put(p,b);return p},
+ async urlsFotos(paths){const o={};for(const p of paths){const b=await idb.get(p);if(b)o[p]=URL.createObjectURL(b)}return o},
+ async blobFoto(p){return idb.get(p)},
+ async apagarFotos(paths){for(const p of paths)await idb.del(p)}
 };
 
 /* ======== Base de dados: Supabase (online, partilhada) ======== */
@@ -173,7 +210,24 @@ function supa(cl){
   async votar(ed,art,ch,op){if(op==null)chk(await cl.from('votos').delete().match({edicao:ed,artigo:art,chave:ch}));else chk(await cl.from('votos').upsert({edicao:ed,artigo:art,chave:ch,opcao:op},{onConflict:'edicao,artigo,chave,utilizador'}))},
   async comentar(c){chk(await cl.from('comentarios').insert({edicao:c.ed,artigo:c.art,tipo:c.tipo,nome:c.nome,turma:c.turma,texto:c.texto}))},
   async comentarios(f){let q=cl.from('comentarios').select('*').order('criado',{ascending:false});if(f.ed)q=q.eq('edicao',f.ed);if(f.art)q=q.eq('artigo',f.art);if(f.estado)q=q.eq('estado',f.estado);if(f.tipo)q=q.eq('tipo',f.tipo);return chk(await q).map(r=>({id:r.id,ed:r.edicao,art:r.artigo,tipo:r.tipo,nome:r.nome,turma:r.turma,texto:r.texto,estado:r.estado,criado:r.criado}))},
-  async moderar(id,estado){chk(await cl.from('comentarios').update({estado}).eq('id',id))}
+  async moderar(id,estado){chk(await cl.from('comentarios').update({estado}).eq('id',id))},
+  async uid(){const {data}=await cl.auth.getSession();return data.session?.user?.id},
+  async eRedator(){return !!chk(await cl.rpc('e_redator'))},
+  async entrarRedacao(c){return !!chk(await cl.rpc('entrar_redacao',{p_codigo:String(c)}))},
+  async redacaoInfo(){const d=chk(await cl.from('definicoes').select('valor').eq('chave','redacao').maybeSingle());try{return d?JSON.parse(d.valor):{}}catch(e){return {}}},
+  async setRedacaoInfo(o){chk(await cl.from('definicoes').upsert({chave:'redacao',valor:JSON.stringify(o)}))},
+  async codigoRedacao(){return chk(await cl.rpc('ver_codigo_redacao'))||''},
+  async setCodigoRedacao(c){chk(await cl.rpc('definir_codigo_redacao',{p_codigo:c}))},
+  async limparRedatores(){chk(await cl.rpc('limpar_redatores'))},
+  async submeter(s){return chk(await cl.from('submissoes').insert(s).select('id').single()).id},
+  async editarSub(id,s){chk(await cl.from('submissoes').update(s).eq('id',id))},
+  async minhas(){const u=await this.uid();return chk(await cl.from('submissoes').select('*').eq('autor',u).order('criado',{ascending:false}))},
+  async subs(){return chk(await cl.from('submissoes').select('*').order('criado',{ascending:false}))},
+  async apagarSub(s){const p=(s.fotos||[]).map(f=>f.path);if(p.length)await cl.storage.from('submissoes').remove(p);chk(await cl.from('submissoes').delete().eq('id',s.id))},
+  async subirFoto(b,ext){const path=(await this.uid())+'/'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)+'.'+ext;chk(await cl.storage.from('submissoes').upload(path,b,{contentType:b.type||'image/jpeg'}));return path},
+  async urlsFotos(paths){const o={};if(!paths.length)return o;chk(await cl.storage.from('submissoes').createSignedUrls(paths,3600)).forEach(x=>{if(x.signedUrl)o[x.path]=x.signedUrl});return o},
+  async blobFoto(p){return chk(await cl.storage.from('submissoes').download(p))},
+  async apagarFotos(paths){if(paths.length)chk(await cl.storage.from('submissoes').remove(paths))}
  };
 }
 
@@ -200,6 +254,7 @@ const urlArtigo=(e,a)=>(cfg.base||location.href.split('#')[0])+'#e'+e.n+(a?'-'+a
 function route(){
  const h=location.hash.slice(1);
  if(h==='painel')return painel();
+ if(h==='redacao')return redacao();
  const m=h.match(/^e(\d+)(?:-(.+))?$/);
  const e=edicao(m?Number(m[1]):dest)||eds[eds.length-1];
  if(!e){main.innerHTML='<div class="card">Ainda não há nenhuma edição. <a href="#painel">Abrir o painel do professor</a></div>';return}
@@ -219,7 +274,7 @@ function verIndice(e){
  <p class="lead">Cada artigo tem um código QR. Aponta a câmara do telemóvel, vota, reage às fotos e deixa a tua opinião. Também podes escolher o artigo aqui.</p>
  <ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}</span></span><span class="n">${a.b.map(b=>TIPOS[b.t]).filter((v,i,s)=>s.indexOf(v)===i).slice(0,2).join(' · ')}</span></a></li>`).join('')}</ul>
  ${outras.length?`<p class="note" style="margin-top:20px">Edições anteriores: ${outras.map(x=>`<a href="#e${x.n}">N.º${x.n} (${esc(x.titulo)})</a>`).join(' · ')}</p>`:''}
- <p class="note" style="margin-top:28px"><a href="#painel">Painel do professor</a>${modo==='demo'?' · modo demonstração: os votos ficam só neste aparelho':''}</p>`;
+ <p class="note" style="margin-top:28px"><a href="#redacao">Redação: enviar um artigo para o jornal</a> · <a href="#painel">Painel do professor</a>${modo==='demo'?' · modo demonstração: os votos ficam só neste aparelho':''}</p>`;
 }
 
 /* ======== Leitor: página do artigo ======== */
@@ -301,10 +356,11 @@ async function painel(){
    prof=true;painel()});
   return}
  const pend=(await db.comentarios({estado:'pendente'}).catch(()=>[])).length;
- const T=[['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['ligacao','Ligação']];
- main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${k==='moderacao'&&pend?`<span class="badge">${pend}</span>`:''}</button>`).join('')}<a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Sair do painel</a></div><div id="pane"></div>`;
+ const novos=(await db.subs().catch(()=>[])).filter(s=>s.estado==='recebido').length,bd={moderacao:pend,redacao:novos};
+ const T=[['redacao','Redação'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['ligacao','Ligação']];
+ main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Sair do painel</a></div><div id="pane"></div>`;
  main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;rasc=aba==='edicoes'?rasc:null;painel()});
- ({edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
+ ({redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
 }
 const pane=()=>$('#pane');
 const selEd=()=>`<select id="selEd" style="max-width:320px">${eds.map(e=>`<option value="${e.n}" ${e.n===(edSel||dest)?'selected':''}>N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select>`;
@@ -433,9 +489,235 @@ function pLigacao(){
  pane().innerHTML=`<div class="card"><h3>Estado</h3><p>${modo==='online'?'<span class="ok">Online:</span> votos e comentários são partilhados por todos os alunos.':modo==='erro'?'<span class="err">Erro de ligação à base de dados.</span> A usar o modo demonstração.':'<b>Modo demonstração:</b> os dados ficam só neste browser. Serve para experimentar antes de pôr online.'}</p></div>
  <div class="card"><h3>Pôr online</h3><form id="cfgf"><label for="cb">Endereço público da app (para os QR)</label><input id="cb" value="${esc(cfg.base)}" placeholder="https://jornal.exemplo.pt/"><label for="cu">Supabase · URL do projeto</label><input id="cu" value="${esc(cfg.supabaseUrl)}" placeholder="https://xxxx.supabase.co"><label for="ck">Supabase · chave pública (publishable/anon)</label><input id="ck" value="${esc(cfg.supabaseKey)}">
  <div class="row" style="margin-top:12px"><button class="btn pri" style="flex:0 0 auto">Guardar e recarregar</button>${modo==='demo'?'<button class="btn" type="button" id="limpar" style="flex:0 0 auto">Apagar dados de demonstração</button>':''}</div></form>
- <p class="note">A chave pública pode estar na página: quem protege os dados são as regras da base de dados (os alunos só votam e comentam; aprovar e importar edições exige conta de professor).</p></div>`;
+ <p class="note">A chave pública pode estar na página: quem protege os dados são as regras da base de dados (os alunos só votam e comentam; aprovar e importar edições exige conta de professor). Para a Redação, corre também <b>redacao.sql</b> no editor SQL do Supabase, depois de supabase.sql.</p></div>`;
  $('#cfgf').onsubmit=ev=>{ev.preventDefault();LS.set('rc-config',{base:$('#cb').value.trim(),supabaseUrl:$('#cu').value.trim(),supabaseKey:$('#ck').value.trim()});location.hash='inicio';location.reload()};
  const l=$('#limpar');if(l)l.onclick=()=>{if(l.dataset.ok){local.d={edicoes:[ED1],destaque:1,votos:{},coms:[]};local.save();carregar().then(painel)}else{l.dataset.ok=1;l.textContent='Confirmar: apagar votos e comentários?'}};
+}
+
+/* ======== Redação: os jornalistas enviam artigos ======== */
+const ESTADOS={recebido:['Recebido','A equipa do jornal ainda não leu.'],revisao:['Em revisão','A equipa está a ler o teu texto.'],alteracoes:['Precisa de alterações','Lê a nota da equipa, corrige e volta a enviar.'],aceite:['Aceite','Vai sair no jornal!'],publicado:['Publicado','Já saiu no jornal. Parabéns!'],recusado:['Não vai ser publicado','Lê a nota da equipa.']};
+const estTag=e=>`<span class="est est-${esc(e)}">${esc((ESTADOS[e]||[e])[0])}</span>`;
+const palavras=t=>(String(t||'').match(/\S+/g)||[]).length;
+const extDe=b=>({'image/png':'png','image/webp':'webp','image/heic':'heic','image/heif':'heif'})[b&&b.type]||'jpg';
+const MAXF=12,CAMPOS=['seccao','titulo','entrada','texto','autores','turma','creditos_fotos','notas','pt','pq','po'];
+const urlRedacao=()=>(cfg.base||location.href.split('#')[0])+'#redacao';
+const d2b=u=>{const [h,b]=u.split(','),bin=atob(b),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return new Blob([a],{type:h.slice(5).split(';')[0]})};
+const textoDe=s=>[s.titulo,s.entrada,s.texto,'Texto: '+s.autores+(s.turma?' ('+s.turma+')':''),s.creditos_fotos?'Fotografias: '+s.creditos_fotos:''].filter(Boolean).join('\n\n');
+async function baixar(blob,nome){
+ if(window.claude&&window.claude.use){try{const d=await window.claude.use('downloads');if(d){await d.save({filename:nome,data:blob});return}}catch(e){console.warn(e)}}
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+}
+/* Reduz para 2400 px e regrava em JPG: a foto fica leve e perde a localização GPS. */
+async function comprimir(file){
+ try{const bm=await createImageBitmap(file),s=Math.min(1,2400/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
+  c.width=Math.round(bm.width*s);c.height=Math.round(bm.height*s);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bm,0,0,c.width,c.height);if(bm.close)bm.close();
+  const b=await new Promise(ok=>c.toBlob(ok,'image/jpeg',.88));if(b)return b}catch(e){}
+ if(file.size<=10e6&&/^image\//.test(file.type))return file;
+ throw new Error('imagem');
+}
+function secoes(){const s=new Set(['Notícias','Reportagem','Entrevista','Crónica','Ambiente','Desporto Escolar','Dias especiais','Escrita criativa','Sugestões']);eds.forEach(e=>e.artigos.forEach(a=>{if(a.s)s.add(a.s)}));return [...s]}
+function novoForm(){const r=LS.get('rc-rascunho',null)||{},o={fotos:[],removidas:[],autorizacao:false};CAMPOS.forEach(k=>o[k]=String(r[k]||''));return o}
+let rForm=null,rAba='novo',rMsg='';
+
+async function redacao(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Redação';
+ let info={},ok=false,demoCod='';
+ try{[info,ok]=await Promise.all([db.redacaoInfo(),db.eRedator()]);if(modo!=='online')demoCod=await db.codigoRedacao()}catch(e){console.warn(e)}
+ if(location.hash!=='#redacao')return;
+ if(!ok){
+  main.innerHTML=`<span class="tag">Clube de Jornalismo</span>
+  <h2 class="t">Redação do Repórter da Calheta</h2>
+  <p class="lead">Escreveste uma notícia, uma reportagem ou uma crónica para o jornal? Envia-a aqui, com as fotografias. O código da redação pede-se ao professor responsável pelo jornal.</p>
+  <div class="card" style="max-width:420px"><form id="rlogin"><label for="rc">Código da redação</label><input id="rc" autocomplete="off" autocapitalize="off" required>
+  <div class="row" style="margin-top:12px"><button class="btn pri" style="flex:0 0 auto">Entrar</button><span class="msg err"></span></div>
+  ${demoCod?`<p class="note">Modo demonstração: o código é <b>${esc(demoCod)}</b>.</p>`:''}</form></div>`;
+  $('#rlogin').onsubmit=async ev=>{ev.preventDefault();const m=$('#rlogin .msg'),b=$('#rlogin button');b.disabled=true;
+   try{if(await db.entrarRedacao($('#rc').value)){redacao();return}m.textContent='Código errado.'}catch(e){console.warn(e);m.textContent='Não foi possível entrar. Tenta outra vez.'}b.disabled=false};
+  return}
+ let minhas=[];try{minhas=await db.minhas()}catch(e){console.warn(e)}
+ if(location.hash!=='#redacao')return;
+ const prazo=info.prazo?new Date(info.prazo+'T12:00'):null,ed=rForm&&rForm.id;
+ main.innerHTML=`<span class="tag">Redação${info.edicao?' · N.º'+esc(info.edicao):''}</span>
+ <h2 class="t">${ed?'Corrige o teu artigo':'Envia o teu artigo'}</h2>
+ <p class="lead">${info.edicao?`Estamos a preparar o n.º${esc(info.edicao)}. `:''}${prazo&&!isNaN(prazo)?`Entrega até <b>${esc(prazo.toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long'}))}</b>. `:''}${info.msg?esc(info.msg):'A equipa do jornal lê tudo antes de publicar.'}</p>
+ <div class="tabs"><button class="btn sm ${rAba==='novo'?'on':''}" data-raba="novo">${ed?'Corrigir artigo':'Novo artigo'}</button><button class="btn sm ${rAba==='meus'?'on':''}" data-raba="meus">Os meus artigos${minhas.length?' ('+minhas.length+')':''}</button><a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Voltar ao jornal</a></div>
+ <div id="rpane"></div>`;
+ main.querySelectorAll('[data-raba]').forEach(b=>b.onclick=()=>{rAba=b.dataset.raba;redacao()});
+ rAba==='meus'?rMeus(minhas):rNovo(info);
+}
+
+function rNovo(info){
+ const rp=$('#rpane');if(!rForm)rForm=novoForm();const f=rForm;
+ if(info.aberta===false&&!f.id){rp.innerHTML='<div class="card">A redação está fechada: o próximo número já está a ser montado. Se tens um texto urgente, fala com o professor responsável pelo jornal.</div>';return}
+ rp.innerHTML=`<form id="rf" novalidate>
+ ${f.id&&f.nota_equipa?`<div class="notaeq"><b>Nota da equipa:</b> ${esc(f.nota_equipa)}</div>`:''}
+ <div class="card"><h3>O artigo</h3>
+  <label for="r-s" style="margin-top:0">Secção</label><input id="r-s" name="seccao" list="r-sl" maxlength="40" value="${esc(f.seccao)}" placeholder="ex.: Notícias"><datalist id="r-sl">${secoes().map(s=>`<option value="${esc(s)}">`).join('')}</datalist>
+  <label for="r-t">Título</label><input id="r-t" name="titulo" maxlength="140" value="${esc(f.titulo)}">
+  <label for="r-e">Entrada (opcional)</label><textarea id="r-e" name="entrada" maxlength="400" style="min-height:64px" placeholder="Uma ou duas frases que resumem o artigo">${esc(f.entrada)}</textarea>
+  <label for="r-x">Texto</label><textarea id="r-x" name="texto" maxlength="20000" style="min-height:280px">${esc(f.texto)}</textarea>
+  <p class="note" id="r-pal"></p></div>
+ <div class="card"><h3>Quem escreveu</h3>
+  <div class="row"><div style="flex:3 1 220px"><label for="r-a" style="margin-top:0">Nomes como devem sair no jornal</label><input id="r-a" name="autores" maxlength="200" value="${esc(f.autores)}" placeholder="ex.: Ana S. e Rui M."></div><div style="flex:1 1 120px"><label for="r-tu" style="margin-top:0">Turma ou cargo</label><input id="r-tu" name="turma" maxlength="40" value="${esc(f.turma)}" placeholder="ex.: 8.º A"></div></div></div>
+ <div class="card"><h3>Fotografias</h3>
+  <div class="thumbs" id="r-th"></div>
+  <button type="button" class="btn" id="r-fb" style="margin-top:12px">+ Acrescentar fotos</button><input id="r-f" type="file" accept="image/*" multiple class="hide">
+  <p class="note">Até ${MAXF} fotos, pela ordem que sugeres para a página: é essa a numeração que os leitores usam para votar na foto preferida.</p>
+  <label for="r-c">Fotografias de (créditos)</label><input id="r-c" name="creditos_fotos" maxlength="120" value="${esc(f.creditos_fotos)}">
+  <label class="chk"><input type="checkbox" id="r-au" ${f.autorizacao?'checked':''}> As pessoas que aparecem nas fotos têm autorização de imagem da escola, ou não se lhes vê a cara.</label></div>
+ <div class="card"><h3>Pergunta para os leitores (opcional)</h3>
+  <p class="note" style="margin-top:0">Aparece na Participa, na página que o QR do teu artigo abre.</p>
+  <label for="r-pt">Tipo</label><select id="r-pt" name="pt"><option value="">Sem pergunta</option><option value="sondagem" ${f.pt==='sondagem'?'selected':''}>Votação (opinião)</option><option value="quiz" ${f.pt==='quiz'?'selected':''}>Quiz (há uma resposta certa)</option></select>
+  <div id="r-pw" class="${f.pt?'':'hide'}"><label for="r-pq">Pergunta</label><input id="r-pq" name="pq" maxlength="160" value="${esc(f.pq)}"><label for="r-po">Opções, uma por linha</label><textarea id="r-po" name="po" maxlength="600" placeholder="No quiz, põe * antes da resposta certa">${esc(f.po)}</textarea></div></div>
+ <div class="card"><label for="r-n" style="margin-top:0">Recado para a equipa do jornal (opcional)</label><textarea id="r-n" name="notas" maxlength="600" style="min-height:64px">${esc(f.notas)}</textarea></div>
+ <div class="row"><button class="btn pri" style="flex:0 0 auto">${f.id?'Enviar correções':'Enviar para a redação'}</button>${f.id?'<button class="btn" type="button" id="r-cancel" style="flex:0 0 auto">Cancelar</button>':''}<span class="msg" id="r-msg"></span></div>
+ <p class="note">Nos nomes, só o primeiro nome e a inicial. Não escrevas moradas, telefones nem coisas privadas sobre outras pessoas.</p></form>`;
+ const form=$('#rf'),m=$('#r-msg'),T=s=>String(s||'').trim();
+ const sync=()=>{const fd=new FormData(form);CAMPOS.forEach(k=>f[k]=String(fd.get(k)??''));f.autorizacao=$('#r-au').checked;form.querySelectorAll('[data-leg]').forEach(x=>{const o=f.fotos[x.dataset.leg];if(o)o.legenda=x.value})};
+ const thumbs=()=>{$('#r-th').innerHTML=f.fotos.map((x,i)=>`<div class="th">${x.url?`<img src="${esc(x.url)}" alt="Foto ${i+1}">`:'<div class="ph">sem pré-visualização</div>'}<div class="thb"><b>Foto ${i+1}</b>${i?`<button type="button" class="btn sm" data-up="${i}" aria-label="Passar a foto ${i+1} para antes">←</button>`:''}<button type="button" class="btn sm" data-rmf="${i}" aria-label="Retirar a foto ${i+1}">×</button></div><input data-leg="${i}" maxlength="160" placeholder="Legenda" aria-label="Legenda da foto ${i+1}" value="${esc(x.legenda||'')}"></div>`).join('')||'<p class="note" style="margin:0">Ainda sem fotos.</p>'};
+ const pal=()=>{const n=palavras($('#r-x').value);$('#r-pal').textContent=n+(n===1?' palavra':' palavras')+'. Como referência, uma página com 2 ou 3 fotos leva cerca de 300 a 400 palavras.'};
+ const onIn=ev=>{sync();if(ev.target.id==='r-x')pal();if(ev.target.id==='r-pt')$('#r-pw').classList.toggle('hide',!f.pt);if(!f.id)LS.set('rc-rascunho',Object.fromEntries(CAMPOS.map(k=>[k,f[k]])))};
+ form.addEventListener('input',onIn);form.addEventListener('change',onIn);
+ thumbs();pal();
+ $('#r-fb').onclick=()=>$('#r-f').click();
+ $('#r-f').onchange=async()=>{sync();const fs=[...$('#r-f').files];$('#r-f').value='';let erro='';
+  for(const file of fs){if(f.fotos.length>=MAXF){erro='Máximo de '+MAXF+' fotos.';break}
+   m.className='msg';m.textContent='A preparar '+file.name+'…';
+   try{const blob=await comprimir(file);f.fotos.push({blob,url:URL.createObjectURL(blob),legenda:'',nome:file.name})}catch(e){erro=file.name+': não consegui abrir esta imagem. Experimenta em JPG ou PNG.'}}
+  m.className=erro?'msg err':'msg';m.textContent=erro;thumbs()};
+ $('#r-th').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;sync();
+  if(b.dataset.rmf){const [x]=f.fotos.splice(Number(b.dataset.rmf),1);if(x&&x.path)f.removidas.push(x.path)}
+  if(b.dataset.up){const i=Number(b.dataset.up);[f.fotos[i-1],f.fotos[i]]=[f.fotos[i],f.fotos[i-1]]}
+  thumbs()};
+ const cc=$('#r-cancel');if(cc)cc.onclick=()=>{rForm=null;rAba='meus';redacao()};
+ form.onsubmit=async ev=>{ev.preventDefault();sync();const err=t=>{m.className='msg err';m.textContent=t};
+  if(T(f.titulo).length<3)return err('Falta o título.');
+  if(palavras(f.texto)<20)return err('O texto está muito curto.');
+  if(!T(f.autores))return err('Escreve quem escreveu o artigo.');
+  if(f.fotos.length&&!f.autorizacao)return err('Confirma a autorização de imagem das fotos.');
+  let pergunta=null;
+  if(f.pt){const os=f.po.split('\n').map(T).filter(Boolean);if(!T(f.pq)||os.length<2)return err('A pergunta precisa de texto e de pelo menos duas opções.');
+   pergunta={t:f.pt,q:T(f.pq),o:os.slice(0,8).map(o=>o.replace(/^\*\s*/,''))};
+   if(f.pt==='quiz'){const c=os.slice(0,8).findIndex(o=>o.startsWith('*'));if(c<0)return err('No quiz, marca a resposta certa com * no início da linha.');pergunta.c=c}}
+  const btn=form.querySelector('button.pri');btn.disabled=true;
+  try{const fotos=[];let k=0;
+   for(const x of f.fotos){if(!x.path){m.className='msg';m.textContent=`A enviar a foto ${++k}…`;x.path=await db.subirFoto(x.blob,extDe(x.blob))}fotos.push({path:x.path,legenda:T(x.legenda),nome:x.nome||''})}
+   const dados={seccao:T(f.seccao),titulo:T(f.titulo),entrada:T(f.entrada),texto:T(f.texto),autores:T(f.autores),turma:T(f.turma),creditos_fotos:T(f.creditos_fotos),notas:T(f.notas),pergunta,fotos,autorizacao:!!f.autorizacao};
+   if(f.id){await db.editarSub(f.id,dados);if(f.removidas.length)await db.apagarFotos(f.removidas).catch(e=>console.warn(e))}
+   else{dados.edicao=Number(info.edicao)||null;await db.submeter(dados);LS.set('rc-rascunho',null)}
+   rMsg=f.id?'Correções enviadas. A equipa vai voltar a ler.':'Recebido, obrigado! Acompanha aqui o estado do teu artigo.';rForm=null;rAba='meus';redacao()}
+  catch(e){console.warn(e);err('Não foi possível enviar. Verifica a ligação à internet e tenta outra vez.');btn.disabled=false}};
+}
+
+function rMeus(lista){
+ const rp=$('#rpane');
+ rp.innerHTML=`${rMsg?`<p class="ok">${esc(rMsg)}</p>`:''}${lista.map(s=>{const nf=(s.fotos||[]).length;return `<div class="card"><div class="row" style="align-items:center"><div style="flex:3 1 220px"><span class="lt">${esc(s.titulo)}</span><span class="ls">${esc(s.seccao||'Sem secção')} · ${palavras(s.texto)} palavras · ${nf} ${nf===1?'foto':'fotos'} · enviado a ${esc(new Date(s.criado).toLocaleDateString('pt-PT'))}</span></div><div style="flex:0 0 auto">${estTag(s.estado)}</div></div>
+ <p class="note">${esc((ESTADOS[s.estado]||['',''])[1])}${(s.estado==='aceite'||s.estado==='publicado')&&s.edicao?' N.º'+esc(s.edicao)+(s.pagina?', pág. '+esc(s.pagina):'')+'.':''}</p>
+ ${s.nota_equipa?`<div class="notaeq"><b>Nota da equipa:</b> ${esc(s.nota_equipa)}</div>`:''}
+ ${s.estado==='recebido'||s.estado==='alteracoes'?`<button class="btn sm" data-red="${esc(s.id)}" style="margin-top:12px">Corrigir</button>`:''}</div>`}).join('')||'<p class="note">Ainda não enviaste nenhum artigo deste aparelho.</p>'}
+ <p class="note">Os teus artigos ficam ligados a este telemóvel ou computador. Podes corrigi-los enquanto a equipa não os aceitar.</p>`;
+ rMsg='';
+ rp.onclick=async ev=>{const b=ev.target.closest('[data-red]');if(!b)return;const s=lista.find(x=>x.id===b.dataset.red);if(!s)return;b.disabled=true;
+  let urls={};try{urls=await db.urlsFotos((s.fotos||[]).map(x=>x.path))}catch(e){console.warn(e)}
+  const p=s.pergunta||{};
+  rForm={id:s.id,nota_equipa:s.nota_equipa,seccao:s.seccao||'',titulo:s.titulo||'',entrada:s.entrada||'',texto:s.texto||'',autores:s.autores||'',turma:s.turma||'',creditos_fotos:s.creditos_fotos||'',notas:s.notas||'',autorizacao:!!s.autorizacao,pt:p.t||'',pq:p.q||'',po:(p.o||[]).map((o,i)=>(p.t==='quiz'&&i===p.c?'*':'')+o).join('\n'),fotos:(s.fotos||[]).map(x=>Object.assign({},x,{url:urls[x.path]||''})),removidas:[]};
+  rAba='novo';redacao()};
+}
+
+/* --- Painel: Redação (rever artigos e fechar a edição) --- */
+let rFiltro='tratar',rAberto=null;
+const FILTROS={tratar:['Por tratar',s=>s.estado==='recebido'||s.estado==='revisao'],alteracoes:['À espera do autor',s=>s.estado==='alteracoes'],aceite:['Aceites',s=>s.estado==='aceite'],publicado:['Publicados',s=>s.estado==='publicado'],recusado:['Recusados',s=>s.estado==='recusado'],todos:['Todos',()=>true]};
+function detalhe(s,urls){
+ const fs=s.fotos||[],p=s.pergunta;
+ return `<div class="art">
+ ${s.entrada?`<p style="margin-top:0"><b>${esc(s.entrada)}</b></p>`:''}
+ <div class="texto">${esc(s.texto)}</div>
+ ${fs.length?`<h3 style="margin-top:16px">Fotografias${s.creditos_fotos?` <span class="note">· ${esc(s.creditos_fotos)}</span>`:''}</h3>
+ <div class="thumbs">${fs.map((f,i)=>`<div class="th">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="Foto ${i+1}">`:'<div class="ph">sem pré-visualização</div>'}<b>Foto ${i+1}</b>${f.legenda?`<span class="ls">${esc(f.legenda)}</span>`:''}</div>`).join('')}</div>
+ <p class="note">${s.autorizacao?'O autor confirmou a autorização de imagem.':'<span class="err">O autor não confirmou a autorização de imagem.</span>'}</p>`:''}
+ ${p&&Array.isArray(p.o)?`<p><b>Pergunta para os leitores (${p.t==='quiz'?'quiz':'votação'}):</b> ${esc(p.q)}<br><span class="note">${p.o.map((o,i)=>esc(o)+(p.t==='quiz'&&i===p.c?' ✓':'')).join(' · ')}</span></p>`:''}
+ ${s.notas?`<div class="notaeq"><b>Recado do autor:</b> ${esc(s.notas)}</div>`:''}
+ <div class="row" style="margin-top:14px"><div style="flex:1 1 200px"><label for="m-e">Estado</label><select id="m-e">${Object.entries(ESTADOS).map(([k,[l]])=>`<option value="${k}" ${s.estado===k?'selected':''}>${esc(l)}</option>`).join('')}</select></div>
+ <div style="flex:0 1 110px"><label for="m-n">Edição N.º</label><input id="m-n" type="number" min="1" value="${esc(s.edicao??'')}"></div>
+ <div style="flex:0 1 100px"><label for="m-p">Página</label><input id="m-p" maxlength="10" value="${esc(s.pagina||'')}"></div></div>
+ <label for="m-x">Nota para o autor (aparece-lhe em "Os meus artigos")</label><textarea id="m-x" maxlength="800" style="min-height:64px" placeholder="ex.: Falta dizer quando foi a visita. Corta o 3.º parágrafo.">${esc(s.nota_equipa||'')}</textarea>
+ <div class="row" style="margin-top:10px"><button class="btn pri sm" data-guardar="${esc(s.id)}" style="flex:0 0 auto">Guardar</button><button class="btn sm" data-copiar="${esc(s.id)}" style="flex:0 0 auto">Copiar texto</button>${fs.length?`<button class="btn sm" data-zip="${esc(s.id)}" style="flex:0 0 auto">Descarregar fotos (ZIP)</button>`:''}<button class="btn sm" data-apagar="${esc(s.id)}" style="flex:0 0 auto">${confirmar==='sub'+s.id?'Confirmar apagar?':'Apagar'}</button><span class="msg" id="m-msg"></span></div></div>`;
+}
+function edicaoDe(lista,n){
+ const ex=edicao(n),ids=new Set();
+ return {n,titulo:ex?ex.titulo:'',ano:ex?ex.ano:(eds.length?eds[eds.length-1].ano:''),artigos:lista.map(s=>{let id=slug(s.titulo),k=2;while(ids.has(id))id=slug(s.titulo)+'-'+k++;ids.add(id);
+  const b=[{t:'reacoes'}],p=s.pergunta;if((s.fotos||[]).length)b.push({t:'fotos',n:s.fotos.length});
+  if(p&&Array.isArray(p.o)&&(p.t==='sondagem'||p.t==='quiz'))b.push(p.t==='quiz'?{t:'quiz',q:p.q,o:p.o,c:p.c}:{t:'sondagem',q:p.q,o:p.o});
+  b.push({t:'comentario',q:'Deixa uma mensagem aos autores'});
+  return {id,p:s.pagina||'',s:s.seccao||'Notícias',ti:s.titulo,b}})};
+}
+async function pacote(lista,n,nome){
+ if(!window.JSZip)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+ const z=new window.JSZip(),pad=x=>String(x).padStart(2,'0');
+ let md=`# Repórter da Calheta n.º${n}\n\nArtigos aceites, por ordem de página.\n\n`;
+ for(const s of lista){
+  const pre=(s.pagina?'p'+pad(s.pagina)+'-':'')+slug(s.titulo),p=s.pergunta,fs=s.fotos||[];
+  md+=`## ${s.pagina?'pág. '+s.pagina+' · ':''}${s.seccao||'Sem secção'} · ${s.titulo}\n\n${s.entrada?'**'+s.entrada+'**\n\n':''}${s.texto}\n\nTexto: ${s.autores}${s.turma?' ('+s.turma+')':''}\n`;
+  if(fs.length){md+=`\nFotografias${s.creditos_fotos?' de '+s.creditos_fotos:''}:\n`;
+   for(let i=0;i<fs.length;i++){const f=fs[i],fn=`${pre}-foto${pad(i+1)}.${f.path.split('.').pop()}`;md+=`- Foto ${i+1}: ${fn}${f.legenda?' · '+f.legenda:''}\n`;const b=await db.blobFoto(f.path).catch(()=>null);if(b)z.file('fotos/'+fn,b)}}
+  if(p&&Array.isArray(p.o))md+=`\nPergunta para os leitores (${p.t==='quiz'?'quiz':'votação'}): ${p.q}\nOpções: ${p.o.map((o,i)=>o+(p.t==='quiz'&&i===p.c?' (certa)':'')).join(' / ')}\n`;
+  if(s.notas)md+=`\nRecado do autor: ${s.notas}\n`;
+  md+='\n---\n\n';
+ }
+ z.file('artigos.md',md);
+ z.file('participa.json',JSON.stringify(edicaoDe(lista,n),null,1));
+ await baixar(await z.generateAsync({type:'blob'}),nome);
+}
+async function pRedacao(){
+ const [lista,info,cod]=await Promise.all([db.subs().catch(e=>{console.warn(e);return []}),db.redacaoInfo().catch(()=>({})),db.codigoRedacao().catch(()=>'')]);
+ const proxN=Number(info.edicao)||(eds.reduce((m,e)=>Math.max(m,e.n),0)+1);
+ const vis=lista.filter(FILTROS[rFiltro][1]),ab=vis.find(s=>s.id===rAberto);
+ const urls=ab&&(ab.fotos||[]).length?await db.urlsFotos(ab.fotos.map(f=>f.path)).catch(()=>({})):{};
+ const dt=s=>esc(new Date(s.criado).toLocaleDateString('pt-PT',{day:'numeric',month:'short'}));
+ pane().innerHTML=`
+ <div class="card"><h3>Receção de artigos</h3><form id="rcfg">
+  <div class="row"><div style="flex:0 1 120px"><label for="ri-n">Próxima edição</label><input id="ri-n" type="number" min="1" value="${esc(proxN)}"></div>
+  <div style="flex:0 1 190px"><label for="ri-p">Prazo de entrega</label><input id="ri-p" type="date" value="${esc(info.prazo||'')}"></div>
+  <div><label for="ri-c">Código da redação</label><input id="ri-c" value="${esc(cod)}" autocomplete="off"></div></div>
+  <label for="ri-m">Recado para os jornalistas (opcional)</label><input id="ri-m" maxlength="200" value="${esc(info.msg||'')}" placeholder="ex.: Procuramos reportagens sobre o Natal na escola">
+  <label class="chk"><input type="checkbox" id="ri-a" ${info.aberta!==false?'checked':''}> Receção aberta (desliga quando o jornal já está a ser montado)</label>
+  <div class="row" style="margin-top:12px"><button class="btn pri sm" style="flex:0 0 auto">Guardar</button><button type="button" class="btn sm" id="ri-l" style="flex:0 0 auto">Copiar ligação</button><button type="button" class="btn sm" id="ri-q" style="flex:0 0 auto">QR da redação (PNG)</button><button type="button" class="btn sm" id="ri-r" style="flex:0 0 auto">${confirmar==='revogar'?'Confirmar: tirar o acesso?':'Tirar o acesso a todos'}</button><span class="msg" id="ri-msg"></span></div>
+ </form><p class="note">Os jornalistas abrem <b>${esc(urlRedacao())}</b> e entram com o código. Quem já entrou mantém o acesso mesmo que mudes o código; no fim do ano letivo, usa "Tirar o acesso a todos".</p></div>
+ <div class="tabs" style="margin-top:18px">${Object.entries(FILTROS).map(([k,[l,fn]])=>`<button class="btn sm ${rFiltro===k?'on':''}" data-filtro="${k}">${l}${k!=='todos'?' ('+lista.filter(fn).length+')':''}</button>`).join('')}</div>
+ ${vis.map(s=>{const nf=(s.fotos||[]).length,o=s.id===rAberto;return `<div class="card"><div class="row" style="align-items:center"><div style="flex:3 1 260px"><span class="lt">${esc(s.titulo)}</span><span class="ls">${esc(s.seccao||'Sem secção')} · ${esc(s.autores)}${s.turma?' ('+esc(s.turma)+')':''} · ${palavras(s.texto)} palavras · ${nf} ${nf===1?'foto':'fotos'} · ${dt(s)}</span></div>
+  <div style="flex:0 0 auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">${s.edicao?`<span class="note" style="margin:0">N.º${esc(s.edicao)}${s.pagina?' · pág. '+esc(s.pagina):''}</span>`:''}${estTag(s.estado)}<button class="btn sm" data-abrir="${esc(s.id)}">${o?'Fechar':'Abrir'}</button></div></div>
+  ${o?detalhe(s,urls):''}</div>`}).join('')||`<p class="note">${rFiltro==='tratar'?'Não há artigos por tratar.':'Nada aqui.'}</p>`}
+ <div class="card"><h3>Fechar a edição</h3>
+  <div class="row" style="align-items:end"><div style="flex:0 1 120px"><label for="x-n">Edição N.º</label><input id="x-n" type="number" min="1" value="${esc(proxN)}"></div>
+  <div style="flex:3 1 320px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" id="x-zip">Descarregar pacote (ZIP)</button><button class="btn sm" id="x-ed">Criar edição na Participa</button><button class="btn sm" id="x-pub">Marcar aceites como publicados</button></div></div>
+  <p class="note" id="x-msg">Junta os artigos <b>aceites</b> dessa edição, por ordem de página: os textos (artigos.md), as fotos com o nome da página e o índice para a Participa, já com as perguntas dos jornalistas. Podes dar o pacote ao Claude para montar a edição no Canva.</p></div>`;
+ const msg=(id,t,ok)=>{const el=$(id);if(el){el.className='msg '+(ok?'ok':'err');el.textContent=t}};
+ $('#rcfg').onsubmit=async ev=>{ev.preventDefault();const c=$('#ri-c').value.trim();
+  if(c.length<6)return msg('#ri-msg','O código precisa de pelo menos 6 caracteres.');
+  try{await db.setRedacaoInfo({edicao:Number($('#ri-n').value)||null,prazo:$('#ri-p').value||'',msg:$('#ri-m').value.trim(),aberta:$('#ri-a').checked});if(c!==cod)await db.setCodigoRedacao(c);msg('#ri-msg','Guardado.',1)}
+  catch(e){console.warn(e);msg('#ri-msg','Não foi possível guardar.')}};
+ $('#ri-l').onclick=async ev=>{try{await navigator.clipboard.writeText(urlRedacao());ev.target.textContent='Copiada!'}catch(e){ev.target.textContent=urlRedacao()}};
+ $('#ri-q').onclick=async()=>{const src=qrImg(urlRedacao(),'Redação','Envia o teu artigo para o jornal');if(src)await baixar(d2b(src),'QR-redacao.png')};
+ $('#ri-r').onclick=async()=>{if(confirmar!=='revogar'){confirmar='revogar';return pRedacao()}confirmar=null;let ok=true;try{await db.limparRedatores()}catch(e){console.warn(e);ok=false}await pRedacao();msg('#ri-msg',ok?'Feito: todos vão precisar do código para voltar a entrar.':'Não foi possível tirar o acesso.',ok)};
+ const aceites=()=>{const n=Number($('#x-n').value);return [n,lista.filter(s=>s.estado==='aceite'&&Number(s.edicao)===n).sort((a,b)=>(parseInt(a.pagina)||999)-(parseInt(b.pagina)||999))]};
+ const vazio=n=>msg('#x-msg',`Ainda não há artigos aceites para o n.º${n}. Abre cada artigo, escolhe "Aceite" e indica a edição e a página.`);
+ $('#x-zip').onclick=async ev=>{const [n,l]=aceites();if(!l.length)return vazio(n);ev.target.disabled=true;msg('#x-msg','A preparar o pacote…',1);
+  try{await pacote(l,n,'Reporter-n'+n+'-artigos.zip');msg('#x-msg',`Pacote com ${l.length} ${l.length===1?'artigo':'artigos'} pronto.`,1)}catch(e){console.warn(e);msg('#x-msg','Não foi possível criar o pacote.')}ev.target.disabled=false};
+ $('#x-ed').onclick=()=>{const [n,l]=aceites();if(!l.length)return vazio(n);const novo=edicaoDe(l,n),ex=edicao(n);
+  if(ex){rasc=JSON.parse(JSON.stringify(ex));const ids=new Set(rasc.artigos.map(a=>a.id));novo.artigos.forEach(a=>{if(!ids.has(a.id))rasc.artigos.push(a)});rasc.artigos.sort((a,b)=>(parseInt(a.p)||999)-(parseInt(b.p)||999))}
+  else rasc=Object.assign(novo,{novo:true});
+  aba='edicoes';painel()};
+ $('#x-pub').onclick=async ev=>{const [n,l]=aceites();if(!l.length)return vazio(n);ev.target.disabled=true;
+  try{for(const s of l)await db.editarSub(s.id,{estado:'publicado'});painel()}catch(e){console.warn(e);msg('#x-msg','Não foi possível atualizar.');ev.target.disabled=false}};
+ pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.filtro){rFiltro=d.filtro;rAberto=null;confirmar=null;return pRedacao()}
+  if(d.abrir){rAberto=rAberto===d.abrir?null:d.abrir;confirmar=null;return pRedacao()}
+  const s=lista.find(x=>x.id===(d.guardar||d.copiar||d.zip||d.apagar));if(!s)return;
+  if(d.guardar){b.disabled=true;try{await db.editarSub(s.id,{estado:$('#m-e').value,edicao:Number($('#m-n').value)||null,pagina:$('#m-p').value.trim()||null,nota_equipa:$('#m-x').value.trim()||null});painel()}catch(e){console.warn(e);msg('#m-msg','Não foi possível guardar.');b.disabled=false}}
+  if(d.copiar){try{await navigator.clipboard.writeText(textoDe(s));b.textContent='Copiado!'}catch(e){b.textContent='Não deu para copiar'}}
+  if(d.zip){b.disabled=true;try{await pacote([s],s.edicao||proxN,'fotos-'+slug(s.titulo)+'.zip')}catch(e){console.warn(e);msg('#m-msg','Não foi possível criar o ZIP.')}b.disabled=false}
+  if(d.apagar){if(confirmar!=='sub'+s.id){confirmar='sub'+s.id;return pRedacao()}confirmar=null;rAberto=null;try{await db.apagarSub(s)}catch(e){console.warn(e)}painel()}
+ };
 }
 
 window.addEventListener('hashchange',()=>{if(location.hash!=='#painel')main.classList.remove('wide')});
