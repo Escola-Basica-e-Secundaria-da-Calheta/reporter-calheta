@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Repórter da Calheta · Participa</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ffd84d">
+<link rel="apple-touch-icon" href="icone-192.png">
+<link rel="icon" href="icone-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Kalam:wght@700&family=Fredoka:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
@@ -128,7 +132,60 @@ body.tvmode header.mast{display:none}body.tvmode .wrap{max-width:none;padding:0}
 .tvs .opt{min-height:auto;font-size:inherit;padding:.45em .8em}
 .tvqr{display:grid;grid-template-columns:auto 1fr;gap:4vw;align-items:center}.tvqr img{width:min(34vw,500px);background:#fff;border-radius:12px}
 @media(max-width:600px){.tvqr{grid-template-columns:1fr}}
-@media print{header.mast .meta,.noprint{display:none!important}.card{break-inside:avoid;border-color:#ccc}body{font-size:11pt}}
+
+/* v1.3 */
+.login{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:clamp(24px,5vw,56px);align-items:start;max-width:960px;margin:20px auto 0}
+.login-card{margin:0;padding:clamp(20px,4vw,30px);background:var(--bg);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.login-t{font-size:clamp(28px,5vw,36px);margin:14px 0 4px}
+.pwbox{position:relative}.pwbox input{padding-right:96px}
+.pwv{position:absolute;right:6px;top:50%;transform:translateY(-50%);min-height:36px;padding:0 10px;border:0;border-radius:8px;background:none;color:var(--blue);font:600 15px "Source Sans 3",sans-serif;cursor:pointer}
+.btn.full{width:100%;margin-top:18px}.caps{margin:6px 0 0;color:var(--bad)}
+.login-aside{padding-top:8px}.login-aside h3{font-size:22px}
+.login-aside ul{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:12px}
+.login-aside li{position:relative;padding-left:30px;line-height:1.4}.login-aside li::before{content:"✓";position:absolute;left:0;top:-1px;width:22px;height:22px;border-radius:50%;background:var(--hl);color:#16181d;font:700 14px/22px "Source Sans 3",sans-serif;text-align:center}
+@media(max-width:780px){.login{grid-template-columns:1fr}.login-aside{order:2}}
+
+.list li a.lido .lt{color:var(--mute)}.vist{color:var(--ok);font-weight:700}
+.passa-h{display:flex;gap:14px;align-items:center}.selo0{width:64px;height:64px;border-radius:50%;border:3px dashed var(--line);display:grid;place-items:center;font:600 26px "Fredoka",sans-serif;color:var(--mute);flex:none}
+.carimbos{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}.carimbos span{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line)}.carimbos span.on{background:var(--hl);border-color:var(--ink)}
+.ouvir{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 10px}.ouvir .vel{display:flex;gap:6px;align-items:center;margin:0;font-size:14px;font-weight:400}.ouvir select{width:auto;padding:4px 8px;font-size:14px}
+details>summary{cursor:pointer}
+.accb{min-height:28px;padding:0 10px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:600 13px "Source Sans 3",sans-serif;cursor:pointer;margin:-4px 0}.accb b{font-family:"Fredoka",sans-serif;font-size:14px}.accb:hover{border-color:var(--ink)}
+.meta{align-items:center}
+.accp{position:fixed;top:12px;right:10px;z-index:51;width:min(340px,calc(100vw - 20px));margin:0;box-shadow:0 6px 30px rgba(0,0,0,.25);background:var(--bg)}
+.accp .lbl{margin:10px 0 4px;font-weight:600;font-size:15px}.seg{display:flex;gap:6px;flex-wrap:wrap}.seg .btn.on{background:var(--hls);border-color:var(--ink)}
+body.tvmode .accb{display:none}
+html[data-fs="2"] .wrap,html[data-fs="2"] header.mast{zoom:1.15}html[data-fs="3"] .wrap,html[data-fs="3"] header.mast{zoom:1.32}
+html[data-font=leg] :is(body,h2,h3,h4,.tag,.btn,.opt,input,select,textarea,button,.lt,.pg,.kpi b,.atalhos b){font-family:"Atkinson Hyperlegible",system-ui,sans-serif!important;letter-spacing:.01em;word-spacing:.08em}
+html[data-font=leg] body{line-height:1.7}
+html[data-contraste="1"]{--mute:var(--ink);--line:var(--ink);--paper:var(--bg);--blue:light-dark(#0b3d91,#c3dbff);--hls:light-dark(#ffe066,#5c4a00)}
+html[data-contraste="1"] .card,html[data-contraste="1"] .opt{border-width:2px}
+.sopa{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:2px;max-width:560px;user-select:none}
+.sopa button{aspect-ratio:1;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 clamp(13px,3.6vw,20px) "Source Sans 3",sans-serif;padding:0;border-radius:4px;cursor:pointer}
+.sopa button.ach{background:var(--hls);border-color:var(--ink)}.sopa button.sel{outline:3px solid var(--blue);outline-offset:-2px}
+.pzw{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:6px 14px;font-weight:600}.pzw li.ok{text-decoration:line-through;color:var(--ok)}
+.cruz-w{overflow-x:auto}.cruz{display:grid;grid-template-columns:repeat(var(--c),40px);gap:0;width:max-content}
+.cz{position:relative;width:40px;height:40px;margin:0;border:1px solid var(--ink);background:var(--bg)}.cz.x{border-color:transparent;background:none}
+.cz i{position:absolute;top:1px;left:3px;font:600 11px "Source Sans 3",sans-serif;font-style:normal;color:var(--mute)}
+.cz input{width:100%;height:100%;border:0;border-radius:0;padding:8px 0 0;text-align:center;text-transform:uppercase;font:600 20px "Source Sans 3",sans-serif;background:transparent}.cz input.mal{color:var(--bad);background:light-dark(#fde8e6,#3a1916)}
+.pistas2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}.pistas2 h4{margin:0 0 4px;font:600 17px "Fredoka",sans-serif}.pistas2 ol{list-style:none;padding:0;margin:0;display:grid;gap:4px}
+.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}.gf{margin:0;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.gf img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--bg)}.gf figcaption{padding:10px;display:grid;gap:6px}
+.mapa{height:min(60vh,460px);border-radius:12px;border:1.5px solid var(--line);margin:14px 0;background:var(--paper)}.mapa .leaflet-popup-content a{color:#1f5fbf}
+.agenda{list-style:none;padding:0;margin:0}.ev{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line)}
+.evd{text-align:center;border:1.5px solid var(--ink);border-radius:10px;padding:4px 0;line-height:1.1}.evd b{display:block;font:600 22px "Fredoka",sans-serif}.evd span{font-size:13px;color:var(--mute);text-transform:uppercase}
+
+@media(max-width:600px){.ev{grid-template-columns:48px 1fr}.ev .btn{grid-column:2}}
+.rvl{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:10px}.rvl li{border-left:4px solid var(--hl);padding:4px 0 4px 10px}.rvl mark,mark.an{background:var(--hls);color:inherit;border-bottom:2px solid #e0a800}
+.ctx{font-size:15px}mark.an sup{font-weight:700;color:var(--blue);padding-left:2px}
+.anl{margin:10px 0 0;padding-left:22px;display:grid;gap:4px}.anl li.feita{color:var(--mute)}
+.diff ins{background:light-dark(#d5f5df,#163a22);text-decoration:none}.diff del{background:light-dark(#fde2df,#40181a);color:var(--bad)}
+p.note ins{background:light-dark(#d5f5df,#163a22);text-decoration:none}p.note del{background:light-dark(#fde2df,#40181a)}
+.hb{position:relative;height:22px;background:var(--bg);border-radius:4px;overflow:hidden}.hb span{position:absolute;inset:0 auto 0 0;background:var(--hls);border-right:2px solid var(--ink)}.hb b{position:relative;padding-left:6px;font-size:14px;font-variant-numeric:tabular-nums}
+.horas{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;height:140px;align-items:end;padding-bottom:18px;position:relative}.horas.dias{grid-template-columns:repeat(auto-fit,minmax(6px,1fr));padding-bottom:0;height:100px}
+.horas div{height:100%;display:flex;flex-direction:column;justify-content:flex-end;position:relative}.horas span{display:block;background:var(--blue);border-radius:4px 4px 0 0;min-height:2px}.horas i{position:absolute;bottom:-18px;left:0;font-size:12px;font-style:normal;color:var(--mute)}
+.avisos{margin-top:4px}
+@media print{.accb{display:none!important}header.mast .meta,.noprint{display:none!important}.card{break-inside:avoid;border-color:#ccc}body{font-size:11pt}}
 .hide{display:none!important}
 pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font-size:13px}
 @media(max-width:600px){.react button{min-height:64px}.list li a{grid-template-columns:48px 1fr}.list .n{display:none}}
@@ -138,7 +195,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.2</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.3</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -146,7 +203,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <script>
 {
 /* ======== CONFIGURAÇÃO (preencher ao pôr a app online) ======== */
-const CONFIG={supabaseUrl:'https://pjnuoykywyvnzgwrsftq.supabase.co',supabaseKey:'sb_publishable_X2ddhD0IPo78DG6rmNAIig_FtEKcpLR',base:'https://escola-basica-e-secundaria-da-calheta.github.io/reporter-calheta/',pinDemo:'calheta',pinRedacao:'reporter'};
+const CONFIG={supabaseUrl:'https://pjnuoykywyvnzgwrsftq.supabase.co',supabaseKey:'sb_publishable_X2ddhD0IPo78DG6rmNAIig_FtEKcpLR',base:'https://escola-basica-e-secundaria-da-calheta.github.io/reporter-calheta/',pinDemo:'calheta',pinRedacao:'reporter',vapid:'BJHgJ2c4ogyEm2WkqAmwQ75lxDSYlFqraqGCvta0Yrg1h7WZ54zg9fc_NhZsalpe4MbManQMM4AaTISzm50xOgU'};
 
 const $=s=>document.querySelector(s);
 const main=$('#main');
@@ -278,7 +335,8 @@ async function init(){
    const cl=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseKey);
    const {data}=await cl.auth.getSession();
    if(!data.session){const r=await cl.auth.signInAnonymously();if(r.error)throw r.error}
-   db=supa(cl);extrasSupa(cl,db);modo='online';
+   cl.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY'){recuperar=true;setTimeout(()=>{history.replaceState(null,'','#painel');painel()},0)}});
+   db=supa(cl);extrasSupa(cl,db);extras13(cl,db);modo='online';
   }catch(e){console.warn(e);modo='erro'}
  }
  await carregar();route();
@@ -295,6 +353,10 @@ function route(){
  if(h==='tv')return verTV();
  if(h==='arquivo')return verArquivo();
  if(h==='familias')return verFamilias();
+ if(h==='concurso')return verConcurso();
+ if(h==='cartas')return verCartas();
+ if(h==='mapa')return verMapa();
+ if(h==='agenda')return verAgenda();
  const mc=h.match(/^caca-(\d+)-(.+)$/);if(mc)return verCaca(Number(mc[1]),mc[2]);
  const mx=h.match(/^e(\d+)-(top|ler|relatorio)$/);if(mx){const ee=edicao(Number(mx[1]));if(ee){atual=null;main.classList.remove('wide');$('#edmeta').textContent='N.º'+ee.n+' · '+(ee.titulo||'');window.scrollTo(0,0);return ({top:verTop,ler:verLer,relatorio:verRelatorio})[mx[2]](ee)}}
  const m=h.match(/^e(\d+)(?:-(.+))?$/);
@@ -315,10 +377,11 @@ function verIndice(e){
  <h2 class="t">Leste o jornal? Agora é a tua vez.</h2>
  <p class="lead">Cada artigo tem um código QR. Aponta a câmara do telemóvel, vota, reage às fotos e deixa a tua opinião. Também podes escolher o artigo aqui.</p>
  <div id="capa"></div>
+ <div id="v13i"></div>
  <ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}</span></span><span class="n">${a.b.map(b=>TIPOS[b.t]).filter((v,i,s)=>s.indexOf(v)===i).slice(0,2).join(' · ')}</span></a></li>`).join('')}</ul>
  ${outras.length?`<p class="note" style="margin-top:20px">Edições anteriores: ${outras.map(x=>`<a href="#e${x.n}">N.º${x.n} (${esc(x.titulo)})</a>`).join(' · ')}</p>`:''}
  <p class="note" style="margin-top:28px"><a href="#redacao">Redação: enviar um artigo para o jornal</a> · <a href="#painel">Painel do professor</a>${modo==='demo'?' · modo demonstração: os votos ficam só neste aparelho':''}</p>`;
- posIndice(e);
+ posIndice(e);v13Indice(e);
 }
 
 /* ======== Leitor: página do artigo ======== */
@@ -334,12 +397,12 @@ async function verArtigo(e,a){
  <h2 class="t">${esc(a.ti)}</h2>
  <p class="lead">Este artigo está no Repórter da Calheta n.º${e.n}, em papel. Diz-nos o que achaste!</p>
  ${a.b.map((b,bi)=>bloco(b,bi,cont,meus,coms)).join('')}
- <div class="row" style="margin-top:22px">
+ <div class="row" id="nav" style="margin-top:22px">
   ${prev?`<a class="btn" href="#e${e.n}-${esc(prev.id)}" style="text-align:center;text-decoration:none;line-height:26px">← ${esc(prev.ti.slice(0,28))}</a>`:''}
   <a class="btn" href="#e${e.n}" style="text-align:center;text-decoration:none;line-height:26px">Todos os artigos</a>
   ${next?`<a class="btn" href="#e${e.n}-${esc(next.id)}" style="text-align:center;text-decoration:none;line-height:26px">${esc(next.ti.slice(0,28))} →</a>`:''}
  </div>`;
- posArtigo(e,a);
+ posArtigo(e,a);v13Artigo(e,a);
 }
 const soma=o=>Object.values(o||{}).reduce((x,y)=>x+y,0);
 function bloco(b,bi,cont,meus,coms){
@@ -363,6 +426,7 @@ function bloco(b,bi,cont,meus,coms){
   <div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar</button><span class="msg"></span></div>
   <p class="note">${sug?'Só a equipa do jornal lê as sugestões.':'Os comentários aparecem depois de um professor os aprovar.'} Não escrevas apelidos, moradas, telefones nem nada sobre outras pessoas.</p></form>
   ${sug?'':`<ul class="coms">${coms.length?coms.map(x=>`<li><small>${esc(x.nome||'Anónimo')}${x.turma?' · '+esc(x.turma):''}</small><br>${esc(x.texto)}</li>`).join(''):'<li class="note">Ainda não há comentários aprovados. Sê o primeiro!</li>'}</ul>`}</div>`}
+ if(b.t==='sopa'||b.t==='cruzadas')return htmlPassatempo(b,bi,cont);
  if(b.t==='texto')return `<div class="card"><h3>${esc(b.q||'Texto')}</h3><div class="txt">${esc(b.x||'')}</div></div>`;
  if(b.t==='audio')return `<div class="card"><h3>${esc(b.q||'Ouve o artigo')}</h3><audio controls preload="none" style="width:100%" data-media="${esc(b.url||'')}"></audio></div>`;
  if(b.t==='perguntas')return `<div class="card"><h3>${esc(b.q||'Que pergunta gostavas de fazer?')}</h3><form data-form="pergunta"><div class="row"><div><label for="n${bi}">Primeiro nome ou alcunha</label><input id="n${bi}" name="nome" maxlength="30" autocomplete="off"></div><div style="flex:0 1 120px"><label for="t${bi}">Turma</label><input id="t${bi}" name="turma" maxlength="10" autocomplete="off"></div></div><label for="x${bi}">A tua pergunta</label><textarea id="x${bi}" name="texto" maxlength="400" required></textarea><div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar pergunta</button><span class="msg"></span></div><p class="note">Os jornalistas escolhem as melhores para a entrevista.</p></form></div>`;
@@ -383,6 +447,7 @@ main.addEventListener('submit',async ev=>{
  const f=ev.target.closest('form[data-form]');if(!f||!atual)return;ev.preventDefault();
  const msg=f.querySelector('.msg'),fd=new FormData(f),texto=String(fd.get('texto')||'').trim();
  if(texto.length<3){msg.className='msg err';msg.textContent='Escreve um pouco mais.';return}
+ if(temPalavrao(texto+' '+(fd.get('nome')||''))){msg.className='msg err';msg.textContent=AVISO_PAL;return}
  const btn=f.querySelector('button');btn.disabled=true;
  try{await db.comentar({ed:atual.e.n,art:atual.a.id,tipo:f.dataset.form,nome:String(fd.get('nome')||'').trim().slice(0,30),turma:String(fd.get('turma')||'').trim().slice(0,10),texto:texto.slice(0,400)});
   f.reset();msg.className='msg ok';msg.textContent=f.dataset.form!=='comentario'?'Obrigado! Chegou à equipa do jornal.':'Enviado! Vai aparecer depois de aprovado.'}
@@ -391,24 +456,65 @@ main.addEventListener('submit',async ev=>{
 });
 
 /* ======== Painel do professor ======== */
-let aba='edicoes',rasc=null,edSel=null,verTodos=false,confirmar=null;
+let recuperar=false;
+function novaPalavraPasse(){
+ main.innerHTML=`<div class="login" style="grid-template-columns:minmax(0,440px)"><div class="card login-card"><span class="tag">Painel do professor</span><h2 class="t login-t">Nova palavra-passe</h2><form id="npf"><label for="np1">Palavra-passe nova (pelo menos 8 caracteres)</label><input id="np1" type="password" autocomplete="new-password" minlength="8" required><label for="np2">Repete a palavra-passe</label><input id="np2" type="password" autocomplete="new-password" required><button class="btn pri full">Guardar e entrar</button><p class="msg err" id="np-m" role="alert"></p></form></div></div>`;
+ $('#np1').focus();
+ $('#npf').onsubmit=async ev=>{ev.preventDefault();const a=$('#np1').value,b=$('#np2').value,m=$('#np-m');if(a.length<8){m.textContent='Usa pelo menos 8 caracteres.';return}if(a!==b){m.textContent='As duas palavras-passe não são iguais.';return}
+  try{const r=await db.cl.auth.updateUser({password:a});if(r.error)throw r.error;recuperar=false;const ok=await db.cl.rpc('e_professor');prof=ok.data===true;history.replaceState(null,'','#painel');painel()}catch(e){console.warn(e);m.textContent='Não foi possível guardar. Pede um email novo.'}}
+}
+let aba='edicoes',rasc=null,edSel=null,verTodos=false,verRet=false,confirmar=null,pubTexto=true;
 async function painel(){
  atual=null;$('#edmeta').textContent='Painel do professor';main.classList.add('wide');
+ if(!prof&&modo==='online'&&!recuperar){try{const {data}=await db.cl.auth.getSession(),u=data.session&&data.session.user;if(u&&!u.is_anonymous){const ok=await db.cl.rpc('e_professor');if(ok.data===true)prof=true}}catch(e){console.warn(e)}if(location.hash!=='#painel')return}
+ if(recuperar)return novaPalavraPasse();
  if(!prof){
-  main.innerHTML=modo==='online'?`<div class="card" style="max-width:420px"><h3>Entrar como professor</h3><form id="login"><label for="em">Email</label><input id="em" type="email" required><label for="pw">Palavra-passe</label><input id="pw" type="password" required><div class="row" style="margin-top:12px"><button class="btn pri" style="flex:0 0 auto">Entrar</button><span class="msg err"></span></div></form></div>`
-  :`<div class="card" style="max-width:420px"><h3>Painel do professor</h3><form id="login"><label for="pw">Código de acesso</label><input id="pw" type="password" required><div class="row" style="margin-top:12px"><button class="btn pri" style="flex:0 0 auto">Entrar</button><span class="msg err"></span></div><p class="note">Modo demonstração: o código é <b>${esc(cfg.pinDemo)}</b>. Online, entra-se com email e palavra-passe.</p></form></div>`;
-  $('#login').addEventListener('submit',async ev=>{ev.preventDefault();const m=$('#login .msg');
-   if(modo==='online'){const r=await db.cl.auth.signInWithPassword({email:$('#em').value,password:$('#pw').value});if(r.error){m.textContent='Dados errados.';return}
-    const ok=await db.cl.rpc('e_professor');if(!ok.data){m.textContent='Esta conta não está autorizada.';await db.cl.auth.signOut();await db.cl.auth.signInAnonymously();return}}
-   else if($('#pw').value!==cfg.pinDemo){m.textContent='Código errado.';return}
+  const online=modo==='online';
+  main.innerHTML=`<div class="login">
+  <div class="card login-card"><span class="tag">Painel do professor</span>
+   <h2 class="t login-t">Bem-vindo à redação</h2>
+   <p class="lead" style="margin-bottom:6px">${online?'Entra com a conta de professor do jornal.':'Modo demonstração: os dados ficam só neste browser.'}</p>
+   <form id="login" novalidate>
+    ${online?`<label for="em">Email</label><input id="em" type="email" autocomplete="username" inputmode="email" placeholder="nome@edu.azores.gov.pt" value="${esc(LS.get('rc-prof-email','')||'')}" required>`:''}
+    <label for="pw">${online?'Palavra-passe':'Código de acesso'}</label>
+    <div class="pwbox"><input id="pw" type="password" autocomplete="current-password" required><button type="button" class="pwv" id="pwv" aria-controls="pw" aria-pressed="false">Mostrar</button></div>
+    <p class="note caps hide" id="caps">As maiúsculas estão ligadas.</p>
+    <button class="btn pri full" id="lg-b">Entrar</button>
+    <p class="msg err" id="lg-m" role="alert"></p>
+    ${online?'<p class="note" style="text-align:center;margin:0"><button type="button" class="lk" id="esq">Esqueci-me da palavra-passe</button></p>':`<p class="note">O código da demonstração é <b>${esc(cfg.pinDemo)}</b>.</p>`}
+   </form></div>
+  <div class="login-aside"><h3>No painel podes</h3><ul>
+   <li><b>Rever os artigos</b> que os jornalistas enviam, deixar notas no texto e aceitá-los</li>
+   <li><b>Montar o número</b>: distribuir os artigos pelas páginas e criar o pacote para o Canva</li>
+   <li><b>Moderar</b> comentários, cartas e perguntas antes de aparecerem</li>
+   <li><b>Ver o que a escola lê</b>: estatísticas, ranking das turmas e relatório em PDF</li>
+   <li><b>Gerar os códigos QR</b> e as imagens para as redes</li>
+   <li><b>Animar a comunidade</b>: concurso de fotografia, agenda e avisos no telemóvel</li></ul>
+   <p class="note">Não tens conta? Pede a um professor do jornal para te acrescentar em <b>Escola → Equipa de professores</b>.</p>
+   <p class="note"><a href="#inicio">← Voltar ao jornal</a></p></div></div>`;
+  const pw=$('#pw'),m=$('#lg-m'),bt=$('#lg-b'),err=t=>{m.className='msg err';m.textContent=t};
+  $('#pwv').onclick=()=>{const v=pw.type==='password';pw.type=v?'text':'password';$('#pwv').textContent=v?'Esconder':'Mostrar';$('#pwv').setAttribute('aria-pressed',v);pw.focus()};
+  pw.addEventListener('keyup',ev=>{if(ev.getModifierState)$('#caps').classList.toggle('hide',!ev.getModifierState('CapsLock'))});
+  (online&&!$('#em').value?$('#em'):pw).focus();
+  const esq=$('#esq');if(esq)esq.onclick=async()=>{const em=$('#em').value.trim();if(!/^\S+@\S+\.\S+$/.test(em)){err('Escreve primeiro o teu email.');$('#em').focus();return}
+   esq.disabled=true;try{const r=await db.cl.auth.resetPasswordForEmail(em,{redirectTo:(cfg.base||location.href.split('#')[0])});if(r.error)throw r.error;m.className='msg ok';m.textContent='Enviámos um email com uma ligação para criares uma palavra-passe nova. Vê também no spam.'}catch(e){console.warn(e);err('Não foi possível enviar o email. Tenta daqui a um minuto.')}esq.disabled=false};
+  $('#login').addEventListener('submit',async ev=>{ev.preventDefault();m.textContent='';
+   if(online){const em=$('#em').value.trim();if(!em||!pw.value)return err('Escreve o email e a palavra-passe.');
+    bt.disabled=true;bt.textContent='A entrar…';
+    try{const r=await db.cl.auth.signInWithPassword({email:em,password:pw.value});
+     if(r.error){bt.disabled=false;bt.textContent='Entrar';return err(/confirm/i.test(r.error.message)?'Ainda não confirmaste o email desta conta.':/invalid/i.test(r.error.message)?'Email ou palavra-passe errados.':'Não foi possível entrar. Verifica a ligação à internet.')}
+     const ok=await db.cl.rpc('e_professor');if(!ok.data){await db.cl.auth.signOut();await db.cl.auth.signInAnonymously();bt.disabled=false;bt.textContent='Entrar';return err('Esta conta existe, mas não está autorizada como professor do jornal.')}
+     LS.set('rc-prof-email',em)}catch(e){console.warn(e);bt.disabled=false;bt.textContent='Entrar';return err('Não foi possível entrar. Verifica a ligação à internet.')}}
+   else if(pw.value!==cfg.pinDemo){pw.select();return err('Código errado.')}
    prof=true;painel()});
   return}
  const pend=(await db.comentarios({estado:'pendente'}).catch(()=>[])).length;
  const novos=(await db.subs().catch(()=>[])).filter(s=>s.estado==='recebido').length,bd={moderacao:pend,redacao:novos};
- const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['escola','Escola'],['ligacao','Ligação']];
- main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Sair do painel</a></div><div id="pane"></div>`;
+ const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['estatisticas','Estatísticas'],['comunidade','Comunidade'],['escola','Escola'],['ligacao','Ligação']];
+ main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Ver o jornal</a>${modo==='online'?'<button class="btn sm" id="sair" style="flex:none">Terminar sessão</button>':''}</div><div id="pane"></div>`;
+ {const sb=$('#sair');if(sb)sb.onclick=async()=>{sb.disabled=true;try{await db.cl.auth.signOut();await db.cl.auth.signInAnonymously()}catch(e){console.warn(e)}prof=false;painel()}}
  main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;rasc=aba==='edicoes'?rasc:null;painel()});
- ({pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
+ ({estatisticas:pEstat,comunidade:pComunidade,pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
 }
 const pane=()=>$('#pane');
 const selEd=()=>`<select id="selEd" style="max-width:320px">${eds.map(e=>`<option value="${e.n}" ${e.n===(edSel||dest)?'selected':''}>N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select>`;
@@ -437,6 +543,7 @@ function parseImport(txt){
   let id=slug(ti),k=2;while(usados.has(id))id=slug(ti)+'-'+k++;usados.add(id);
   return {id,p:pag.replace(/\D/g,'')||pag,s:sec||'Notícias',ti,b:[{t:'reacoes'},{t:'comentario',q:'Deixa a tua opinião'}]}});
 }
+function alertaEd(t){setTimeout(()=>{const m=$('#gMsg');if(m){m.className='msg err';m.textContent=t}},0)}
 function editor(){
  const r=rasc;
  pane().innerHTML=`<h3>${r.novo?'Importar nova edição':'Editar edição N.º'+r.n}</h3>
@@ -444,16 +551,17 @@ function editor(){
  <label for="imp">Colar o índice ou o JSON da edição</label><textarea id="imp" placeholder="Uma linha por artigo:  página | secção | título&#10;2 | Notícias | Visita de estudo ao Pico&#10;5 | Ambiente | Brigada Eco-escola&#10;&#10;Ou cola o JSON que o Claude gera a partir do Canva."></textarea>
  <div class="row" style="margin-top:8px"><button class="btn" id="lerImp" style="flex:0 0 auto">Acrescentar artigos</button><span class="msg" id="impMsg"></span></div></div>
  ${extrasEdicao(r)}
- <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><div style="flex:1 1 100%"><label>Resumo (opcional: aparece no arquivo e na página para partilhar)</label><input data-f="r" data-i="${i}" maxlength="200" value="${esc(a.r||'')}"></div><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
+ <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><div style="flex:1 1 100%"><label>Resumo (opcional: aparece no arquivo e na página para partilhar)</label><input data-f="r" data-i="${i}" maxlength="200" value="${esc(a.r||'')}"></div><div style="flex:1 1 220px"><label>Onde aconteceu (para o mapa)</label><select data-f="lg" data-i="${i}"><option value="">Sem lugar</option>${Object.entries(LOCAIS).map(([k,[n]])=>`<option value="${k}" ${a.lg===k?'selected':''}>${esc(n)}</option>`).join('')}${a.lg&&!LOCAIS[a.lg]?`<option value="${esc(a.lg)}" selected>${esc((localDe(a.lg)||{}).n||a.lg)}</option>`:''}</select></div><div style="flex:3 1 300px"><label>Autores (opcional)</label><input data-f="au" data-i="${i}" maxlength="200" value="${esc(a.au||'')}"></div><details style="flex:1 1 100%" ${a.tx?'open':''}><summary class="note">Texto completo (opcional: para ler, ouvir e pesquisar na Participa)</summary><textarea data-f="tx" data-i="${i}" maxlength="20000" style="min-height:120px">${esc(a.tx||'')}</textarea></details><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
   <div class="chips">${a.b.map((b,j)=>`<span class="chip"><b>${TIPOS[b.t]}</b>${b.t==='fotos'?' · '+b.n+' fotos':b.q?' · '+esc(b.q.slice(0,50)):''}<button data-rmb="${i}:${j}" aria-label="Remover">×</button></span>`).join('')}</div>
   <div class="row"><select data-nt="${i}" style="flex:0 1 190px">${Object.entries(TIPOS).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select><input data-nq="${i}" placeholder="Pergunta (ou nº de fotos)" style="flex:2 1 200px"><input data-no="${i}" placeholder="Opções separadas por vírgula; no quiz, * na certa" style="flex:2 1 220px"><button class="btn sm" data-add="${i}" style="flex:0 0 auto">+ Bloco</button></div></div>`).join('')}</div>
  <div class="row" style="margin-top:18px"><button class="btn pri" id="guardar" style="flex:0 0 auto">${confirmar==='sobre'?'Substituir a edição existente?':'Guardar edição'}</button><button class="btn" id="cancelar" style="flex:0 0 auto">Cancelar</button><span class="msg" id="gMsg"></span></div>`;
  const sync=()=>{r.n=Number($('#en').value)||r.n;r.titulo=$('#et').value.trim();r.ano=$('#ea').value.trim();pane().querySelectorAll('[data-f]').forEach(x=>{r.artigos[x.dataset.i][x.dataset.f]=x.value.trim()})};
  bindExtras(r,sync);
+ pane().querySelectorAll('[data-nt]').forEach(sl=>sl.onchange=()=>{const i=sl.dataset.nt,q=pane().querySelector(`[data-nq="${i}"]`),o=pane().querySelector(`[data-no="${i}"]`),P={sopa:['Título (ex.: Sopa de letras do Natal)','Palavras separadas por vírgula'],cruzadas:['Título (ex.: Cruzadas do ambiente)','PALAVRA=pista; PALAVRA=pista; …'],texto:['Título (ex.: In English)','O texto'],fotos:['Número de fotos','']}[sl.value]||['Pergunta (ou nº de fotos)','Opções separadas por vírgula; no quiz, * na certa'];q.placeholder=P[0];o.placeholder=P[1]});
  $('#lerImp').onclick=()=>{sync();const m=$('#impMsg');try{const res=parseImport($('#imp').value);
    if(res.json){const j=res.json,arts=Array.isArray(j)?j:j.artigos;if(!Array.isArray(arts))throw new Error('sem artigos');
     if(!Array.isArray(j)){if(j.n)r.n=Number(j.n);if(j.titulo)r.titulo=j.titulo;if(j.ano)r.ano=j.ano}
-    arts.forEach(a=>r.artigos.push({id:slug(a.id||a.ti),p:a.p??'',s:a.s||'',ti:String(a.ti||''),b:Array.isArray(a.b)?a.b.filter(b=>TIPOS[b.t]):[]}))}
+    arts.forEach(a=>r.artigos.push(Object.assign({id:slug(a.id||a.ti),p:a.p??'',s:a.s||'',ti:String(a.ti||''),b:Array.isArray(a.b)?a.b.filter(b=>TIPOS[b.t]):[]},...['r','au','tx','lg'].filter(k=>a[k]).map(k=>({[k]:String(a[k])})))))}
    else r.artigos.push(...res);
    editor();$('#impMsg').className='msg ok';$('#impMsg').textContent='Artigos acrescentados. Ajusta os blocos de cada um.'}
   catch(e){m.className='msg err';m.textContent='Não percebi o texto colado. Verifica o formato.'}};
@@ -466,6 +574,8 @@ function editor(){
    else if(t==='sondagem'||t==='quiz'){if(!q||os.length<2){b.textContent='Falta pergunta ou opções';return}nb.q=q;nb.c=Math.max(0,os.findIndex(o=>o.startsWith('*')));nb.o=os.map(o=>o.replace(/^\*/,'').trim());if(t==='sondagem')delete nb.c}
    else if(t==='texto'){const raw=pane().querySelector(`[data-no="${i}"]`).value.trim();if(!raw){b.textContent='Escreve o texto em Opções';return}nb.q=q||'In English';nb.x=raw}
    else if(t==='audio'){escolherAudio(i,q);return}
+   else if(t==='sopa'){const raw=pane().querySelector(`[data-no="${i}"]`).value.split(/[,;\n]/).map(x=>x.trim()).filter(Boolean);if(raw.length<3){b.textContent='Escreve pelo menos 3 palavras';return}const z=gerarSopa(raw,r.n+'-'+r.artigos[i].ti+'-'+Date.now());nb.q=q||'Sopa de letras';nb.g=z.g;nb.w=z.w;if(z.w.length<raw.length)alertaEd(`${raw.length-z.w.length} palavras não couberam (máximo 14 letras).`)}
+   else if(t==='cruzadas'){const raw=pane().querySelector(`[data-no="${i}"]`).value.split(';').map(x=>x.split('=')).filter(x=>x[0]&&x[0].trim()&&x[1]).map(x=>({p:x[0].trim(),d:x.slice(1).join('=').trim()}));if(raw.length<3){b.textContent='Escreve pelo menos 3 palavras com pista';return}const z=gerarCruz(raw,r.n+'-'+r.artigos[i].ti+'-'+Date.now());if(!z){b.textContent='Não consegui cruzar as palavras';return}Object.assign(nb,{q:q||'Palavras cruzadas',R:z.R,C:z.C,w:z.w});if(z.fora)alertaEd(`${z.fora} ${z.fora===1?'palavra não cruzou':'palavras não cruzaram'} com as outras e ficaram de fora. Experimenta palavras com letras em comum.`)}
    else if(t!=='reacoes')nb.q=q||({estrelas:'Que nota dás?',comentario:'Deixa a tua opinião',sugestao:'Tens uma sugestão?',perguntas:'Que pergunta gostavas de fazer?'})[t];
    r.artigos[i].b.push(nb);editor()}};
  $('#cancelar').onclick=()=>{rasc=null;confirmar=null;painel()};
@@ -480,14 +590,14 @@ function editor(){
 
 /* --- Moderação --- */
 async function pModeracao(){
- const lista=await db.comentarios(verTodos?{}:{estado:'pendente'}).catch(()=>[]);
- const tit=(n,id)=>{const a=edicao(n)?.artigos.find(x=>x.id===id);return a?`N.º${n} · pág. ${a.p} · ${a.ti}`:`N.º${n} · ${({_familias:'Mural das famílias',_capa:'Capa'})[id]||id}`};
- pane().innerHTML=`<div class="row" style="align-items:center"><h3 style="flex:1 1 auto;margin:0">${verTodos?'Todas as mensagens':'À espera de aprovação'} (${lista.length})</h3><button class="btn sm" id="tog" style="flex:0 0 auto">${verTodos?'Ver só pendentes':'Ver todas'}</button></div>
+ const [lista,ret]=await Promise.all([db.comentarios(verTodos?{}:{estado:verRet?'retido':'pendente'}).catch(()=>[]),db.comentarios({estado:'retido'}).catch(()=>[])]);
+ const tit=(n,id)=>{const a=edicao(n)?.artigos.find(x=>x.id===id);return a?`N.º${n} · pág. ${a.p} · ${a.ti}`:`N.º${n} · ${({_familias:'Mural das famílias',_capa:'Capa',_cartas:'Cartas ao jornal'})[id]||id}`};
+ pane().innerHTML=`<div class="row" style="align-items:center"><h3 style="flex:1 1 auto;margin:0">${verTodos?'Todas as mensagens':verRet?'Retidas pelo filtro de linguagem':'À espera de aprovação'} (${lista.length})</h3><button class="btn sm" id="tog" style="flex:0 0 auto">${verTodos?'Ver só pendentes':'Ver todas'}</button>${!verTodos?`<button class="btn sm ${verRet?'on':''}" id="togr" style="flex:0 0 auto">${verRet?'Voltar às pendentes':'Retidas pelo filtro ('+ret.length+')'}</button>`:''}</div>${verRet?'<p class="note">Estas mensagens têm palavras da lista de linguagem imprópria e não entram na lista normal. Às vezes o filtro engana-se (por exemplo, "burro" num texto sobre animais): podes aprovar à mesma.</p>':''}
  ${lista.map(c=>{const mau=MAUS.some(w=>(c.texto+' '+c.nome).toLowerCase().includes(w));
-  return `<div class="card"><p class="note" style="margin:0 0 6px">${esc(tit(c.ed,c.art))} · ${TIPOC[c.tipo]||c.tipo} · ${esc(new Date(c.criado).toLocaleString('pt-PT'))} ${mau?'<span class="flag">verificar linguagem</span>':''}</p>
+  return `<div class="card"><p class="note" style="margin:0 0 6px">${esc(tit(c.ed,c.art))} · ${TIPOC[c.tipo]||c.tipo} · ${esc(new Date(c.criado).toLocaleString('pt-PT'))} ${mau||c.estado==='retido'?'<span class="flag">verificar linguagem</span>':''}</p>
   <b>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''}</b><p style="margin:4px 0 10px">${esc(c.texto)}</p>
   <div style="display:flex;gap:6px;flex-wrap:wrap">${c.estado!=='aprovado'?`<button class="btn sm pri" data-mod="${esc(c.id)}" data-e="aprovado">${c.tipo==='sugestao'||c.tipo==='pergunta'?'Marcar como lida':'Aprovar'}</button>`:'<span class="ok">Aprovado</span>'}${c.estado!=='rejeitado'?`<button class="btn sm" data-mod="${esc(c.id)}" data-e="rejeitado">Rejeitar</button>`:'<span class="err">Rejeitado</span>'}</div></div>`}).join('')||'<p class="note">Não há nada à espera. 🎉</p>'}`;
- $('#tog').onclick=()=>{verTodos=!verTodos;painel()};
+ $('#tog').onclick=()=>{verTodos=!verTodos;verRet=false;painel()};const tr=$('#togr');if(tr)tr.onclick=()=>{verRet=!verRet;painel()};
  pane().onclick=async ev=>{const b=ev.target.closest('[data-mod]');if(!b)return;b.disabled=true;await db.moderar(b.dataset.mod,b.dataset.e);painel()};
 }
 
@@ -503,7 +613,7 @@ async function pResultados(){
    if(b.t==='sondagem'||b.t==='quiz'){b.o.forEach((o,oi)=>csv.push([a.p,a.ti,TIPOS[b.t],b.q,o,c[oi]||0]));
     return `<p style="margin:10px 0 6px"><b>${esc(b.q)}</b>${b.t==='quiz'&&t?` · ${Math.round((c[b.c]||0)*100/t)}% acertaram`:''}</p><div class="opts res">${b.o.map((o,oi)=>{const p=t?Math.round((c[oi]||0)*100/t):0;return `<div class="opt"><span class="bar" style="width:${p}%"></span><span>${esc(o)}</span><span class="pct">${c[oi]||0} · ${p}%</span></div>`}).join('')}</div>`}
    if(b.t==='estrelas'){let s=0;for(const k in c)s+=Number(k)*c[k];csv.push([a.p,a.ti,TIPOS[b.t],b.q,'media',t?(s/t).toFixed(2):'']);return `<p>${esc(b.q)} <b>${t?(s/t).toFixed(1)+' ★':'sem votos'}</b> <span class="note">(${t})</span></p>`}
-   if(b.t==='texto'||b.t==='audio')return '';const n=coms.filter(x=>x.art===a.id&&x.tipo===(b.t==='perguntas'?'pergunta':b.t)).length;return `<p>${TIPOS[b.t]}: <b>${n}</b> recebidos</p>`}).join('');
+   if(b.t==='texto'||b.t==='audio')return '';if(b.t==='sopa'||b.t==='cruzadas'){csv.push([a.p,a.ti,TIPOS[b.t],b.q||'','resolveram',t]);return `<p>${TIPOS[b.t]}: <b>${t}</b> ${t===1?'leitor resolveu':'leitores resolveram'}</p>`}const n=coms.filter(x=>x.art===a.id&&x.tipo===(b.t==='perguntas'?'pergunta':b.t)).length;return `<p>${TIPOS[b.t]}: <b>${n}</b> recebidos</p>`}).join('');
   return `<div class="card"><span class="tag">pág. ${esc(a.p)}</span> <b>${esc(a.ti)}</b> <span class="note">· ${tot} interações</span>${blocos}</div>`}).join('');
  pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><a class="btn sm" href="#e${e.n}-relatorio" style="flex:0 0 auto;text-decoration:none;line-height:26px">Relatório (PDF)</a><a class="btn sm" href="#e${e.n}-top" style="flex:0 0 auto;text-decoration:none;line-height:26px">Ranking</a><a class="btn sm" href="#tv" style="flex:0 0 auto;text-decoration:none;line-height:26px">Modo TV</a><button class="btn sm" id="melhores" style="flex:0 0 auto">Melhores do ano</button><button class="btn sm" id="csv" style="flex:0 0 auto">Copiar resultados (CSV)</button></div>${html}`;
  bindSel(pResultados);const mb=$('#melhores');if(mb)mb.onclick=()=>melhoresAno(mb);
@@ -525,14 +635,19 @@ function qrImg(url,titulo,sub){
 function pQR(){
  const e=edicao(edSel||dest);if(!e){pane().innerHTML='<p class="note">Sem edições.</p>';return}
  const base=cfg.base||location.href.split('#')[0];
+ const pzs=[];e.artigos.forEach(a=>a.b.forEach((b,bi)=>{if(b.t==='sopa'||b.t==='cruzadas')pzs.push([a,b,bi])}));
  const itens=[{a:null,t:'Participa!',s:'Repórter da Calheta n.º'+e.n,f:'QR-n'+e.n+'-capa'}].concat(e.artigos.map(a=>({a,t:'Dá a tua opinião!',s:'pág. '+a.p+' · '+a.ti,f:'QR-n'+e.n+'-p'+String(a.p).padStart(2,'0')+'-'+a.id}))).concat(extrasQR(e,base));
  pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><p class="note" style="flex:2 1 300px;margin:0">Os QR apontam para <b>${esc(base)}</b>. ${cfg.base?'':'Define o endereço público em <b>Ligação</b> antes de imprimir.'}</p></div>
  <p class="note">Descarrega cada imagem e arrasta-a para o Canva, junto ao artigo. O primeiro é para a capa e abre a lista de todos os artigos.</p>
- <div class="qrgrid">${itens.map((it,i)=>{const url=it.url||urlArtigo(e,it.a),src=qrImg(url,it.t,it.s);return `<div class="card"><img src="${src}" alt="Código QR: ${esc(it.s)}"><p style="margin:8px 0 4px;font-weight:700;line-height:1.25">${esc(it.a?it.a.ti:(it.nome||'Capa: todos os artigos'))}</p><p class="note" style="margin:0 0 8px">${it.a?'pág. '+esc(it.a.p):'N.º'+e.n}</p><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><a class="btn sm" href="${src}" download="${esc(it.f)}.png" style="text-decoration:none;line-height:26px">Descarregar</a><button class="btn sm" data-url="${esc(url)}">Copiar ligação</button></div></div>`}).join('')}</div>`;
+ <div class="qrgrid">${itens.map((it,i)=>{const url=it.url||urlArtigo(e,it.a),src=qrImg(url,it.t,it.s);return `<div class="card"><img src="${src}" alt="Código QR: ${esc(it.s)}"><p style="margin:8px 0 4px;font-weight:700;line-height:1.25">${esc(it.a?it.a.ti:(it.nome||'Capa: todos os artigos'))}</p><p class="note" style="margin:0 0 8px">${it.a?'pág. '+esc(it.a.p):'N.º'+e.n}</p><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><a class="btn sm" href="${src}" download="${esc(it.f)}.png" style="text-decoration:none;line-height:26px">Descarregar</a><button class="btn sm" data-url="${esc(url)}">Copiar ligação</button>${it.a?`<button class="btn sm" data-social="${i}">Imagem para redes</button>`:''}</div></div>`}).join('')}</div>
+ ${pzs.length?`<h3 style="margin-top:22px">Passatempos para o jornal em papel</h3><p class="note">A grelha é a mesma que os leitores resolvem na Participa. A solução vai para o número seguinte.</p><div class="qrgrid">${pzs.map(([a,b,bi])=>`<div class="card"><img src="${pngPassatempo(b,false)}" alt="${esc(TIPOS[b.t])}"><p style="margin:8px 0 4px;font-weight:700">${esc(b.q||TIPOS[b.t])}</p><p class="note" style="margin:0 0 8px">pág. ${esc(a.p)} · ${esc(a.ti)}</p><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><button class="btn sm" data-pzpng="${esc(a.id)}:${bi}:0">Grelha (PNG)</button><button class="btn sm" data-pzpng="${esc(a.id)}:${bi}:1">Solução (PNG)</button>${b.t==='cruzadas'?`<button class="btn sm" data-pztx="${esc(a.id)}:${bi}">Copiar pistas</button>`:''}</div></div>`).join('')}</div>`:''}`;
  bindSel(pQR);
  pane().onclick=async ev=>{
   const dl=ev.target.closest('a[download]');
   if(dl&&window.claude&&window.claude.use){ev.preventDefault();try{const d=await window.claude.use('downloads');if(!d)throw 0;const blob=await (await fetch(dl.href)).blob();await d.save({filename:dl.getAttribute('download'),data:blob})}catch(e){dl.textContent='Clica com o botão direito na imagem'}return}
+  const so=ev.target.closest('[data-social]');if(so){so.disabled=true;so.textContent='A preparar…';try{const it=itens[Number(so.dataset.social)];await baixar(d2b(await imagemSocial(e,it.a)),'redes-n'+e.n+'-'+it.a.id+'.png');so.textContent='Imagem para redes'}catch(err){console.warn(err);so.textContent='Não foi possível'}so.disabled=false;return}
+  const pp=ev.target.closest('[data-pzpng]');if(pp){const [aid,bi,sol]=pp.dataset.pzpng.split(':'),a=e.artigos.find(x=>x.id===aid),b=a&&a.b[Number(bi)];if(b)await baixar(d2b(pngPassatempo(b,sol==='1')),(sol==='1'?'solucao-':'')+slug(b.q||TIPOS[b.t])+'-n'+e.n+'.png');return}
+  const pt=ev.target.closest('[data-pztx]');if(pt){const [aid,bi]=pt.dataset.pztx.split(':'),b=e.artigos.find(x=>x.id===aid).b[Number(bi)],T=h=>b.w.filter(q=>q.h===h).map(q=>q.n+'. '+q.d).join('\n');try{await navigator.clipboard.writeText('Horizontais\n'+T(true)+'\n\nVerticais\n'+T(false));pt.textContent='Copiadas!'}catch(err){pt.textContent='Não deu para copiar'}return}
   const b=ev.target.closest('[data-url]');if(!b)return;try{await navigator.clipboard.writeText(b.dataset.url);b.textContent='Copiada!'}catch(e){b.textContent=b.dataset.url}};
 }
 
@@ -625,7 +740,8 @@ function rNovo(info){
  <div class="card"><h3>Extras (opcional)</h3><label for="r-en" style="margin-top:0">Versão curta em inglês</label><textarea id="r-en" name="ingles" maxlength="3000" style="min-height:80px" placeholder="Um resumo em inglês, se quiseres praticar">${esc(f.ingles||'')}</textarea>
   <label>Áudio: lê o teu artigo em voz alta</label><div class="row" id="r-aud" style="align-items:center"></div><p class="note">Fica na página do artigo, para quem prefere ouvir.</p></div>
  <div class="card"><label for="r-n" style="margin-top:0">Recado para a equipa do jornal (opcional)</label><textarea id="r-n" name="notas" maxlength="600" style="min-height:64px">${esc(f.notas)}</textarea></div>
- <div class="card"><h3>Antes de enviar</h3><ul class="chk-list" id="r-chk"></ul></div>
+ ${f.id?notasAutorHTML(f.texto,f.anotacoes):''}
+ <div class="card" id="r-antes"><h3>Antes de enviar</h3><ul class="chk-list" id="r-chk"></ul></div>
  <div class="row"><button class="btn pri" style="flex:0 0 auto">${f.id?'Enviar correções':'Enviar para a redação'}</button>${f.id?'<button class="btn" type="button" id="r-cancel" style="flex:0 0 auto">Cancelar</button>':''}<span class="msg" id="r-msg"></span></div>
  <p class="note">Nos nomes, só o primeiro nome e a inicial. Não escrevas moradas, telefones nem coisas privadas sobre outras pessoas.</p></form>`;
  const form=$('#rf'),m=$('#r-msg'),T=s=>String(s||'').trim();
@@ -642,6 +758,7 @@ function rNovo(info){
   const afb=$('#r-afb');if(afb){afb.onclick=()=>$('#r-af').click();$('#r-af').onchange=()=>{const x=$('#r-af').files[0];if(!x)return;if(x.size>10e6){$('#r-ast').textContent='O ficheiro tem mais de 10 MB.';return}novo(x)}}
   const rb=$('#r-rec');if(rb)rb.onclick=async()=>{if(rec){rec.stop();return}try{const st=await navigator.mediaDevices.getUserMedia({audio:true}),ch=[];rec=new MediaRecorder(st);rec.ondataavailable=ev=>ch.push(ev.data);rec.onstop=()=>{st.getTracks().forEach(t=>t.stop());const bl=new Blob(ch,{type:rec.mimeType||'audio/webm'});rec=null;novo(bl)};rec.start();rb.textContent='■ Parar';$('#r-ast').textContent='A gravar…'}catch(e){rec=null;$('#r-ast').textContent='Não foi possível usar o microfone. Escolhe um ficheiro.'}}};
  thumbs();pal();chkUpd();audUI();
+ revisorUI($('#r-antes'),()=>$('#r-x').value,v=>{$('#r-x').value=v;$('#r-x').dispatchEvent(new Event('input',{bubbles:true}))});
  $('#r-fb').onclick=()=>$('#r-f').click();
  $('#r-f').onchange=async()=>{sync();const fs=[...$('#r-f').files];$('#r-f').value='';let erro='';
   for(const file of fs){if(f.fotos.length>=MAXF){erro='Máximo de '+MAXF+' fotos.';break}
@@ -678,6 +795,7 @@ function rMeus(lista){
  rp.innerHTML=`${rMsg?`<p class="ok">${esc(rMsg)}</p>`:''}${lista.map(s=>{const nf=(s.fotos||[]).length;return `<div class="card"><div class="row" style="align-items:center"><div style="flex:3 1 220px"><span class="lt">${esc(s.titulo)}</span><span class="ls">${esc(s.seccao||'Sem secção')} · ${palavras(s.texto)} palavras · ${nf} ${nf===1?'foto':'fotos'} · enviado a ${esc(new Date(s.criado).toLocaleDateString('pt-PT'))}</span></div><div style="flex:0 0 auto">${estTag(s.estado)}</div></div>
  <p class="note">${esc((ESTADOS[s.estado]||['',''])[1])}${(s.estado==='aceite'||s.estado==='publicado')&&s.edicao?' N.º'+esc(s.edicao)+(s.pagina?', pág. '+esc(s.pagina):'')+'.':''}</p>
  ${s.nota_equipa?`<div class="notaeq"><b>Nota da equipa:</b> ${esc(s.nota_equipa)}</div>`:''}
+ ${(s.anotacoes||[]).length?`<p class="note">A equipa deixou ${s.anotacoes.length} ${s.anotacoes.length===1?'nota':'notas'} no teu texto. Carrega em Corrigir para as veres.</p>`:''}
  ${s.estado==='recebido'||s.estado==='alteracoes'?`<button class="btn sm" data-red="${esc(s.id)}" style="margin-top:12px">Corrigir</button>`:''}</div>`}).join('')||'<p class="note">Ainda não enviaste nenhum artigo deste aparelho.</p>'}
  ${lista.some(s=>s.estado==='publicado')?`<p class="note"><b>O teu portefólio:</b> ${lista.filter(s=>s.estado==='publicado').map(s=>esc(s.titulo)+(s.edicao?' (n.º'+esc(s.edicao)+(s.pagina?', pág. '+esc(s.pagina):'')+')':'')).join(' · ')}</p>`:''}
  <p class="note">Os teus artigos ficam ligados a este telemóvel ou computador. Podes corrigi-los enquanto a equipa não os aceitar.</p>`;
@@ -685,7 +803,7 @@ function rMeus(lista){
  rp.onclick=async ev=>{const b=ev.target.closest('[data-red]');if(!b)return;const s=lista.find(x=>x.id===b.dataset.red);if(!s)return;b.disabled=true;
   let urls={};try{urls=await db.urlsFotos((s.fotos||[]).map(x=>x.path).concat(s.audio?[s.audio]:[]))}catch(e){console.warn(e)}
   const p=s.pergunta||{};
-  rForm={id:s.id,ingles:s.ingles||'',audio:s.audio?{path:s.audio,url:urls[s.audio]||''}:null,nota_equipa:s.nota_equipa,seccao:s.seccao||'',titulo:s.titulo||'',entrada:s.entrada||'',texto:s.texto||'',autores:s.autores||'',turma:s.turma||'',creditos_fotos:s.creditos_fotos||'',notas:s.notas||'',autorizacao:!!s.autorizacao,pt:p.t||'',pq:p.q||'',po:(p.o||[]).map((o,i)=>(p.t==='quiz'&&i===p.c?'*':'')+o).join('\n'),fotos:(s.fotos||[]).map(x=>Object.assign({},x,{url:urls[x.path]||''})),removidas:[]};
+  rForm={id:s.id,ingles:s.ingles||'',audio:s.audio?{path:s.audio,url:urls[s.audio]||''}:null,nota_equipa:s.nota_equipa,seccao:s.seccao||'',titulo:s.titulo||'',entrada:s.entrada||'',texto:s.texto||'',autores:s.autores||'',turma:s.turma||'',creditos_fotos:s.creditos_fotos||'',notas:s.notas||'',autorizacao:!!s.autorizacao,anotacoes:s.anotacoes||[],pt:p.t||'',pq:p.q||'',po:(p.o||[]).map((o,i)=>(p.t==='quiz'&&i===p.c?'*':'')+o).join('\n'),fotos:(s.fotos||[]).map(x=>Object.assign({},x,{url:urls[x.path]||''})),removidas:[]};
   rAba='novo';redacao()};
 }
 
@@ -719,7 +837,7 @@ function edicaoDe(lista,n){
   if(s.ingles)b.push({t:'texto',q:'In English',x:s.ingles});
   if(s.audio)b.push({t:'audio',q:'Ouve o artigo',url:'sub:'+s.audio});
   b.push({t:'comentario',q:'Deixa uma mensagem aos autores'});
-  return {id,p:s.pagina||'',s:s.seccao||'Notícias',ti:s.titulo,r:s.entrada||'',au:s.autores+(s.turma?' ('+s.turma+')':''),b}})};
+  return Object.assign({id,p:s.pagina||'',s:s.seccao||'Notícias',ti:s.titulo,r:s.entrada||'',au:s.autores+(s.turma?' ('+s.turma+')':''),b},pubTexto&&s.texto?{tx:s.texto}:{})})};
 }
 async function pacote(lista,n,nome){
  if(!window.JSZip)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
@@ -761,7 +879,9 @@ async function pRedacao(){
  <div class="card"><h3>Fechar a edição</h3>
   <div class="row" style="align-items:end"><div style="flex:0 1 120px"><label for="x-n">Edição N.º</label><input id="x-n" type="number" min="1" value="${esc(proxN)}"></div>
   <div style="flex:3 1 320px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" id="x-zip">Descarregar pacote (ZIP)</button><button class="btn sm" id="x-ed">Criar edição na Participa</button><button class="btn sm" id="x-pub">Marcar aceites como publicados</button></div></div>
+  <label class="chk"><input type="checkbox" id="x-tx" ${pubTexto?'checked':''}> Pôr o texto completo dos artigos na Participa (para ler, ouvir em voz alta e pesquisar no arquivo)</label>
   <p class="note" id="x-msg">Junta os artigos <b>aceites</b> dessa edição, por ordem de página: os textos (artigos.md), as fotos com o nome da página e o índice para a Participa, já com as perguntas dos jornalistas. Podes dar o pacote ao Claude para montar a edição no Canva.</p></div>`;
+ if(ab)v13Detalhe(ab);const ptx=$('#x-tx');if(ptx)ptx.onchange=()=>{pubTexto=ptx.checked};
  const msg=(id,t,ok)=>{const el=$(id);if(el){el.className='msg '+(ok?'ok':'err');el.textContent=t}};
  $('#rcfg').onsubmit=async ev=>{ev.preventDefault();const c=$('#ri-c').value.trim();
   if(c.length<6)return msg('#ri-msg','O código precisa de pelo menos 6 caracteres.');
@@ -954,7 +1074,7 @@ async function verCaca(n,id){
 /* --- 17: arquivo pesquisável --- */
 function verArquivo(){
  atual=null;main.classList.remove('wide');$('#edmeta').textContent='Arquivo';window.scrollTo(0,0);
- const all=eds.slice().reverse().flatMap(e=>e.artigos.map(a=>({e,a,txt:norm([a.ti,a.s,a.r,a.au,'pag '+a.p].join(' '))})));
+ const all=eds.slice().reverse().flatMap(e=>e.artigos.map(a=>({e,a,txt:norm([a.ti,a.s,a.r,a.au,a.tx,(localDe(a.lg)||{}).n,'pag '+a.p].join(' '))})));
  const secs=[...new Set(all.map(x=>x.a.s).filter(Boolean))].sort();
  main.innerHTML=`<span class="tag">Arquivo</span><h2 class="t">Tudo o que já escrevemos</h2>
  <p class="lead">${all.length} artigos em ${eds.length} ${eds.length===1?'edição':'edições'}.</p>
@@ -1003,6 +1123,7 @@ async function verFamilias(){
  ${e?`<div class="card"><form id="ff"><div class="row"><div><label for="fn">Nome</label><input id="fn" maxlength="30" placeholder="ex.: Mãe da Inês"></div><div style="flex:0 1 140px"><label for="ft">Turma do educando</label><input id="ft" maxlength="10" placeholder="ex.: 5.º B"></div></div><label for="fx">Mensagem</label><textarea id="fx" maxlength="400"></textarea><div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar</button><span class="msg"></span></div><p class="note">Não escrevas apelidos, moradas nem telefones.</p></form></div>`:''}
  <ul class="coms">${lista.map(c=>`<li><small>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''}</small><br>${esc(c.texto)}</li>`).join('')||'<li class="note">Ainda não há mensagens. Sejam os primeiros!</li>'}</ul>`;
  const f=$('#ff');if(f)f.onsubmit=async ev=>{ev.preventDefault();const m=f.querySelector('.msg'),t=$('#fx').value.trim();if(t.length<3){m.className='msg err';m.textContent='Escreve um pouco mais.';return}
+  if(temPalavrao(t+' '+$('#fn').value)){m.className='msg err';m.textContent=AVISO_PAL;return}
   const b=f.querySelector('button');b.disabled=true;try{await db.comentar({ed:e.n,art:'_familias',tipo:'familia',nome:$('#fn').value.trim().slice(0,30),turma:$('#ft').value.trim().slice(0,10),texto:t.slice(0,400)});f.reset();m.className='msg ok';m.textContent='Obrigado! A mensagem aparece depois de lida.'}catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível enviar.'}b.disabled=false};
 }
 
@@ -1214,6 +1335,501 @@ async function pEscola(){
  pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
   if(d.psave){const p=profs[d.psave];try{await db.guardarProfessor({email:p.email,seccoes:pane().querySelector(`[data-sec="${d.psave}"]`).value.split(',').map(x=>x.trim()).filter(Boolean)});b.textContent='Guardado!'}catch(e){console.warn(e);b.textContent='Erro'}}
   if(d.pdel){const p=profs[d.pdel];if(confirmar!=='prof'+p.email){confirmar='prof'+p.email;return pEscola()}confirmar=null;try{await db.apagarProfessor(p.email)}catch(e){console.warn(e)}pEscola()}};
+}
+
+/* ======================= v1.3 ======================= */
+Object.assign(TIPOS,{sopa:'Sopa de letras',cruzadas:'Palavras cruzadas'});
+TIPOC.carta='Carta ao jornal';
+const PALAVROES=/(merd|caralh|\bputa|\bputo\b|\bfod[aeiu]|\bfdp\b|\bcabr[ao]|cabrao|otari|idiot|estupid|imbecil|\bburr[oa]s?\b|anormal|parvalh|\bcona\b|panasc|\bbicha\b|viad[oa]|\bcorn[oa]s?\b|\bchupa|\bbosta|\bporra\b|\bcu\b|\bmama-?m)/;
+const temPalavrao=t=>PALAVROES.test(norm(t));
+const AVISO_PAL='A mensagem tem palavras que não são aceites no jornal. Muda-as e volta a enviar.';
+const entradaQR=/^#e\d+-./.test(location.hash);let jaRotou=false;
+const LOCAIS={
+ escola:['Escola (EBS da Calheta)',38.6025,-28.0125],calheta:['Calheta',38.6011,-28.0158],velas:['Velas',38.6806,-28.2083],topo:['Topo',38.5497,-27.7597],
+ urzelina:['Urzelina',38.6436,-28.1214],manadas:['Manadas',38.6303,-28.0806],'norte-grande':['Norte Grande',38.6697,-28.0436],'norte-pequeno':['Norte Pequeno',38.6378,-27.9958],
+ 'ribeira-seca':['Ribeira Seca',38.5772,-27.9628],'santo-antao':['Santo Antão',38.5631,-27.8578],rosais:['Rosais',38.7225,-28.2681],'santo-amaro':['Santo Amaro',38.6911,-28.1608],
+ beira:['Beira',38.6986,-28.1847],'faja-cubres':['Fajã dos Cubres',38.6386,-27.9706],'faja-caldeira':['Fajã da Caldeira de Santo Cristo',38.6111,-27.9253],
+ 'faja-ouvidor':['Fajã do Ouvidor',38.6797,-28.0806],'faja-sao-joao':['Fajã de São João',38.5583,-27.8478],'pico-esperanca':['Pico da Esperança',38.6497,-28.0742],
+ 'serra-topo':['Serra do Topo',38.5792,-27.8525],'ponta-rosais':['Ponta dos Rosais',38.7522,-28.3075]};
+const localDe=lg=>{if(!lg)return null;if(LOCAIS[lg]){const [n,la,lo]=LOCAIS[lg];return {n,la,lo}}const m=String(lg).match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*(?:\|\s*(.*))?$/);return m?{n:m[3]||'Outro lugar',la:+m[1],lo:+m[2]}:null};
+const urlB64=s=>{const p='='.repeat((4-s.length%4)%4),b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))};
+const novaEd=e=>eds.some(x=>x.n>e.n);
+
+/* --- dados: modo demonstração --- */
+Object.assign(local,{
+ async visita(ed,art,origem){const V=this.P('visitas');V.push({ed,art,origem,dev,criado:new Date().toISOString()});if(V.length>3000)V.splice(0,V.length-3000);this.save()},
+ async lidos(ed){return [...new Set(this.P('visitas').filter(v=>v.ed===ed&&v.dev===dev).map(v=>v.art))]},
+ async estatisticas(ed){const V=this.P('visitas').filter(v=>v.ed===ed),g=(f)=>{const o={};V.forEach(v=>{const k=f(v);o[k]=(o[k]||0)+1});return o};const A={};V.forEach(v=>{const a=A[v.art]=A[v.art]||{artigo:v.art,visitas:0,l:new Set(),qr:0};a.visitas++;a.l.add(v.dev);if(v.origem==='qr')a.qr++});
+  const H=g(v=>new Date(v.criado).getHours()),W=g(v=>(new Date(v.criado).getDay()||7)),D=g(v=>v.criado.slice(0,10));
+  return {visitas:V.length,leitores:new Set(V.map(v=>v.dev)).size,qr:V.filter(v=>v.origem==='qr').length,artigos:Object.values(A).map(a=>({artigo:a.artigo,visitas:a.visitas,leitores:a.l.size,qr:a.qr})),horas:Object.entries(H).map(([h,n])=>({hora:+h,n})),semana:Object.entries(W).map(([d,n])=>({dia:+d,n})),dias:Object.entries(D).sort().map(([dia,n])=>({dia,n}))}},
+ async concursoFotos(c){return this.P('cfotos').filter(f=>f.concurso===c).slice().reverse()},
+ async enviarFotoConcurso(c,blob,d){const info=await this.getDef('concurso',{});if(!info.aberto||info.id!==c)throw new Error('fechado');if(this.P('cfotos').filter(f=>f.concurso===c&&f.utilizador===dev).length>=3)throw new Error('limite');const path='concurso/'+dev+'/'+Date.now().toString(36)+'.jpg';await idb.put(path,blob);this.P('cfotos').push(Object.assign({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),concurso:c,path,utilizador:dev,estado:temPalavrao(d.legenda+' '+d.nome)?'retido':'pendente',criado:new Date().toISOString()},d));this.save()},
+ async urlsConcurso(paths){return this.urlsFotos(paths)},
+ async blobConcurso(p){return idb.get(p)},
+ async moderarFoto(id,estado){const f=this.P('cfotos').find(x=>x.id===id);if(f){f.estado=estado;this.save()}},
+ async apagarFotoConcurso(f){await idb.del(f.path);this.d.cfotos=this.P('cfotos').filter(x=>x.id!==f.id);this.save()},
+ async contagensConcurso(c){const o={};this.P('cvotos').forEach(v=>o[v.foto]=(o[v.foto]||0)+1);return o},
+ async meusVotosConcurso(){return this.P('cvotos').filter(v=>v.dev===dev).map(v=>v.foto)},
+ async votarFoto(id,on){const info=await this.getDef('concurso',{});if(!info.votacao)throw new Error('fechada');if(on){if(this.P('cvotos').filter(v=>v.dev===dev).length>=3)throw new Error('limite');this.P('cvotos').push({foto:id,dev})}else this.d.cvotos=this.P('cvotos').filter(v=>!(v.foto===id&&v.dev===dev));this.save()},
+ async guardarSubscricao(){},async totalSubscricoes(){return 0},
+ async avisar(){throw new Error('Os avisos só funcionam online.')},
+ async versoes(id){return this.P('versoes').filter(v=>v.submissao===id).slice().reverse()}
+});
+{const ed0=local.editarSub;local.editarSub=async function(id,s){const x=this.L().find(y=>y.id===id);if(x&&['texto','titulo','entrada'].some(k=>s[k]!==undefined&&s[k]!==x[k]))this.P('versoes').push({submissao:id,titulo:x.titulo,entrada:x.entrada,texto:x.texto,pelo_autor:!prof,criado:new Date().toISOString()});return ed0.call(this,id,s)};
+ const com0=local.comentar;local.comentar=async function(c){await com0.call(this,c);if(temPalavrao(c.texto+' '+(c.nome||''))){const x=this.d.coms[this.d.coms.length-1];x.estado='retido';this.save()}}}
+
+/* --- dados: Supabase --- */
+function extras13(cl,o){
+ const chk=r=>{if(r.error)throw r.error;return r.data};
+ Object.assign(o,{
+  async visita(ed,art,origem){chk(await cl.from('visitas').insert({edicao:ed,artigo:art,origem}))},
+  async lidos(ed){return [...new Set(chk(await cl.from('visitas').select('artigo').eq('edicao',ed).limit(1000)).map(r=>r.artigo))]},
+  async estatisticas(ed){return chk(await cl.rpc('estatisticas_leitura',{p_edicao:ed}))},
+  async concursoFotos(c){return chk(await cl.from('concurso_fotos').select('*').eq('concurso',c).order('criado',{ascending:false}))},
+  async enviarFotoConcurso(c,blob,d){const path=(await o.uid())+'/'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)+'.jpg';chk(await cl.storage.from('concurso').upload(path,blob,{contentType:'image/jpeg'}));
+   try{chk(await cl.from('concurso_fotos').insert({concurso:c,path,nome:d.nome,turma:d.turma,legenda:d.legenda}))}catch(e){await cl.storage.from('concurso').remove([path]).catch(()=>{});throw e}},
+  async urlsConcurso(paths){const out={};if(!paths.length)return out;chk(await cl.storage.from('concurso').createSignedUrls(paths,3600)).forEach(x=>{if(x.signedUrl)out[x.path]=x.signedUrl});return out},
+  async blobConcurso(p){return chk(await cl.storage.from('concurso').download(p))},
+  async moderarFoto(id,estado){chk(await cl.from('concurso_fotos').update({estado}).eq('id',id))},
+  async apagarFotoConcurso(f){await cl.storage.from('concurso').remove([f.path]).catch(()=>{});chk(await cl.from('concurso_fotos').delete().eq('id',f.id))},
+  async contagensConcurso(c){const out={};chk(await cl.rpc('concurso_contagens',{p_concurso:c})).forEach(r=>out[r.foto]=Number(r.total));return out},
+  async meusVotosConcurso(){return chk(await cl.from('concurso_votos').select('foto')).map(r=>r.foto)},
+  async votarFoto(id,on){if(on)chk(await cl.from('concurso_votos').insert({foto:id}));else chk(await cl.from('concurso_votos').delete().eq('foto',id))},
+  async guardarSubscricao(s){chk(await cl.rpc('guardar_subscricao',{p:s}))},
+  async apagarSubscricao(ep){chk(await cl.rpc('apagar_subscricao',{p_endpoint:ep}))},
+  async totalSubscricoes(){return Number(chk(await cl.rpc('total_subscricoes')))||0},
+  async avisar(m){const r=await cl.functions.invoke('avisar',{body:m});if(r.error)throw r.error;return r.data},
+  async versoes(id){return chk(await cl.from('submissoes_versoes').select('*').eq('submissao',id).order('criado',{ascending:false}))}
+ });
+}
+
+/* --- 1: passaporte do leitor --- */
+async function registarVisita(e,a){
+ const qr=entradaQR&&!jaRotou;jaRotou=true;
+ const k='rc-vis-'+e.n+'-'+a.id;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(err){}
+ const L=LS.get('rc-lidos',{}),l=L[e.n]=L[e.n]||[];if(!l.includes(a.id)){l.push(a.id);LS.set('rc-lidos',L)}
+ try{await db.visita(e.n,a.id,qr?'qr':'app')}catch(err){console.warn(err)}
+}
+const NIVEIS=[[1,'Leitor curioso','Leste o primeiro artigo.'],[.5,'Leitor dedicado','Já vais a meio do jornal.'],[1.01,'Leitor de ouro','Leste o jornal todo!']];
+function selo(nivel,n){const cor=['#8ab6ff','#ffd84d','#f2b705'][nivel];return `<svg viewBox="0 0 100 100" width="64" height="64" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="${cor}" stroke="#16181d" stroke-width="3" stroke-dasharray="6 3"/><circle cx="50" cy="50" r="34" fill="none" stroke="#16181d" stroke-width="2"/><text x="50" y="47" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="600" font-size="20" fill="#16181d">N.º${n}</text><text x="50" y="66" text-anchor="middle" font-size="18">${['★','★★','★★★'][nivel]}</text></svg>`}
+async function passaporte(e){
+ const box=$('#v13i');if(!box)return;
+ let lidos=(LS.get('rc-lidos',{})[e.n])||[];try{lidos=[...new Set(lidos.concat(await db.lidos(e.n)))]}catch(err){}
+ if(!$('#v13i'))return;
+ const ids=new Set(e.artigos.map(a=>a.id)),feitos=lidos.filter(x=>ids.has(x)),n=feitos.length,T=e.artigos.length;
+ main.querySelectorAll('.list li a').forEach(a=>{const id=(a.getAttribute('href')||'').replace('#e'+e.n+'-','');if(feitos.includes(id)){a.classList.add('lido');const lt=a.querySelector('.lt');if(lt&&!lt.querySelector('.vist'))lt.insertAdjacentHTML('afterbegin','<span class="vist" aria-label="Já leste">✓ </span>')}});
+ const nv=n>=T?2:n>=Math.ceil(T/2)?1:n>=1?0:-1;
+ return `<div class="card passa"><div class="passa-h">${nv>=0?selo(nv,e.n):'<div class="selo0" aria-hidden="true">?</div>'}<div><h3 style="margin:0">Passaporte do leitor</h3><p class="note" style="margin:2px 0 0">${nv>=0?`<b>${NIVEIS[nv][1]}.</b> ${NIVEIS[nv][2]} `:''}Leste ${n} de ${T} artigos deste número.${nv<2?' Cada QR que abres carimba o passaporte.':''}</p></div></div>
+ <div class="carimbos" aria-hidden="true">${e.artigos.map(a=>`<span class="${feitos.includes(a.id)?'on':''}" title="${esc(a.ti)}"></span>`).join('')}</div></div>`;
+}
+
+/* --- extras na página da edição --- */
+async function v13Indice(e){
+ const box=$('#v13i');if(!box)return;
+ const [pass,conc,ag]=await Promise.all([passaporte(e),db.getDef('concurso',{}).catch(()=>({})),db.getDef('agenda',[]).catch(()=>[])]);
+ if(!$('#v13i'))return;
+ const hoje=new Date().toISOString().slice(0,10),prox=(ag||[]).filter(x=>x.d>=hoje).sort((a,b)=>(a.d+a.h)<(b.d+b.h)?-1:1);
+ const temPz=e.artigos.find(a=>a.b.some(b=>b.t==='sopa'||b.t==='cruzadas')),temMapa=eds.some(x=>x.artigos.some(a=>localDe(a.lg)));
+ const at=[conc&&(conc.aberto||conc.votacao)?['#concurso','Concurso de fotografia',conc.tema?'Tema: '+conc.tema:'Envia e vota nas fotos']:null,
+  temPz?[`#e${e.n}-${temPz.id}`,'Passatempos','Sopa de letras e palavras cruzadas']:null,
+  ['#cartas','Cartas ao jornal','Escreve à redação'],prox.length?['#agenda','Agenda',prox[0].t+' · '+fmtData(prox[0].d)]:['#agenda','Agenda','O que vem aí na escola'],
+  temMapa?['#mapa','Mapa','As notícias da ilha no mapa']:null].filter(Boolean);
+ box.innerHTML=(pass||'')+`<div class="atalhos">${at.map(([u,t,s])=>`<a href="${u}"><b>${esc(t)}</b><span>${esc(s)}</span></a>`).join('')}</div><div id="avisos"></div>`;
+ botaoAvisos($('#avisos'));
+}
+
+/* --- 4: ouvir (leitura em voz alta) e partilhar --- */
+let falaAtual=null;
+function vozPara(lang){const vs=(window.speechSynthesis&&speechSynthesis.getVoices())||[];return vs.find(v=>v.lang===lang)||vs.find(v=>v.lang&&v.lang.startsWith(lang.slice(0,2)))||null}
+function ouvirUI(el,texto,lang){
+ if(!('speechSynthesis' in window)||!texto)return;
+ const w=document.createElement('div');w.className='ouvir';
+ w.innerHTML=`<button type="button" class="btn sm" data-o="play">▶ ${lang.startsWith('en')?'Listen':'Ouvir'}</button><button type="button" class="btn sm hide" data-o="pause">⏸ Pausa</button><button type="button" class="btn sm hide" data-o="stop">■ Parar</button><label class="vel">${lang.startsWith('en')?'Speed':'Velocidade'} <select data-o="vel"><option value=".8">devagar</option><option value="1" selected>normal</option><option value="1.2">rápido</option></select></label>`;
+ el.prepend(w);
+ const B=k=>w.querySelector(`[data-o="${k}"]`),est=s=>{B('play').classList.toggle('hide',s==='fala');B('pause').classList.toggle('hide',s!=='fala');B('stop').classList.toggle('hide',s==='parado');if(s==='pausa')B('play').textContent='▶ Continuar';if(s==='parado')B('play').textContent='▶ '+(lang.startsWith('en')?'Listen':'Ouvir')};
+ B('play').onclick=()=>{const S=speechSynthesis;if(falaAtual===w&&S.paused){S.resume();est('fala');return}
+  S.cancel();falaAtual=w;const partes=texto.match(/[^.!?\n]+[.!?]*\s*/g)||[texto];let i=0;
+  const prox=()=>{if(falaAtual!==w)return;if(i>=partes.length){falaAtual=null;est('parado');return}const u=new SpeechSynthesisUtterance(partes[i++]);u.lang=lang;const v=vozPara(lang);if(v)u.voice=v;u.rate=Number(B('vel').value)||1;u.onend=prox;u.onerror=()=>{falaAtual=null;est('parado')};S.speak(u)};
+  prox();est('fala')};
+ B('pause').onclick=()=>{speechSynthesis.pause();est('pausa')};
+ B('stop').onclick=()=>{falaAtual=null;speechSynthesis.cancel();est('parado')};
+}
+window.addEventListener('hashchange',()=>{if(falaAtual){falaAtual=null;try{speechSynthesis.cancel()}catch(e){}}});
+async function partilhar(titulo,url,btn){
+ if(navigator.share){try{await navigator.share({title:titulo,url});return}catch(e){if(e&&e.name==='AbortError')return}}
+ try{await navigator.clipboard.writeText(url);btn.textContent='Ligação copiada!'}catch(e){btn.textContent=url}
+}
+function v13Artigo(e,a){
+ registarVisita(e,a);
+ const lead=main.querySelector('.lead');
+ if(a.tx&&lead){const c=document.createElement('div');c.className='card';
+  c.innerHTML=`<details${String(a.tx).length<1500?' open':''}><summary><h3 style="display:inline">Ler o artigo</h3></summary>${a.r?`<p><b>${esc(a.r)}</b></p>`:''}<div class="txt artx">${esc(a.tx)}</div>${a.au?`<p class="note">Texto: ${esc(a.au)}</p>`:''}</details>`;
+  lead.after(c);ouvirUI(c,[a.ti,a.r,a.tx].filter(Boolean).join('. '),'pt-PT')}
+ main.querySelectorAll('.card').forEach(cd=>{const t=cd.querySelector(':scope > .txt');if(!t||t.classList.contains('artx'))return;const h=(cd.querySelector('h3')||{}).textContent||'';ouvirUI(cd,t.textContent,/english|ingl/i.test(h)?'en-GB':'pt-PT')});
+ const row=$('#nav'),L=localDe(a.lg);
+ if(row){const b=document.createElement('button');b.type='button';b.className='btn';b.textContent='Partilhar';b.onclick=()=>partilhar(a.ti+' · Repórter da Calheta',urlArtigo(e,a),b);row.appendChild(b)}
+ if(L&&row)row.insertAdjacentHTML('beforebegin',`<p class="note">📍 ${esc(L.n)} · <a href="#mapa">ver no mapa</a></p>`);
+ iniciarPassatempos(e,a);
+}
+
+/* --- 5: acessibilidade --- */
+const ACC=Object.assign({fs:1,font:'',contraste:0,tema:''},LS.get('rc-acc',{}));
+function aplicarAcc(){const r=document.documentElement;r.dataset.fs=ACC.fs;r.dataset.font=ACC.font||'';r.dataset.contraste=ACC.contraste?'1':'';if(ACC.tema)r.dataset.theme=ACC.tema;else delete r.dataset.theme;
+ if(ACC.font==='leg'&&!$('#fonte-leg')){const l=document.createElement('link');l.id='fonte-leg';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap';document.head.appendChild(l)}}
+function painelAcc(){
+ let p=$('#accp');if(p){p.remove();return}
+ p=document.createElement('div');p.id='accp';p.className='accp card';p.setAttribute('role','dialog');p.setAttribute('aria-label','Opções de leitura');
+ const draw=()=>{p.innerHTML=`<h3>Opções de leitura</h3>
+ <p class="lbl">Tamanho da letra</p><div class="seg">${[[1,'A'],[2,'A+'],[3,'A++']].map(([v,l])=>`<button type="button" class="btn sm ${ACC.fs==v?'on':''}" data-fs="${v}">${l}</button>`).join('')}</div>
+ <p class="lbl">Tipo de letra</p><div class="seg"><button type="button" class="btn sm ${!ACC.font?'on':''}" data-font="">Normal</button><button type="button" class="btn sm ${ACC.font==='leg'?'on':''}" data-font="leg">Mais fácil de ler</button></div>
+ <p class="lbl">Cores</p><div class="seg"><button type="button" class="btn sm ${!ACC.tema?'on':''}" data-tema="">Automático</button><button type="button" class="btn sm ${ACC.tema==='light'?'on':''}" data-tema="light">Claro</button><button type="button" class="btn sm ${ACC.tema==='dark'?'on':''}" data-tema="dark">Escuro</button></div>
+ <label class="chk"><input type="checkbox" id="acc-c" ${ACC.contraste?'checked':''}> Alto contraste</label>
+ <div class="row" style="margin-top:12px"><button type="button" class="btn sm pri" id="acc-x" style="flex:0 0 auto">Fechar</button><button type="button" class="btn sm" id="acc-r" style="flex:0 0 auto">Repor</button></div>
+ <p class="note">O tipo "mais fácil de ler" (Atkinson Hyperlegible) ajuda quem tem dislexia ou vê mal. As opções ficam guardadas neste aparelho.</p>`};
+ draw();document.body.appendChild(p);
+ p.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.fs)ACC.fs=Number(d.fs);if(d.font!==undefined)ACC.font=d.font;if(d.tema!==undefined)ACC.tema=d.tema;
+  if(b.id==='acc-x'){p.remove();$('#accb').focus();return}if(b.id==='acc-r')Object.assign(ACC,{fs:1,font:'',contraste:0,tema:''});
+  LS.set('rc-acc',ACC);aplicarAcc();draw();const f=p.querySelector(b.id?'#'+b.id:`[data-${Object.keys(d)[0]}="${Object.values(d)[0]}"]`);if(f)f.focus()};
+ p.onchange=ev=>{if(ev.target.id==='acc-c'){ACC.contraste=ev.target.checked?1:0;LS.set('rc-acc',ACC);aplicarAcc()}};
+ p.onkeydown=ev=>{if(ev.key==='Escape'){p.remove();$('#accb').focus()}};
+ p.querySelector('button').focus();
+}
+aplicarAcc();
+{const b=document.createElement('button');b.id='accb';b.type='button';b.className='accb';b.innerHTML='<b>Aa</b> Leitura';b.title='Opções de leitura';b.setAttribute('aria-label','Opções de leitura: tamanho da letra, cores e tipo de letra');b.onclick=painelAcc;const mt=document.querySelector('header.mast .meta');mt.insertBefore(b,mt.lastElementChild)}
+
+/* --- 7: passatempos (sopa de letras e palavras cruzadas) --- */
+const limpaPal=w=>norm(w).toUpperCase().replace(/[^A-Z]/g,'');
+function rng(seed){let h=1779033703^seed.length;for(let i=0;i<seed.length;i++){h=Math.imul(h^seed.charCodeAt(i),3432918353);h=h<<13|h>>>19}return ()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);h^=h>>>16;return (h>>>0)/4294967296}}
+const DIRS=[[0,1],[1,0],[1,1],[-1,1]];
+function gerarSopa(words,seed){
+ const W=[...new Set(words.map(limpaPal).filter(w=>w.length>=3&&w.length<=14))].sort((a,b)=>b.length-a.length).slice(0,16);
+ const R=rng(seed),n=Math.min(15,Math.max(10,(W[0]||'').length+2,Math.ceil(Math.sqrt(W.join('').length*2.2))));
+ for(let tent=0;tent<30;tent++){
+  const g=Array.from({length:n},()=>Array(n).fill('')),ok=[];
+  for(const w of W){let pos=false;for(let t=0;t<200&&!pos;t++){const [dr,dc]=DIRS[Math.floor(R()*DIRS.length)],r0=Math.floor(R()*n),c0=Math.floor(R()*n),re=r0+dr*(w.length-1),ce=c0+dc*(w.length-1);
+    if(re<0||re>=n||ce<0||ce>=n)continue;let bom=true;for(let i=0;i<w.length;i++){const x=g[r0+dr*i][c0+dc*i];if(x&&x!==w[i]){bom=false;break}}
+    if(bom){for(let i=0;i<w.length;i++)g[r0+dr*i][c0+dc*i]=w[i];pos=true}}
+   if(pos)ok.push(w)}
+  if(ok.length===W.length||tent===29){const L='AAAEEEIIOOUUSRNTMLCDPBGVFHQZJX';for(const row of g)for(let c=0;c<n;c++)if(!row[c])row[c]=L[Math.floor(R()*L.length)];return {g:g.map(r=>r.join('')),w:ok}}
+ }
+}
+function acharSopa(g,w){const n=g.length;for(let r=0;r<n;r++)for(let c=0;c<n;c++)for(const [dr,dc] of [[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]]){let i=0;for(;i<w.length;i++){const rr=r+dr*i,cc=c+dc*i;if(rr<0||rr>=n||cc<0||cc>=n||g[rr][cc]!==w[i])break}if(i===w.length)return Array.from({length:w.length},(_,k)=>[r+dr*k,c+dc*k])}return null}
+function gerarCruz(items,seed){
+ const L=items.map(x=>({p:limpaPal(x.p),d:String(x.d||'').trim()})).filter(x=>x.p.length>=2&&x.p.length<=15).slice(0,20);
+ const R=rng(seed);let best=null;
+ for(let tent=0;tent<40;tent++){
+  const ord=L.slice().sort((a,b)=>b.p.length-a.p.length+(tent?(R()-.5)*4:0)),cel=new Map(),pl=[],K=(r,c)=>r+','+c,get=(r,c)=>cel.get(K(r,c));
+  const cabe=(w,r,c,h)=>{let cruza=0;for(let i=-1;i<=w.length;i++){const rr=h?r:r+i,cc=h?c+i:c,x=get(rr,cc);if(i<0||i===w.length){if(x)return -1;continue}
+    if(x){if(x!==w[i])return -1;cruza++}else{const a1=h?get(rr-1,cc):get(rr,cc-1),a2=h?get(rr+1,cc):get(rr,cc+1);if(a1||a2)return -1}}return cruza};
+  const por=(w,r,c,h,d)=>{for(let i=0;i<w.length;i++)cel.set(K(h?r:r+i,h?c+i:c),w[i]);pl.push({p:w,d,r,c,h})};
+  por(ord[0].p,0,0,true,ord[0].d);
+  for(const it of ord.slice(1)){let op=[];for(const q of pl)for(let i=0;i<q.p.length;i++)for(let j=0;j<it.p.length;j++){if(q.p[i]!==it.p[j])continue;const h=!q.h,r=q.h?q.r-j:q.r+i,c=q.h?q.c+i:q.c-j,s=cabe(it.p,r,c,h);if(s>0)op.push([s,r,c,h])}
+   if(op.length){op.sort((a,b)=>b[0]-a[0]);const top=op.filter(o=>o[0]===op[0][0]),o=top[Math.floor(R()*top.length)];por(it.p,o[1],o[2],o[3],it.d)}}
+  if(!best||pl.length>best.length)best=pl;if(pl.length===L.length)break;
+ }
+ if(!best)return null;
+ const r0=Math.min(...best.map(q=>q.r)),c0=Math.min(...best.map(q=>q.c));best.forEach(q=>{q.r-=r0;q.c-=c0});
+ const rows=Math.max(...best.map(q=>q.h?q.r+1:q.r+q.p.length)),cols=Math.max(...best.map(q=>q.h?q.c+q.p.length:q.c+1));
+ const ini=[...new Set(best.map(q=>q.r*100+q.c))].sort((a,b)=>a-b);best.forEach(q=>q.n=ini.indexOf(q.r*100+q.c)+1);
+ best.sort((a,b)=>a.n-b.n||(a.h?-1:1));
+ return {R:rows,C:cols,w:best,fora:L.length-best.length};
+}
+function celulasCruz(b){const m={};b.w.forEach(q=>{for(let i=0;i<q.p.length;i++){const r=q.h?q.r:q.r+i,c=q.h?q.c+i:q.c;m[r+','+c]=q.p[i]}});return m}
+function htmlPassatempo(b,bi,cont){
+ const feitos=soma(cont[String(bi)]||{});
+ if(b.t==='sopa')return `<div class="card pz" data-pz="${bi}"><h3>${esc(b.q||'Sopa de letras')}</h3><p class="note" style="margin-top:0">Toca na primeira e na última letra de cada palavra. Há palavras na horizontal, na vertical e na diagonal.</p><div class="sopa" style="--n:${b.g.length}" role="grid" aria-label="Sopa de letras">${b.g.map((row,r)=>[...row].map((ch,c)=>`<button type="button" data-rc="${r},${c}" aria-label="${ch}, linha ${r+1}, coluna ${c+1}">${ch}</button>`).join('')).join('')}</div><ul class="pzw">${b.w.map(w=>`<li data-w="${esc(w)}">${esc(w)}</li>`).join('')}</ul><p class="note pzst"></p><p class="note">${feitos?feitos+(feitos===1?' leitor já resolveu.':' leitores já resolveram.'):''}</p></div>`;
+ if(b.t==='cruzadas'){const m=celulasCruz(b),num={};b.w.forEach(q=>num[q.r+','+q.c]=q.n);let g='';for(let r=0;r<b.R;r++)for(let c=0;c<b.C;c++){const k=r+','+c;g+=m[k]?`<label class="cz">${num[k]?`<i>${num[k]}</i>`:''}<input data-rc="${k}" maxlength="1" autocomplete="off" autocapitalize="characters" aria-label="Linha ${r+1}, coluna ${c+1}"></label>`:'<span class="cz x"></span>'}
+  const pistas=h=>b.w.filter(q=>q.h===h).map(q=>`<li><b>${q.n}.</b> ${esc(q.d)} <span class="note">(${q.p.length})</span></li>`).join('');
+  return `<div class="card pz" data-pz="${bi}"><h3>${esc(b.q||'Palavras cruzadas')}</h3><div class="cruz-w"><div class="cruz" style="--c:${b.C}">${g}</div></div><div class="pistas2"><div><h4>Horizontais</h4><ol>${pistas(true)}</ol></div><div><h4>Verticais</h4><ol>${pistas(false)}</ol></div></div><div class="row" style="margin-top:10px"><button type="button" class="btn sm pri" data-pzv="1" style="flex:0 0 auto">Verificar</button><span class="note pzst" style="margin:0"></span></div><p class="note">${feitos?feitos+(feitos===1?' leitor já resolveu.':' leitores já resolveram.'):''}</p></div>`}
+ return '';
+}
+async function iniciarPassatempos(e,a){
+ const boxes=main.querySelectorAll('[data-pz]');if(!boxes.length)return;
+ const meus=await db.meus(e.n,a.id).catch(()=>({})),sol=novaEd(e);
+ boxes.forEach(box=>{const bi=Number(box.dataset.pz),b=a.b[bi],K='rc-pz-'+e.n+'-'+a.id+'-'+bi,st=box.querySelector('.pzst'),est=LS.get(K,{});
+  const feito=async()=>{st.className='ok pzst';st.textContent='Resolvido! Parabéns.';if(meus[String(bi)]==null){meus[String(bi)]='1';try{await db.votar(e.n,a.id,String(bi),'1')}catch(err){console.warn(err)}}};
+  const btnSol=()=>{if(!sol||box.querySelector('[data-pzs]'))return;box.insertAdjacentHTML('beforeend','<button type="button" class="btn sm" data-pzs="1">Ver a solução</button>')};
+  if(b.t==='sopa'){const achadas=new Set(est.a||[]);let ini=null;
+   const pinta=()=>{box.querySelectorAll('.sopa button').forEach(x=>x.classList.remove('ach','sel'));achadas.forEach(w=>{const p=acharSopa(b.g,w);if(p)p.forEach(([r,c])=>{const x=box.querySelector(`[data-rc="${r},${c}"]`);if(x)x.classList.add('ach')})});box.querySelectorAll('.pzw li').forEach(li=>li.classList.toggle('ok',achadas.has(li.dataset.w)));
+    st.className='note pzst';st.textContent=`${achadas.size} de ${b.w.length} palavras.`;if(achadas.size===b.w.length)feito()};
+   box.onclick=ev=>{if(ev.target.closest('[data-pzs]')){b.w.forEach(w=>achadas.add(w));pinta();return}const x=ev.target.closest('[data-rc]');if(!x)return;const [r,c]=x.dataset.rc.split(',').map(Number);
+    if(!ini){ini=[r,c];x.classList.add('sel');return}const [r0,c0]=ini;ini=null;const dr=Math.sign(r-r0),dc=Math.sign(c-c0),len=Math.max(Math.abs(r-r0),Math.abs(c-c0))+1;
+    if(!(r===r0||c===c0||Math.abs(r-r0)===Math.abs(c-c0))){pinta();return}let s='';for(let i=0;i<len;i++)s+=b.g[r0+dr*i][c0+dc*i];const rv=[...s].reverse().join('');
+    const w=b.w.find(w=>w===s||w===rv);if(w&&!achadas.has(w)){achadas.add(w);LS.set(K,{a:[...achadas]})}pinta()};
+   pinta();btnSol()}
+  if(b.t==='cruzadas'){const m=celulasCruz(b),ins=[...box.querySelectorAll('input[data-rc]')];
+   ins.forEach(i=>{if(est[i.dataset.rc])i.value=est[i.dataset.rc]});
+   const guardar=()=>{const o={};ins.forEach(i=>{if(i.value)o[i.dataset.rc]=i.value});LS.set(K,o)};
+   let dirH=true;
+   box.oninput=ev=>{const i=ev.target.closest('input[data-rc]');if(!i)return;i.value=limpaPal(i.value).slice(-1);i.classList.remove('mal');guardar();if(i.value){const [r,c]=i.dataset.rc.split(',').map(Number),nx=box.querySelector(`[data-rc="${dirH?r+','+(c+1):(r+1)+','+c}"]`);if(nx&&nx.tagName==='INPUT')nx.focus()}};
+   box.onfocusin=ev=>{const i=ev.target.closest('input[data-rc]');if(!i)return;const [r,c]=i.dataset.rc.split(',').map(Number);const h=m[r+','+(c-1)]||m[r+','+(c+1)],v=m[(r-1)+','+c]||m[(r+1)+','+c];if(h&&!v)dirH=true;else if(v&&!h)dirH=false};
+   box.onkeydown=ev=>{const i=ev.target.closest('input[data-rc]');if(!i)return;const [r,c]=i.dataset.rc.split(',').map(Number),mv={ArrowRight:[0,1],ArrowLeft:[0,-1],ArrowDown:[1,0],ArrowUp:[-1,0]}[ev.key];
+    if(ev.key==='Backspace'&&!i.value){const p=box.querySelector(`[data-rc="${dirH?r+','+(c-1):(r-1)+','+c}"]`);if(p&&p.tagName==='INPUT'){p.focus();ev.preventDefault()}}
+    if(mv){dirH=!mv[0];const n=box.querySelector(`[data-rc="${(r+mv[0])+','+(c+mv[1])}"]`);if(n&&n.tagName==='INPUT'){n.focus();ev.preventDefault()}}};
+   box.onclick=ev=>{if(ev.target.closest('[data-pzs]')){ins.forEach(i=>{i.value=m[i.dataset.rc];i.classList.remove('mal')});guardar();return}
+    if(!ev.target.closest('[data-pzv]'))return;let vaz=0,mal=0;ins.forEach(i=>{if(!i.value)vaz++;else if(i.value!==m[i.dataset.rc]){mal++;i.classList.add('mal')}});
+    if(!vaz&&!mal)return feito();st.className='note pzst';st.textContent=mal?`${mal} ${mal===1?'letra errada':'letras erradas'} (a vermelho).${vaz?' Faltam '+vaz+'.':''}`:`Está tudo certo até agora. Faltam ${vaz} letras.`};
+   btnSol()}
+  if(sol)box.insertAdjacentHTML('beforeend','<p class="note">Já saiu o número seguinte: podes ver a solução.</p>');
+  else box.insertAdjacentHTML('beforeend','<p class="note">A solução sai no próximo número do jornal.</p>');
+ });
+}
+/* desenho em PNG, para o jornal em papel */
+function pngPassatempo(b,solucao){
+ const cs=48,pad=30,cv=document.createElement('canvas'),x=cv.getContext('2d');
+ if(b.t==='sopa'){const n=b.g.length;cv.width=cv.height=n*cs+pad*2;x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);
+  if(solucao){x.fillStyle='#ffd84d';b.w.forEach(w=>{const p=acharSopa(b.g,w);if(p)p.forEach(([r,c])=>x.fillRect(pad+c*cs+2,pad+r*cs+2,cs-4,cs-4))})}
+  x.fillStyle='#16181d';x.font='600 28px "Source Sans 3", sans-serif';x.textAlign='center';x.textBaseline='middle';
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++)x.fillText(b.g[r][c],pad+c*cs+cs/2,pad+r*cs+cs/2+1);
+  x.strokeStyle='#16181d';x.lineWidth=2;x.strokeRect(pad-6,pad-6,n*cs+12,n*cs+12)}
+ else{const m=celulasCruz(b),num={};b.w.forEach(q=>num[q.r+','+q.c]=q.n);cv.width=b.C*cs+pad*2;cv.height=b.R*cs+pad*2;x.fillStyle='#fff';x.fillRect(0,0,cv.width,cv.height);
+  for(const k in m){const [r,c]=k.split(',').map(Number),X=pad+c*cs,Y=pad+r*cs;x.fillStyle='#fff';x.fillRect(X,Y,cs,cs);x.strokeStyle='#16181d';x.lineWidth=2;x.strokeRect(X,Y,cs,cs);
+   x.fillStyle='#16181d';if(num[k]){x.font='600 14px "Source Sans 3", sans-serif';x.textAlign='left';x.textBaseline='top';x.fillText(num[k],X+4,Y+3)}
+   if(solucao){x.font='600 26px "Source Sans 3", sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(m[k],X+cs/2,Y+cs/2+4)}}}
+ return cv.toDataURL('image/png');
+}
+
+/* --- 8: concurso de fotografia --- */
+async function verConcurso(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Concurso de fotografia';window.scrollTo(0,0);
+ const info=await db.getDef('concurso',{}).catch(()=>({}))||{};
+ if(location.hash!=='#concurso')return;
+ if(!info.id){main.innerHTML='<span class="tag">Concurso de fotografia</span><h2 class="t">Ainda não há concurso</h2><p class="lead">Fica atento: o próximo tema é anunciado no jornal.</p>';return}
+ const [fotos,cont,meus,eu]=await Promise.all([db.concursoFotos(info.id).catch(()=>[]),db.contagensConcurso(info.id).catch(()=>({})),db.meusVotosConcurso().catch(()=>[]),db.uid().catch(()=>dev)]);
+ const apr=fotos.filter(f=>f.estado==='aprovado'),minhas=fotos.filter(f=>f.utilizador===eu),urls=await db.urlsConcurso(apr.concat(minhas).map(f=>f.path)).catch(()=>({}));
+ if(location.hash!=='#concurso')return;
+ const ord=info.votacao?apr:apr.slice().sort((a,b)=>(cont[b.id]||0)-(cont[a.id]||0));
+ main.innerHTML=`<span class="tag">Concurso de fotografia</span><h2 class="t">${esc(info.tema||'Concurso de fotografia')}</h2>
+ <p class="lead">${esc(info.desc||'Tira uma fotografia sobre o tema e envia-a. As melhores saem no jornal.')}${info.ate?` Envia até <b>${esc(fmtData(info.ate))}</b>.`:''}</p>
+ ${info.aberto?`<div class="card"><h3>Envia a tua fotografia</h3><form id="cf"><button type="button" class="btn" id="cf-b">Escolher fotografia</button><input type="file" id="cf-f" accept="image/*" class="hide"><div id="cf-p" style="margin-top:10px"></div>
+  <label for="cf-l">Título ou legenda</label><input id="cf-l" maxlength="160" required><div class="row"><div><label for="cf-n">Primeiro nome</label><input id="cf-n" maxlength="30"></div><div style="flex:0 1 140px"><label for="cf-t">Turma</label><input id="cf-t" maxlength="12" value="${esc(LS.get('rc-turma','')||'')}"></div></div>
+  <label class="chk"><input type="checkbox" id="cf-a"> A fotografia é minha e não se vê a cara de ninguém (ou as pessoas deram autorização).</label>
+  <div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar</button><span class="msg" id="cf-m"></span></div><p class="note">Até 3 fotografias por pessoa. Um professor vê todas antes de aparecerem aqui.</p></form></div>`:''}
+ ${minhas.length?`<div class="card"><h3>As tuas fotografias</h3><div class="thumbs">${minhas.map(f=>`<div class="th">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="${esc(f.legenda||'A tua fotografia')}">`:''}<b>${esc(f.legenda||'')}</b><span class="ls">${f.estado==='aprovado'?'Na galeria':f.estado==='rejeitado'?'Não foi aceite':'À espera de um professor'}</span></div>`).join('')}</div></div>`:''}
+ <h3 style="margin-top:22px">Galeria${info.votacao?' · vota nas tuas 3 preferidas':''}</h3>
+ ${ord.length?`<div class="galeria">${ord.map(f=>{const v=meus.includes(f.id);return `<figure class="gf">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="${esc(f.legenda||'Fotografia do concurso')}" loading="lazy">`:''}<figcaption><b>${esc(f.legenda||'')}</b><span class="ls">${esc(f.nome||'')}${f.turma?' · '+esc(f.turma):''}</span>${info.votacao?`<button type="button" class="btn sm ${v?'pri':''}" data-cv="${esc(f.id)}" aria-pressed="${v}">${v?'♥ Votaste':'♡ Votar'} · ${cont[f.id]||0}</button>`:`<span class="ls">${cont[f.id]||0} ♥</span>`}</figcaption></figure>`}).join('')}</div>`:'<p class="note">Ainda não há fotografias na galeria.</p>'}
+ <p class="note" id="cv-m"></p><p class="note"><a href="#inicio">Voltar ao jornal</a></p>`;
+ let blob=null;const f=$('#cf');
+ if(f){$('#cf-b').onclick=()=>$('#cf-f').click();
+  $('#cf-f').onchange=async()=>{const x=$('#cf-f').files[0];if(!x)return;try{blob=await comprimir(x);$('#cf-p').innerHTML=`<img src="${URL.createObjectURL(blob)}" alt="Pré-visualização" style="max-width:260px;width:100%;border-radius:10px">`}catch(e){$('#cf-m').className='msg err';$('#cf-m').textContent='Não consegui abrir esta imagem.'}};
+  f.onsubmit=async ev=>{ev.preventDefault();const m=$('#cf-m'),err=t=>{m.className='msg err';m.textContent=t};const leg=$('#cf-l').value.trim(),nome=$('#cf-n').value.trim();
+   if(!blob)return err('Escolhe a fotografia.');if(!leg)return err('Dá um título à fotografia.');if(!$('#cf-a').checked)return err('Confirma a autorização.');if(temPalavrao(leg+' '+nome))return err(AVISO_PAL);
+   const b=f.querySelector('button.pri');b.disabled=true;m.className='msg';m.textContent='A enviar…';
+   try{await db.enviarFotoConcurso(info.id,blob,{legenda:leg,nome,turma:fmtT($('#cf-t').value)});verConcurso()}catch(e){console.warn(e);err(/3|limite/.test(e.message||'')?'Já enviaste 3 fotografias.':'Não foi possível enviar.');b.disabled=false}}}
+ main.onclick=async ev=>{const b=ev.target.closest('[data-cv]');if(!b||location.hash!=='#concurso')return;b.disabled=true;
+  try{await db.votarFoto(b.dataset.cv,!meus.includes(b.dataset.cv));verConcurso()}catch(e){console.warn(e);$('#cv-m').textContent=meus.length>=3?'Já votaste em 3 fotografias. Tira um voto para votares noutra.':'Não foi possível votar.';b.disabled=false}};
+}
+
+/* --- 10: cartas ao jornal --- */
+async function verCartas(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Cartas ao jornal';window.scrollTo(0,0);
+ const e=edicao(dest)||eds[eds.length-1],lista=await db.comentarios({tipo:'carta',estado:'aprovado'}).catch(()=>[]);
+ if(location.hash!=='#cartas')return;
+ main.innerHTML=`<span class="tag">Cartas ao jornal</span><h2 class="t">Escreve à redação</h2>
+ <p class="lead">Tens uma opinião sobre a escola, uma ideia para melhorar alguma coisa ou queres agradecer a alguém? Escreve uma carta. As melhores saem no jornal em papel.</p>
+ ${e?`<div class="card"><form id="kf"><div class="row"><div><label for="kn">Nome como queres que saia</label><input id="kn" maxlength="30" placeholder="ex.: Inês M."></div><div style="flex:0 1 140px"><label for="kt">Turma ou cargo</label><input id="kt" maxlength="10" placeholder="ex.: 9.º A"></div></div>
+ <label for="kx">A tua carta</label><textarea id="kx" maxlength="1500" style="min-height:200px"></textarea><p class="note" id="kc">0 de 1500 caracteres.</p>
+ <div class="row" style="margin-top:6px"><button class="btn pri" style="flex:0 0 auto">Enviar carta</button><span class="msg"></span></div><p class="note">Uma carta fala de ideias, não ataca pessoas. A equipa pode encurtar o texto. Não escrevas moradas nem telefones.</p></form></div>`:''}
+ <h3 style="margin-top:22px">Cartas publicadas</h3><ul class="coms">${lista.map(c=>`<li><div class="txt">${esc(c.texto)}</div><small>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''}</small></li>`).join('')||'<li class="note">Ainda não há cartas publicadas.</li>'}</ul>`;
+ const f=$('#kf');if(!f)return;$('#kx').oninput=()=>$('#kc').textContent=$('#kx').value.length+' de 1500 caracteres.';
+ f.onsubmit=async ev=>{ev.preventDefault();const m=f.querySelector('.msg'),t=$('#kx').value.trim(),n=$('#kn').value.trim();if(t.length<30){m.className='msg err';m.textContent='Escreve um pouco mais.';return}if(temPalavrao(t+' '+n)){m.className='msg err';m.textContent=AVISO_PAL;return}
+  const b=f.querySelector('button');b.disabled=true;try{await db.comentar({ed:e.n,art:'_cartas',tipo:'carta',nome:n.slice(0,30),turma:$('#kt').value.trim().slice(0,10),texto:t.slice(0,1500)});f.reset();m.className='msg ok';m.textContent='Obrigado! A equipa do jornal vai ler a tua carta.'}catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível enviar.'}b.disabled=false};
+}
+
+/* --- 11: mapa das notícias --- */
+async function verMapa(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Mapa';window.scrollTo(0,0);
+ const pts=eds.flatMap(e=>e.artigos.map(a=>({e,a,L:localDe(a.lg)}))).filter(x=>x.L);
+ main.innerHTML=`<span class="tag">Mapa</span><h2 class="t">As notícias no mapa de São Jorge</h2><p class="lead">${pts.length} ${pts.length===1?'artigo tem':'artigos têm'} lugar marcado. Toca num ponto para abrir o artigo.</p>
+ <div class="row"><div><label for="me">Edição</label><select id="me"><option value="">Todas</option>${eds.map(e=>`<option value="${e.n}">N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select></div></div>
+ <div id="mapa" class="mapa" role="region" aria-label="Mapa das notícias"></div><ul class="list" id="ml"></ul>`;
+ try{if(!window.L){const l=document.createElement('link');l.rel='stylesheet';l.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';document.head.appendChild(l);await loadScript('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js')}}catch(e){$('#mapa').innerHTML='<p class="note" style="padding:12px">Não foi possível carregar o mapa.</p>'}
+ if(location.hash!=='#mapa')return;
+ let mp=null,camada=null;
+ if(window.L){mp=L.map('mapa',{scrollWheelZoom:false}).setView([38.64,-28.0],10);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(mp)}
+ const draw=()=>{const en=Number($('#me').value),P=pts.filter(x=>!en||x.e.n===en);
+  $('#ml').innerHTML=P.map(x=>`<li><a href="#e${x.e.n}-${esc(x.a.id)}"><span class="pg">n.º${x.e.n}</span><span><span class="lt">${esc(x.a.ti)}</span><span class="ls">📍 ${esc(x.L.n)} · ${esc(x.a.s)}</span></span></a></li>`).join('')||'<li class="note">Nenhum artigo desta edição tem lugar marcado.</li>';
+  if(!mp)return;if(camada)camada.remove();camada=L.layerGroup().addTo(mp);const g={};P.forEach(x=>{const k=x.L.la+','+x.L.lo;(g[k]=g[k]||{L:x.L,l:[]}).l.push(x)});
+  Object.values(g).forEach(({L:p,l})=>L.circleMarker([p.la,p.lo],{radius:9+Math.min(8,l.length*2),color:'#16181d',weight:2,fillColor:'#ffd84d',fillOpacity:.95}).bindPopup(`<b>${esc(p.n)}</b><br>${l.map(x=>`<a href="#e${x.e.n}-${esc(x.a.id)}">${esc(x.a.ti)}</a> <small>(n.º${x.e.n})</small>`).join('<br>')}`).addTo(camada));
+  const b=P.map(x=>[x.L.la,x.L.lo]);if(b.length>1)mp.fitBounds(b,{padding:[30,30],maxZoom:13});else if(b.length)mp.setView(b[0],12)};
+ $('#me').onchange=draw;draw();
+}
+
+/* --- 12: agenda da escola --- */
+const icsData=d=>d.replace(/-/g,'');
+function ics(evs){const z=s=>String(s||'').replace(/([,;\\])/g,'\\$1').replace(/\n/g,'\\n'),now=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
+ return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Reporter da Calheta//Participa//PT','CALSCALE:GREGORIAN'].concat(...evs.map(e=>{const fim=e.h?null:new Date(new Date(e.d+'T12:00').getTime()+864e5).toISOString().slice(0,10);
+  return ['BEGIN:VEVENT','UID:'+e.id+'@reporter-calheta','DTSTAMP:'+now,e.h?'DTSTART:'+icsData(e.d)+'T'+e.h.replace(':','')+'00':'DTSTART;VALUE=DATE:'+icsData(e.d),e.h?'DURATION:PT1H':'DTEND;VALUE=DATE:'+icsData(fim),'SUMMARY:'+z(e.t),e.l?'LOCATION:'+z(e.l):'',e.x?'DESCRIPTION:'+z(e.x):'','END:VEVENT'].filter(Boolean)}),['END:VCALENDAR']).join('\r\n')}
+async function verAgenda(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Agenda';window.scrollTo(0,0);
+ const ag=(await db.getDef('agenda',[]).catch(()=>[]))||[];if(location.hash!=='#agenda')return;
+ const hoje=new Date().toISOString().slice(0,10),L=ag.slice().sort((a,b)=>(a.d+(a.h||''))<(b.d+(b.h||''))?-1:1),prox=L.filter(x=>x.d>=hoje),pass=L.filter(x=>x.d<hoje).reverse().slice(0,10);
+ const mes=d=>new Date(d+'T12:00').toLocaleDateString('pt-PT',{month:'long',year:'numeric'}),item=x=>`<li class="ev"><div class="evd"><b>${new Date(x.d+'T12:00').getDate()}</b><span>${new Date(x.d+'T12:00').toLocaleDateString('pt-PT',{weekday:'short'})}</span></div><div><span class="lt">${esc(x.t)}</span><span class="ls">${x.h?esc(x.h)+' · ':''}${esc(x.l||'')}</span>${x.x?`<p style="margin:4px 0 0">${esc(x.x)}</p>`:''}</div><button type="button" class="btn sm" data-ics="${esc(x.id)}">+ Calendário</button></li>`;
+ let h='',m='';prox.forEach(x=>{const mm=mes(x.d);if(mm!==m){if(m)h+='</ul>';h+=`<h3 style="margin-top:18px">${esc(mm.charAt(0).toUpperCase()+mm.slice(1))}</h3><ul class="agenda">`;m=mm}h+=item(x)});if(m)h+='</ul>';
+ main.innerHTML=`<span class="tag">Agenda</span><h2 class="t">O que vem aí na escola</h2><p class="lead">Atividades, visitas, dias especiais e prazos. Toca em "+ Calendário" para guardar no telemóvel.</p>
+ ${prox.length?`<button type="button" class="btn sm" id="ag-all">Guardar tudo no calendário</button>${h}`:'<p class="note">Não há nada marcado para os próximos dias.</p>'}
+ ${pass.length?`<details style="margin-top:22px"><summary>Já aconteceu</summary><ul class="agenda">${pass.map(item).join('')}</ul></details>`:''}`;
+ main.onclick=ev=>{if(location.hash!=='#agenda')return;const b=ev.target.closest('[data-ics]');if(b){const x=ag.find(y=>y.id===b.dataset.ics);if(x)baixar(new Blob([ics([x])],{type:'text/calendar'}),slug(x.t)+'.ics')}if(ev.target.id==='ag-all')baixar(new Blob([ics(prox)],{type:'text/calendar'}),'agenda-escola.ics')};
+}
+
+/* --- 14: app instalável e avisos no telemóvel --- */
+let swReg=null;
+if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').then(r=>swReg=r).catch(e=>console.warn(e))}
+const podeAvisar=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&cfg.vapid;
+async function botaoAvisos(box){
+ if(!box)return;const ios=/iphone|ipad|ipod/i.test(navigator.userAgent),inst=window.matchMedia&&matchMedia('(display-mode: standalone)').matches;
+ if(!podeAvisar()){if(ios&&!inst)box.innerHTML='<p class="note">📱 No iPhone: toca em <b>Partilhar</b> e depois em <b>Adicionar ao ecrã principal</b>. A Participa fica como uma app e podes receber avisos das novas edições.</p>';return}
+ let sub=null;try{const r=swReg||await navigator.serviceWorker.ready;sub=await r.pushManager.getSubscription()}catch(e){}
+ box.innerHTML=`<div class="card avisos"><div class="row" style="align-items:center"><p style="flex:3 1 240px;margin:0">${sub?'🔔 Vais receber um aviso quando sair um número novo.':'🔔 Queres um aviso no telemóvel quando sair um número novo do jornal?'}</p><button type="button" class="btn sm ${sub?'':'pri'}" id="av-b" style="flex:0 0 auto">${sub?'Deixar de receber':'Receber avisos'}</button></div><p class="note" id="av-m" style="margin:6px 0 0"></p></div>`;
+ $('#av-b').onclick=async()=>{const m=$('#av-m');try{const r=swReg||await navigator.serviceWorker.ready;
+  if(sub){const ep=sub.endpoint;await sub.unsubscribe();if(db.apagarSubscricao)await db.apagarSubscricao(ep).catch(()=>{});return botaoAvisos(box)}
+  const p=await Notification.requestPermission();if(p!=='granted'){m.textContent='Sem autorização para avisos. Podes mudar isto nas definições do browser.';return}
+  const s=await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlB64(cfg.vapid)});await db.guardarSubscricao(s.toJSON());botaoAvisos(box)}catch(e){console.warn(e);m.textContent='Não foi possível ativar os avisos neste aparelho.'}};
+}
+
+/* --- 15: revisor de texto --- */
+const AO90=[['acção','ação'],['acções','ações'],['direcção','direção'],['óptimo','ótimo'],['óptima','ótima'],['actual','atual'],['actualmente','atualmente'],['actividade','atividade'],['actividades','atividades'],['colecção','coleção'],['projecto','projeto'],['projectos','projetos'],['objectivo','objetivo'],['objectivos','objetivos'],['director','diretor'],['directora','diretora'],['efectuar','efetuar'],['efectivamente','efetivamente'],['correcto','correto'],['correcta','correta'],['exacto','exato'],['exacta','exata'],['selecção','seleção'],['electricidade','eletricidade'],['eléctrico','elétrico'],['protecção','proteção'],['adopção','adoção'],['baptismo','batismo'],['Janeiro','janeiro'],['Fevereiro','fevereiro'],['Março','março'],['Abril','abril'],['Maio','maio'],['Junho','junho'],['Julho','julho'],['Agosto','agosto'],['Setembro','setembro'],['Outubro','outubro'],['Novembro','novembro'],['Dezembro','dezembro']];
+function revisaoLocal(t){const out=[];
+ AO90.forEach(([a,b])=>{const re=new RegExp('(^|[^\\p{L}])('+a+')(?![\\p{L}])','gu');let m;while((m=re.exec(t))){const o=m.index+m[1].length;if(/^[A-Z]/.test(a)&&o>0&&/[.!?]\s*$/.test(t.slice(Math.max(0,o-3),o)))continue;out.push({o,l:a.length,msg:/^[A-Z]/.test(a)?'Os meses escrevem-se com letra minúscula.':'Grafia antiga: com o Acordo Ortográfico escreve-se "'+b+'".',rep:[b]})}});
+ let m;const re2=/ {2,}/g;while((m=re2.exec(t)))out.push({o:m.index,l:m[0].length,msg:'Espaços a mais.',rep:[' ']});
+ const re3=/ +([,.;:!?])/g;while((m=re3.exec(t)))out.push({o:m.index,l:m[0].length,msg:'Não se põe espaço antes da pontuação.',rep:[m[1]]});
+ const re4=/(?<![\p{L}])(\p{L}+)\s+\1(?![\p{L}])/giu;while((m=re4.exec(t)))if(m[1].length>2)out.push({o:m.index,l:m[0].length,msg:'Palavra repetida.',rep:[m[1]]});
+ (t.match(/[^.!?\n]+[.!?]?/g)||[]).reduce((pos,fr)=>{const p=palavras(fr);if(p>40)out.push({o:t.indexOf(fr,pos),l:fr.length,msg:`Frase muito longa (${p} palavras): divide-a em duas.`,rep:[],longa:true});return pos+fr.length},0);
+ return out}
+async function revisaoLT(t){
+ const r=await fetch('https://api.languagetool.org/v2/check',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({text:t.slice(0,18000),language:'pt-PT',level:'default'})});
+ if(!r.ok)throw new Error('LT '+r.status);const j=await r.json();
+ return (j.matches||[]).filter(m=>!/WHITESPACE|DOUBLE_PUNCT/.test((m.rule&&m.rule.id)||'')).map(m=>({o:m.offset,l:m.length,msg:m.message,rep:(m.replacements||[]).slice(0,3).map(x=>x.value)}));
+}
+function revisorUI(card,getT,setT){
+ const w=document.createElement('div');w.className='revisor';w.innerHTML=`<div class="row" style="align-items:center;margin-top:10px"><button type="button" class="btn sm" id="rv-b" style="flex:0 0 auto">Rever ortografia e gramática</button><span class="note" style="margin:0;flex:2 1 200px">O texto é enviado ao corretor LanguageTool só quando carregas no botão.</span></div><div id="rv-l"></div>`;card.appendChild(w);
+ const run=async()=>{const t=getT(),el=$('#rv-l'),b=$('#rv-b');if(palavras(t)<5){el.innerHTML='<p class="note">Escreve primeiro o texto.</p>';return}b.disabled=true;b.textContent='A rever…';
+  let L=revisaoLocal(t),online=true;try{const lt=await revisaoLT(t);lt.forEach(x=>{if(!L.some(y=>y.o<x.o+x.l&&x.o<y.o+y.l))L.push(x)})}catch(e){console.warn(e);online=false}
+  L.sort((a,b)=>a.o-b.o);b.disabled=false;b.textContent='Rever outra vez';
+  el.innerHTML=`${online?'':'<p class="note">O corretor online não respondeu; mostro só as verificações básicas.</p>'}${L.length?`<p class="note">${L.length} ${L.length===1?'sugestão':'sugestões'}. Toca numa correção para a aplicar.</p><ul class="rvl">${L.slice(0,60).map((x,i)=>`<li><span class="ctx">${esc(t.slice(Math.max(0,x.o-30),x.o))}<mark>${esc(t.substr(x.o,x.l))}</mark>${esc(t.slice(x.o+x.l,x.o+x.l+30))}</span><br><span class="note" style="margin:0">${esc(x.msg)}</span> ${x.rep.map((r,j)=>`<button type="button" class="btn sm" data-rv="${i}:${j}">${esc(r===' '?'(um espaço)':r||'(apagar)')}</button>`).join(' ')}</li>`).join('')}</ul>`:'<p class="ok">Não encontrei erros. Mesmo assim, lê o texto em voz alta antes de enviar.</p>'}`;
+  el.onclick=ev=>{const q=ev.target.closest('[data-rv]');if(!q)return;const [i,j]=q.dataset.rv.split(':').map(Number),x=L[i],cur=getT();if(cur!==t){run();return}setT(cur.slice(0,x.o)+x.rep[j]+cur.slice(x.o+x.l));run()}};
+ $('#rv-b').onclick=run;
+}
+
+/* --- 17: notas da equipa no próprio texto --- */
+function marcarTexto(t,an){
+ const R=[];(an||[]).forEach((a,i)=>{let p=-1,from=0;while((p=t.indexOf(a.q,from))>=0){if(!R.some(r=>p<r.e&&r.s<p+a.q.length))break;from=p+1}if(p>=0&&a.q)R.push({s:p,e:p+a.q.length,i})});
+ R.sort((a,b)=>a.s-b.s);let h='',pos=0;R.forEach(r=>{h+=esc(t.slice(pos,r.s))+`<mark class="an" data-an="${r.i}">${esc(t.slice(r.s,r.e))}<sup>${r.i+1}</sup></mark>`;pos=r.e});h+=esc(t.slice(pos));
+ return {h,achadas:new Set(R.map(r=>r.i))};
+}
+function notasAutorHTML(texto,an){if(!(an||[]).length)return '';const {h,achadas}=marcarTexto(texto,an);
+ return `<div class="card"><h3>Notas da equipa no teu texto (${an.length})</h3><div class="texto">${h}</div><ol class="anl">${an.map((a,i)=>`<li class="${achadas.has(i)?'':'feita'}"><b>«${esc(a.q.length>60?a.q.slice(0,60)+'…':a.q)}»</b> ${esc(a.n)}${achadas.has(i)?'':' <span class="ok">(já mudaste esta parte)</span>'}</li>`).join('')}</ol></div>`}
+function anotarUI(s,box){
+ const an=(s.anotacoes||[]).slice(),txt=box.querySelector('.texto');if(!txt)return;
+ const draw=()=>{const {h,achadas}=marcarTexto(s.texto,an);txt.innerHTML=h;txt.id='m-txt';
+  let l=box.querySelector('.anbox');if(!l){l=document.createElement('div');l.className='anbox';txt.after(l)}
+  l.innerHTML=`<div class="row" style="align-items:end;margin-top:8px"><div style="flex:3 1 260px"><label for="an-n" style="margin-top:0">Nota sobre a frase selecionada</label><input id="an-n" maxlength="300" placeholder="Seleciona uma parte do texto acima e escreve aqui a nota"></div><button type="button" class="btn sm" id="an-a" style="flex:0 0 auto">Pôr nota</button><span class="msg" id="an-m"></span></div>
+  ${an.length?`<ol class="anl">${an.map((a,i)=>`<li class="${achadas.has(i)?'':'feita'}"><b>«${esc(a.q.length>60?a.q.slice(0,60)+'…':a.q)}»</b> ${esc(a.n)}${achadas.has(i)?'':' <span class="ok">(o autor já mudou)</span>'} <button type="button" class="lk" data-anrm="${i}">retirar</button></li>`).join('')}</ol>`:''}`;
+  let sel='';txt.onmouseup=txt.ontouchend=txt.onkeyup=()=>{const S=window.getSelection();if(S&&txt.contains(S.anchorNode))sel=String(S).trim().slice(0,300)};
+  const gravar=async()=>{try{await db.editarSub(s.id,{anotacoes:an});s.anotacoes=an.slice()}catch(e){console.warn(e);$('#an-m').className='msg err';$('#an-m').textContent='Não foi possível guardar.'}};
+  $('#an-a').onclick=async()=>{const n=$('#an-n').value.trim(),m=$('#an-m');if(!sel){m.className='msg err';m.textContent='Seleciona primeiro uma parte do texto.';return}if(!n){$('#an-n').focus();return}an.push({q:sel,n});sel='';await gravar();draw()};
+  l.querySelectorAll('[data-anrm]').forEach(b=>b.onclick=async()=>{an.splice(Number(b.dataset.anrm),1);await gravar();draw()})};
+ draw();
+}
+
+/* --- 18: histórico de versões --- */
+function diffPal(a,b){
+ const A=a.split(/(\s+)/),B=b.split(/(\s+)/),n=A.length,m=B.length;
+ if(n*m>4e6)return a===b?esc(b):`<del>${esc(a)}</del><ins>${esc(b)}</ins>`;
+ const D=Array.from({length:n+1},()=>new Uint16Array(m+1));for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)D[i][j]=A[i]===B[j]?D[i+1][j+1]+1:Math.max(D[i+1][j],D[i][j+1]);
+ let i=0,j=0,h='';while(i<n&&j<m){if(A[i]===B[j]){h+=esc(A[i]);i++;j++}else if(D[i+1][j]>=D[i][j+1]){h+=`<del>${esc(A[i])}</del>`;i++}else{h+=`<ins>${esc(B[j])}</ins>`;j++}}
+ while(i<n){h+=`<del>${esc(A[i])}</del>`;i++}while(j<m)h+=`<ins>${esc(B[j++])}</ins>`;return h.replace(/<\/del><del>/g,'').replace(/<\/ins><ins>/g,'');
+}
+async function versoesUI(s,box){
+ const el=box.querySelector('#vs');if(!el)return;const V=await db.versoes(s.id).catch(()=>[]);
+ if(!V.length){el.innerHTML='<p class="note">Ainda não há versões anteriores: o texto não foi alterado desde que chegou.</p>';return}
+ const dt=x=>new Date(x.criado).toLocaleString('pt-PT',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+ el.innerHTML=`<label for="vs-s">Comparar o texto atual com</label><select id="vs-s">${V.map((v,i)=>`<option value="${i}">Versão de ${esc(dt(v))}${v.pelo_autor?' (antes da correção do autor)':' (antes de uma mudança da equipa)'}</option>`).join('')}</select><p class="note"><ins>Verde</ins>: acrescentado. <del>Vermelho</del>: retirado.</p><div class="texto diff" id="vs-d"></div>`;
+ const draw=()=>{const v=V[Number($('#vs-s').value)];$('#vs-d').innerHTML=(v.titulo!==s.titulo?`<p><b>Título:</b> ${diffPal(v.titulo||'',s.titulo||'')}</p>`:'')+(v.entrada!==s.entrada?`<p><b>Entrada:</b> ${diffPal(v.entrada||'',s.entrada||'')}</p>`:'')+diffPal(v.texto||'',s.texto||'')};
+ $('#vs-s').onchange=draw;draw();
+}
+function v13Detalhe(s){
+ const box=pane()&&pane().querySelector('.art');if(!box)return;
+ anotarUI(s,box);
+ box.querySelector('.anbox').insertAdjacentHTML('afterend','<details class="vsd" style="margin-top:10px"><summary>Versões anteriores e alterações</summary><div id="vs"><p class="note">A carregar…</p></div></details>');
+ box.querySelector('.vsd').addEventListener('toggle',ev=>{if(ev.target.open)versoesUI(s,box)},{once:true});
+}
+
+/* --- 21: estatísticas de leitura --- */
+async function pEstat(){
+ const e=edicao(edSel||dest);if(!e){pane().innerHTML='<p class="note">Sem edições.</p>';return}
+ pane().innerHTML='<p class="note">A contar…</p>';
+ const [st,cont]=await Promise.all([db.estatisticas(e.n).catch(err=>{console.warn(err);return null}),db.todasContagens(e.n).catch(()=>({}))]);
+ if(!st){pane().innerHTML=`<div>${selEd()}</div><p class="err">Não foi possível carregar as estatísticas.</p>`;bindSel(pEstat);return}
+ const A={};(st.artigos||[]).forEach(x=>A[x.artigo]=x);
+ const rows=e.artigos.map(a=>{const x=A[a.id]||{visitas:0,leitores:0,qr:0};let inter=0;const ca=cont[a.id]||{};for(const k in ca)inter+=soma(ca[k]);return {a,v:+x.visitas,l:+x.leitores,qr:+x.qr,inter}}).sort((p,q)=>q.v-p.v);
+ const maxV=Math.max(1,...rows.map(r=>r.v)),H=Array(24).fill(0);(st.horas||[]).forEach(h=>H[h.hora]=+h.n);const maxH=Math.max(1,...H);
+ const W=Array(8).fill(0);(st.semana||[]).forEach(d=>W[d.dia]=+d.n);const maxW=Math.max(1,...W),dias=['','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+ const zero=rows.filter(r=>!r.v),pqr=st.visitas?Math.round(st.qr*100/st.visitas):0;
+ pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><p class="note" style="flex:2 1 300px;margin:0">Conta as vezes que cada página da Participa foi aberta. "Pelo QR" quer dizer que o leitor chegou diretamente pelo código impresso no jornal.</p></div>
+ <div class="kpis"><div class="kpi"><b>${st.visitas}</b>páginas abertas</div><div class="kpi"><b>${st.leitores}</b>leitores diferentes</div><div class="kpi"><b>${pqr}%</b>chegaram pelo QR</div><div class="kpi"><b>${st.leitores?fmt1(st.visitas/st.leitores):0}</b>artigos por leitor</div></div>
+ <div class="card"><h3>Artigos mais lidos</h3><table class="t"><thead><tr><th>Pág.</th><th>Artigo</th><th style="width:30%">Aberturas</th><th class="nu">Leitores</th><th class="nu">Pelo QR</th><th class="nu">Interações</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.a.p)}</td><td>${esc(r.a.ti)}</td><td><div class="hb" title="${r.v} aberturas"><span style="width:${Math.round(r.v*100/maxV)}%"></span><b>${r.v}</b></div></td><td class="nu">${r.l}</td><td class="nu">${r.qr}</td><td class="nu">${r.inter}</td></tr>`).join('')}</tbody></table>
+ ${zero.length?`<p class="note"><b>Ninguém abriu ainda:</b> ${zero.map(r=>'pág. '+esc(r.a.p)+' · '+esc(r.a.ti)).join('; ')}. Talvez o QR esteja pequeno ou escondido na página.</p>`:''}</div>
+ <div class="card"><h3>A que horas se lê</h3><div class="horas" role="img" aria-label="Aberturas por hora do dia">${H.map((n,h)=>`<div title="${h}h: ${n} ${n===1?'abertura':'aberturas'}"><span style="height:${Math.round(n*100/maxH)}%"></span><i>${h%3===0?h+'h':''}</i></div>`).join('')}</div>
+ <h3 style="margin-top:18px">Em que dias</h3>${barras([1,2,3,4,5,6,7].map(d=>[dias[d],W[d],maxW]))}</div>
+ ${(st.dias||[]).length>1?`<div class="card"><h3>Dia a dia</h3><div class="horas dias">${st.dias.slice(-45).map(d=>{const mx=Math.max(...st.dias.slice(-45).map(x=>+x.n));return `<div title="${esc(new Date(d.dia+'T12:00').toLocaleDateString('pt-PT',{day:'numeric',month:'short'}))}: ${d.n}"><span style="height:${Math.round(d.n*100/mx)}%"></span></div>`}).join('')}</div><p class="note">De ${esc(fmtData(st.dias[0].dia))} a ${esc(fmtData(st.dias[st.dias.length-1].dia))}.</p></div>`:''}
+ <button class="btn sm" id="st-csv">Copiar tabela (CSV)</button>`;
+ bindSel(pEstat);
+ $('#st-csv').onclick=async ev=>{const t=[['pagina','artigo','aberturas','leitores','pelo_qr','interacoes']].concat(rows.map(r=>[r.a.p,r.a.ti,r.v,r.l,r.qr,r.inter])).map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');try{await navigator.clipboard.writeText(t);ev.target.textContent='Copiado!'}catch(e){ev.target.textContent='Não deu para copiar'}};
+}
+
+/* --- 8, 10, 12, 14: separador Comunidade (concurso, cartas, agenda, avisos) --- */
+async function pComunidade(){
+ const [info,ag,cartas,nsub]=await Promise.all([db.getDef('concurso',{}).catch(()=>({})),db.getDef('agenda',[]).catch(()=>[]),db.comentarios({tipo:'carta'}).catch(()=>[]),db.totalSubscricoes().catch(()=>null)]);
+ const ci=info||{},fotos=ci.id?await db.concursoFotos(ci.id).catch(()=>[]):[],cont=ci.id?await db.contagensConcurso(ci.id).catch(()=>({})):{};
+ const pend=fotos.filter(f=>f.estado==='pendente'||f.estado==='retido'),apr=fotos.filter(f=>f.estado==='aprovado').sort((a,b)=>(cont[b.id]||0)-(cont[a.id]||0));
+ const urls=await db.urlsConcurso(pend.concat(apr).map(f=>f.path)).catch(()=>({}));
+ const capr=cartas.filter(c=>c.estado==='aprovado'),agL=(ag||[]).slice().sort((a,b)=>(a.d+(a.h||''))<(b.d+(b.h||''))?-1:1),e=edicao(dest)||eds[eds.length-1];
+ pane().innerHTML=`<div class="card"><h3>Concurso de fotografia</h3><form id="cc"><div class="row"><div style="flex:2 1 240px"><label for="cc-t" style="margin-top:0">Tema</label><input id="cc-t" maxlength="80" value="${esc(ci.tema||'')}" placeholder="ex.: O outono em São Jorge"></div><div style="flex:0 1 180px"><label for="cc-a" style="margin-top:0">Envios até</label><input id="cc-a" type="date" value="${esc(ci.ate||'')}"></div></div>
+  <label for="cc-d">Regras ou descrição</label><input id="cc-d" maxlength="300" value="${esc(ci.desc||'')}" placeholder="ex.: Fotografias na horizontal, sem caras. A vencedora sai na capa.">
+  <label class="chk"><input type="checkbox" id="cc-o" ${ci.aberto?'checked':''}> A receber fotografias</label><label class="chk" style="margin-top:6px"><input type="checkbox" id="cc-v" ${ci.votacao?'checked':''}> Votação aberta (cada leitor vota em até 3)</label>
+  <div class="row" style="margin-top:10px"><button class="btn sm pri" style="flex:0 0 auto">Guardar</button>${ci.id?`<button type="button" class="btn sm" id="cc-n" style="flex:0 0 auto">${confirmar==='novocc'?'Confirmar: começar um concurso novo?':'Começar um concurso novo'}</button>`:''}<a class="btn sm" href="#concurso" style="flex:0 0 auto;text-decoration:none;line-height:26px">Ver a página</a><span class="msg" id="cc-m"></span></div></form>
+  ${pend.length?`<h3 style="margin-top:16px">À espera de aprovação (${pend.length})</h3><div class="thumbs">${pend.map(f=>`<div class="th">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="${esc(f.legenda||'')}">`:''}<b>${esc(f.legenda||'')}</b><span class="ls">${esc(f.nome||'')}${f.turma?' · '+esc(f.turma):''}${f.estado==='retido'?' · <span class="flag">verificar linguagem</span>':''}</span><div class="thb"><button class="btn sm pri" data-fa="${esc(f.id)}">Aprovar</button><button class="btn sm" data-fr="${esc(f.id)}">Rejeitar</button></div></div>`).join('')}</div>`:''}
+  ${apr.length?`<h3 style="margin-top:16px">Na galeria, por votos</h3><div class="thumbs">${apr.map((f,i)=>`<div class="th">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="${esc(f.legenda||'')}">`:''}<b>${i<3?['🥇','🥈','🥉'][i]+' ':''}${esc(f.legenda||'')}</b><span class="ls">${esc(f.nome||'')}${f.turma?' · '+esc(f.turma):''} · ${cont[f.id]||0} ♥</span><div class="thb"><button class="btn sm" data-fd="${esc(f.id)}">Descarregar</button><button class="btn sm" data-fx="${esc(f.id)}">${confirmar==='foto'+f.id?'Confirmar?':'Apagar'}</button></div></div>`).join('')}</div>`:''}</div>
+ <div class="card"><h3>Cartas ao jornal</h3><p class="note" style="margin-top:0">As cartas novas aparecem na Moderação. Aqui ficam as aprovadas, prontas para o jornal.</p>${capr.length?`<ul class="coms">${capr.slice(0,20).map(c=>`<li><div class="txt">${esc(c.texto)}</div><small>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''} · ${palavras(c.texto)} palavras</small></li>`).join('')}</ul><button class="btn sm" id="ct-c" style="margin-top:10px">Copiar as cartas para o jornal</button>`:'<p class="note">Ainda não há cartas aprovadas.</p>'}</div>
+ <div class="card"><h3>Agenda da escola</h3><form id="ag"><div class="row"><div style="flex:0 1 170px"><label for="ag-d" style="margin-top:0">Dia</label><input id="ag-d" type="date" required></div><div style="flex:0 1 120px"><label for="ag-h" style="margin-top:0">Hora (opcional)</label><input id="ag-h" type="time"></div><div style="flex:2 1 220px"><label for="ag-t" style="margin-top:0">O quê</label><input id="ag-t" maxlength="100" required placeholder="ex.: Corta-mato escolar"></div><div style="flex:1 1 160px"><label for="ag-l" style="margin-top:0">Onde</label><input id="ag-l" maxlength="80" placeholder="ex.: Pavilhão"></div></div>
+  <label for="ag-x">Detalhes (opcional)</label><input id="ag-x" maxlength="200"><div class="row" style="margin-top:10px"><button class="btn sm pri" style="flex:0 0 auto">Acrescentar</button><a class="btn sm" href="#agenda" style="flex:0 0 auto;text-decoration:none;line-height:26px">Ver a agenda</a><span class="msg" id="ag-m"></span></div></form>
+  ${agL.length?`<table class="t" style="margin-top:12px"><tbody>${agL.map(x=>`<tr><td style="white-space:nowrap">${esc(fmtData(x.d))}${x.h?' · '+esc(x.h):''}</td><td>${esc(x.t)}${x.l?' <span class="note">· '+esc(x.l)+'</span>':''}</td><td class="nu"><button class="btn sm" data-agrm="${esc(x.id)}">Retirar</button></td></tr>`).join('')}</tbody></table>`:''}</div>
+ <div class="card"><h3>Avisos no telemóvel</h3><p class="note" style="margin-top:0">${nsub==null?'Disponível só online.':`<b>${nsub}</b> ${nsub===1?'aparelho recebe':'aparelhos recebem'} avisos. Os leitores ativam-nos na página da edição.`}</p>
+  <form id="av"><label for="av-t" style="margin-top:0">Título</label><input id="av-t" maxlength="60" value="${esc(e?'Saiu o Repórter da Calheta n.º'+e.n+'!':'Repórter da Calheta')}"><label for="av-x">Mensagem</label><input id="av-x" maxlength="140" value="Lê, vota e participa: o QR está em cada página."><label for="av-u">Abrir</label><select id="av-u"><option value="${e?'#e'+e.n:''}">A edição em destaque</option><option value="#concurso">O concurso de fotografia</option><option value="#agenda">A agenda</option><option value="#cartas">As cartas ao jornal</option></select>
+  <div class="row" style="margin-top:10px"><button class="btn sm pri" style="flex:0 0 auto">${confirmar==='avisar'?'Confirmar: enviar a todos?':'Enviar aviso'}</button><span class="msg" id="av-m"></span></div></form></div>`;
+ const msg=(id,t,ok)=>{const el=$(id);if(el){el.className='msg '+(ok?'ok':'err');el.textContent=t}};
+ const novoCI=()=>({id:ci.id||('c'+Date.now().toString(36)),tema:$('#cc-t').value.trim(),ate:$('#cc-a').value||'',desc:$('#cc-d').value.trim(),aberto:$('#cc-o').checked,votacao:$('#cc-v').checked});
+ $('#cc').onsubmit=async ev=>{ev.preventDefault();try{await db.setDef('concurso',novoCI());pComunidade()}catch(e){console.warn(e);msg('#cc-m','Não foi possível guardar.')}};
+ const ccn=$('#cc-n');if(ccn)ccn.onclick=async()=>{if(confirmar!=='novocc'){confirmar='novocc';return pComunidade()}confirmar=null;try{await db.setDef('concurso',{id:'c'+Date.now().toString(36),tema:'',aberto:false,votacao:false});pComunidade()}catch(e){console.warn(e)}};
+ const ctc=$('#ct-c');if(ctc)ctc.onclick=async()=>{const t='CARTAS AO JORNAL\n\n'+capr.map(c=>c.texto+'\n'+(c.nome||'Anónimo')+(c.turma?', '+c.turma:'')).join('\n\n');try{await navigator.clipboard.writeText(t);ctc.textContent='Copiado!'}catch(e){ctc.textContent='Não deu para copiar'}};
+ $('#ag').onsubmit=async ev=>{ev.preventDefault();const t=$('#ag-t').value.trim(),d=$('#ag-d').value;if(!t||!d)return msg('#ag-m','Falta o dia ou o título.');const L=(ag||[]).concat({id:Date.now().toString(36),d,h:$('#ag-h').value||'',t,l:$('#ag-l').value.trim(),x:$('#ag-x').value.trim()});try{await db.setDef('agenda',L);pComunidade()}catch(e){console.warn(e);msg('#ag-m','Não foi possível guardar.')}};
+ $('#av').onsubmit=async ev=>{ev.preventDefault();if(confirmar!=='avisar'){confirmar='avisar';ev.submitter&&(ev.submitter.textContent='Confirmar: enviar a todos?');return}confirmar=null;const b=ev.submitter;if(b)b.disabled=true;
+  try{const r=await db.avisar({titulo:$('#av-t').value.trim(),texto:$('#av-x').value.trim(),url:(cfg.base||location.href.split('#')[0])+$('#av-u').value});msg('#av-m',`Enviado para ${r&&r.enviados!=null?r.enviados:'os'} ${r&&r.enviados===1?'aparelho':'aparelhos'}.`,1)}catch(e){console.warn(e);msg('#av-m',e.message||'Não foi possível enviar.')}if(b){b.disabled=false;b.textContent='Enviar aviso'}};
+ pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset,f=fotos.find(x=>x.id===(d.fa||d.fr||d.fd||d.fx));try{
+  if(d.fa||d.fr){b.disabled=true;await db.moderarFoto(f.id,d.fa?'aprovado':'rejeitado');return pComunidade()}
+  if(d.fd){const bl=await db.blobConcurso(f.path);if(bl)baixar(bl,'concurso-'+slug(f.legenda||'foto')+'-'+slug(f.nome||'')+'.jpg');return}
+  if(d.fx){if(confirmar!=='foto'+f.id){confirmar='foto'+f.id;return pComunidade()}confirmar=null;await db.apagarFotoConcurso(f);return pComunidade()}
+  if(d.agrm){await db.setDef('agenda',(ag||[]).filter(x=>x.id!==d.agrm));return pComunidade()}}catch(e){console.warn(e)}};
+}
+
+/* --- 25: imagem para as redes sociais --- */
+async function imagemSocial(e,a){
+ await Promise.all(['400 90px "UnifrakturMaguntia"','700 40px "Kalam"','600 80px "Fredoka"','400 30px "Source Sans 3"','600 30px "Source Sans 3"'].map(f=>document.fonts&&document.fonts.load?document.fonts.load(f).catch(()=>{}):0));
+ const W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d'),M=80;
+ const linhas=(t,max,font)=>{x.font=font;const ws=String(t||'').split(/\s+/),out=[];let l='';ws.forEach(w=>{const tt=l?l+' '+w:w;if(x.measureText(tt).width>max&&l){out.push(l);l=w}else l=tt});if(l)out.push(l);return out};
+ x.fillStyle='#fff';x.fillRect(0,0,W,H);x.fillStyle='#16181d';x.textAlign='center';x.font='400 104px "UnifrakturMaguntia", serif';x.fillText('Repórter da Calheta',W/2,150);
+ x.fillRect(M,182,W-2*M,6);x.fillRect(M,196,W-2*M,2);x.font='600 28px "Source Sans 3", sans-serif';x.textAlign='left';x.fillText('Calheta · São Jorge',M,240);x.textAlign='right';x.fillText('N.º'+e.n+(e.titulo?' · '+e.titulo:''),W-M,240);
+ x.save();x.translate(M,350);x.rotate(-0.03);x.font='700 44px "Kalam", cursive';x.textAlign='left';const tg=(a.s||'Notícias');const tw=x.measureText(tg).width;x.fillStyle='#ffd84d';x.fillRect(-6,-48,tw+36,64);x.fillStyle='#16181d';x.fillText(tg,12,0);x.restore();
+ let fs=96,L;do{L=linhas(a.ti,W-2*M,`600 ${fs}px "Fredoka", sans-serif`);fs-=6}while(L.length>5&&fs>54);fs+=6;
+ x.fillStyle='#1f5fbf';x.textAlign='left';x.font=`600 ${fs}px "Fredoka", sans-serif`;let y=470;L.forEach(l=>{x.fillText(l,M,y);y+=fs*1.08});
+ if(a.r){x.fillStyle='#5b5f6d';const R=linhas(a.r,W-2*M,'400 36px "Source Sans 3", sans-serif').slice(0,4);y+=20;R.forEach(l=>{x.fillText(l,M,y);y+=48})}
+ const qs=250,qy=H-qs-110;
+ if(window.qrcode){const q=window.qrcode(0,'M');q.addData(urlArtigo(e,a));q.make();const n=q.getModuleCount(),s=Math.floor(qs/n),ox=W-M-n*s;x.fillStyle='#16181d';for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect(ox+k*s,qy+r*s,s,s)}
+ x.fillStyle='#16181d';x.font='600 46px "Fredoka", sans-serif';x.fillText('Leste? Participa!',M,qy+90);x.font='400 32px "Source Sans 3", sans-serif';x.fillStyle='#5b5f6d';x.fillText('Aponta a câmara ao código, vota',M,qy+145);x.fillText('e deixa a tua opinião.',M,qy+188);x.fillText('Pág. '+a.p+' do jornal em papel.',M,qy+231);
+ x.fillStyle='#ffd84d';x.fillRect(0,H-40,W,40);
+ return cv.toDataURL('image/png');
 }
 
 window.addEventListener('hashchange',()=>{if(location.hash!=='#painel')main.classList.remove('wide')});
