@@ -6,6 +6,7 @@ Webapp interativa do jornal da Escola Básica e Secundária da Calheta. Cada art
 - Painel do professor: `index.html#painel` — rever artigos enviados, importar edições, moderar, ver resultados e gerar os QR.
 - Redação: `index.html#redacao` — os jornalistas entram com o código da redação, enviam texto, fotos, áudio e versão em inglês, reservam pautas, leem o guia de escrita e fazem o cartão de jornalista.
 - v1.3: `#concurso` (concurso de fotografia), `#cartas` (cartas ao jornal), `#mapa`, `#agenda`; passaporte do leitor, ouvir os artigos, opções de leitura (Aa), sopa de letras e palavras cruzadas, app instalável com avisos no telemóvel (`sw.js`, `manifest.webmanifest`); no painel, Estatísticas e Comunidade; na Redação, corretor, notas no texto e versões.
+- v1.4 (telemóvel primeiro): barra de navegação em baixo (Jornal, Ranking, Jogos/Agenda, Mais), folha "Mais", deslizar para mudar de artigo, sopa de letras a arrastar o dedo, pista atual nas cruzadas, lista de artigos antes dos atalhos, instalar a app no Android.
 - Outras páginas: `#e<N.º>-top` (ranking e concurso entre turmas), `#tv` (modo TV para a entrada), `#e<N.º>-ler` (página para partilhar e PDF da edição), `#e<N.º>-relatorio` (relatório para imprimir), `#arquivo`, `#familias`, `#caca-<N.º>-<pista>` (caça ao QR).
 
 ## Base de dados
