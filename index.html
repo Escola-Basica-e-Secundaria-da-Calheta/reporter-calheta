@@ -93,6 +93,42 @@ textarea{min-height:96px;resize:vertical}
 .est{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700;border:1.5px solid var(--line);white-space:nowrap}
 .est-recebido,.est-revisao{border-color:var(--blue);color:var(--blue)}.est-alteracoes{border-color:var(--hl);background:var(--hls)}.est-aceite,.est-publicado{border-color:var(--ok);color:var(--ok)}.est-recusado{border-color:var(--bad);color:var(--bad)}
 .ver{display:inline-block;font-size:12px;font-weight:700;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:0 7px;margin-left:2px;vertical-align:1px}
+.lk{border:0;background:none;color:var(--blue);text-decoration:underline;cursor:pointer;font:inherit;padding:0}
+.turma{margin-top:18px}
+.txt{white-space:pre-wrap}
+.atalhos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:16px 0 20px}
+.atalhos a,.atalhos .at{display:block;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;color:var(--ink);text-decoration:none;background:var(--paper)}
+.atalhos a:hover{border-color:var(--ink)}
+.atalhos b{display:block;font:600 18px "Fredoka",sans-serif;color:var(--blue)}
+.atalhos span{font-size:14px;color:var(--mute)}
+.chk-list{list-style:none;padding:0;margin:0;display:grid;gap:4px}.chk-list li.ok{color:var(--ok)}.chk-list li.av{font-weight:600}
+.pistas{list-style:none;padding:0;margin:0;display:grid;gap:4px;color:var(--mute)}.pistas li.ok{color:var(--ok);font-weight:600}
+.pdfv{background:var(--paper);border-radius:12px;padding:10px;outline-offset:2px}.pdfv canvas{display:block;width:100%;background:#fff;border-radius:6px}
+.pdfbar{display:flex;gap:12px;align-items:center;justify-content:center;margin-bottom:8px;font-weight:600}
+a.chip{text-decoration:none;color:var(--ink);padding:6px 12px}
+.plano{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:14px}
+.pag{border:1.5px dashed var(--line);border-radius:10px;padding:8px;min-height:110px;background:var(--bg)}
+.pag.solta{min-height:60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;border:0;padding:0;background:none}
+.pag.usada{border-style:solid}.pag.cheia{border-color:var(--bad)}.pag.sobre{outline:3px solid var(--blue)}
+.pagh{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:var(--mute)}.pagh b{color:var(--ink)}
+.pl-a{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:6px 8px;margin-bottom:6px;cursor:grab;font-size:15px}
+.pl-a .lt{display:block;line-height:1.2}.pl-a select{margin-top:6px;padding:4px 6px;font-size:14px}
+.cartao img{display:block;width:100%;max-width:560px;border-radius:14px;box-shadow:0 2px 14px rgba(0,0,0,.18);background:#fff}
+.guia details{border-top:1px solid var(--line);padding:10px 0}.guia details:first-child{border-top:0}
+.guia summary{font:600 19px "Fredoka",sans-serif;cursor:pointer;min-height:32px}
+.guia .ex{background:var(--bg);border-left:4px solid var(--hl);padding:10px 12px;border-radius:6px;white-space:pre-wrap}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0}
+.kpi{background:var(--paper);border-radius:12px;padding:12px;font-size:15px;color:var(--mute)}.kpi b{display:block;font:600 32px "Fredoka",sans-serif;color:var(--blue)}
+table.t{width:100%;border-collapse:collapse;font-size:15px}table.t th,table.t td{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;vertical-align:top}table.t .nu{text-align:right;font-variant-numeric:tabular-nums}
+body.tvmode header.mast{display:none}body.tvmode .wrap{max-width:none;padding:0}
+.tv{min-height:100vh;display:grid;place-items:center;padding:4vw}
+.tvs{width:min(1400px,100%);font-size:clamp(20px,2.2vw,38px)}
+.tvs .tvk{font:400 clamp(28px,3.4vw,60px)/1 "UnifrakturMaguntia",serif;margin:0 0 1.2vw}
+.tvs h2{font:600 clamp(40px,5vw,88px)/1.05 "Fredoka",sans-serif;color:var(--blue);margin:0 0 3vw;text-wrap:balance}
+.tvs .opt{min-height:auto;font-size:inherit;padding:.45em .8em}
+.tvqr{display:grid;grid-template-columns:auto 1fr;gap:4vw;align-items:center}.tvqr img{width:min(34vw,500px);background:#fff;border-radius:12px}
+@media(max-width:600px){.tvqr{grid-template-columns:1fr}}
+@media print{header.mast .meta,.noprint{display:none!important}.card{break-inside:avoid;border-color:#ccc}body{font-size:11pt}}
 .hide{display:none!important}
 pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font-size:13px}
 @media(max-width:600px){.react button{min-height:64px}.list li a{grid-template-columns:48px 1fr}.list .n{display:none}}
@@ -102,7 +138,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.1</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.2</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -148,7 +184,7 @@ const ED1={n:1,titulo:'setembro | outubro 2025',ano:'Ano V',artigos:[
  {id:'riso',p:26,s:'Fator de Riso',ti:'Fator de Riso',b:[S('Quanto te fez rir?')]}
 ]};
 
-const TIPOS={reacoes:'Reações',fotos:'Gostos nas fotos',sondagem:'Votação',estrelas:'Estrelas',quiz:'Quiz',comentario:'Comentários',sugestao:'Caixa de sugestões'};
+const TIPOS={reacoes:'Reações',fotos:'Gostos nas fotos',sondagem:'Votação',estrelas:'Estrelas',quiz:'Quiz',comentario:'Comentários',sugestao:'Caixa de sugestões',texto:'Texto (ex.: versão em inglês)',audio:'Áudio',perguntas:'Perguntas dos leitores'};
 const REACOES=[['adoro','❤️','Adoro'],['parabens','👏','Parabéns'],['uau','😮','Uau'],['riso','😂','Divertido']];
 const MAUS=['merda','caralho','puta','foda','fdp','idiota','estupid','burr','otari','cabr'];
 
@@ -242,7 +278,7 @@ async function init(){
    const cl=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseKey);
    const {data}=await cl.auth.getSession();
    if(!data.session){const r=await cl.auth.signInAnonymously();if(r.error)throw r.error}
-   db=supa(cl);modo='online';
+   db=supa(cl);extrasSupa(cl,db);modo='online';
   }catch(e){console.warn(e);modo='erro'}
  }
  await carregar();route();
@@ -256,6 +292,11 @@ function route(){
  const h=location.hash.slice(1);
  if(h==='painel')return painel();
  if(h==='redacao')return redacao();
+ if(h==='tv')return verTV();
+ if(h==='arquivo')return verArquivo();
+ if(h==='familias')return verFamilias();
+ const mc=h.match(/^caca-(\d+)-(.+)$/);if(mc)return verCaca(Number(mc[1]),mc[2]);
+ const mx=h.match(/^e(\d+)-(top|ler|relatorio)$/);if(mx){const ee=edicao(Number(mx[1]));if(ee){atual=null;main.classList.remove('wide');$('#edmeta').textContent='N.º'+ee.n+' · '+(ee.titulo||'');window.scrollTo(0,0);return ({top:verTop,ler:verLer,relatorio:verRelatorio})[mx[2]](ee)}}
  const m=h.match(/^e(\d+)(?:-(.+))?$/);
  const e=edicao(m?Number(m[1]):dest)||eds[eds.length-1];
  if(!e){main.innerHTML='<div class="card">Ainda não há nenhuma edição. <a href="#painel">Abrir o painel do professor</a></div>';return}
@@ -273,9 +314,11 @@ function verIndice(e){
  <span class="tag">${esc(e.ano||'')} · N.º${e.n}</span>
  <h2 class="t">Leste o jornal? Agora é a tua vez.</h2>
  <p class="lead">Cada artigo tem um código QR. Aponta a câmara do telemóvel, vota, reage às fotos e deixa a tua opinião. Também podes escolher o artigo aqui.</p>
+ <div id="capa"></div>
  <ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}</span></span><span class="n">${a.b.map(b=>TIPOS[b.t]).filter((v,i,s)=>s.indexOf(v)===i).slice(0,2).join(' · ')}</span></a></li>`).join('')}</ul>
  ${outras.length?`<p class="note" style="margin-top:20px">Edições anteriores: ${outras.map(x=>`<a href="#e${x.n}">N.º${x.n} (${esc(x.titulo)})</a>`).join(' · ')}</p>`:''}
  <p class="note" style="margin-top:28px"><a href="#redacao">Redação: enviar um artigo para o jornal</a> · <a href="#painel">Painel do professor</a>${modo==='demo'?' · modo demonstração: os votos ficam só neste aparelho':''}</p>`;
+ posIndice(e);
 }
 
 /* ======== Leitor: página do artigo ======== */
@@ -296,6 +339,7 @@ async function verArtigo(e,a){
   <a class="btn" href="#e${e.n}" style="text-align:center;text-decoration:none;line-height:26px">Todos os artigos</a>
   ${next?`<a class="btn" href="#e${e.n}-${esc(next.id)}" style="text-align:center;text-decoration:none;line-height:26px">${esc(next.ti.slice(0,28))} →</a>`:''}
  </div>`;
+ posArtigo(e,a);
 }
 const soma=o=>Object.values(o||{}).reduce((x,y)=>x+y,0);
 function bloco(b,bi,cont,meus,coms){
@@ -319,6 +363,9 @@ function bloco(b,bi,cont,meus,coms){
   <div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar</button><span class="msg"></span></div>
   <p class="note">${sug?'Só a equipa do jornal lê as sugestões.':'Os comentários aparecem depois de um professor os aprovar.'} Não escrevas apelidos, moradas, telefones nem nada sobre outras pessoas.</p></form>
   ${sug?'':`<ul class="coms">${coms.length?coms.map(x=>`<li><small>${esc(x.nome||'Anónimo')}${x.turma?' · '+esc(x.turma):''}</small><br>${esc(x.texto)}</li>`).join(''):'<li class="note">Ainda não há comentários aprovados. Sê o primeiro!</li>'}</ul>`}</div>`}
+ if(b.t==='texto')return `<div class="card"><h3>${esc(b.q||'Texto')}</h3><div class="txt">${esc(b.x||'')}</div></div>`;
+ if(b.t==='audio')return `<div class="card"><h3>${esc(b.q||'Ouve o artigo')}</h3><audio controls preload="none" style="width:100%" data-media="${esc(b.url||'')}"></audio></div>`;
+ if(b.t==='perguntas')return `<div class="card"><h3>${esc(b.q||'Que pergunta gostavas de fazer?')}</h3><form data-form="pergunta"><div class="row"><div><label for="n${bi}">Primeiro nome ou alcunha</label><input id="n${bi}" name="nome" maxlength="30" autocomplete="off"></div><div style="flex:0 1 120px"><label for="t${bi}">Turma</label><input id="t${bi}" name="turma" maxlength="10" autocomplete="off"></div></div><label for="x${bi}">A tua pergunta</label><textarea id="x${bi}" name="texto" maxlength="400" required></textarea><div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar pergunta</button><span class="msg"></span></div><p class="note">Os jornalistas escolhem as melhores para a entrevista.</p></form></div>`;
  return '';
 }
 main.addEventListener('click',async ev=>{
@@ -338,7 +385,7 @@ main.addEventListener('submit',async ev=>{
  if(texto.length<3){msg.className='msg err';msg.textContent='Escreve um pouco mais.';return}
  const btn=f.querySelector('button');btn.disabled=true;
  try{await db.comentar({ed:atual.e.n,art:atual.a.id,tipo:f.dataset.form,nome:String(fd.get('nome')||'').trim().slice(0,30),turma:String(fd.get('turma')||'').trim().slice(0,10),texto:texto.slice(0,400)});
-  f.reset();msg.className='msg ok';msg.textContent=f.dataset.form==='sugestao'?'Obrigado! A sugestão chegou à equipa.':'Enviado! Vai aparecer depois de aprovado.'}
+  f.reset();msg.className='msg ok';msg.textContent=f.dataset.form!=='comentario'?'Obrigado! Chegou à equipa do jornal.':'Enviado! Vai aparecer depois de aprovado.'}
  catch(err){console.warn(err);msg.className='msg err';msg.textContent='Não foi possível enviar. Tenta outra vez.'}
  btn.disabled=false;
 });
@@ -358,10 +405,10 @@ async function painel(){
   return}
  const pend=(await db.comentarios({estado:'pendente'}).catch(()=>[])).length;
  const novos=(await db.subs().catch(()=>[])).filter(s=>s.estado==='recebido').length,bd={moderacao:pend,redacao:novos};
- const T=[['redacao','Redação'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['ligacao','Ligação']];
+ const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['escola','Escola'],['ligacao','Ligação']];
  main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Sair do painel</a></div><div id="pane"></div>`;
  main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;rasc=aba==='edicoes'?rasc:null;painel()});
- ({redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
+ ({pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
 }
 const pane=()=>$('#pane');
 const selEd=()=>`<select id="selEd" style="max-width:320px">${eds.map(e=>`<option value="${e.n}" ${e.n===(edSel||dest)?'selected':''}>N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select>`;
@@ -396,11 +443,13 @@ function editor(){
  <div class="card"><div class="row"><div style="flex:0 1 110px"><label for="en">Número</label><input id="en" type="number" min="1" value="${esc(r.n)}"></div><div><label for="et">Meses</label><input id="et" value="${esc(r.titulo)}" placeholder="novembro | dezembro 2025"></div><div style="flex:0 1 140px"><label for="ea">Ano</label><input id="ea" value="${esc(r.ano)}" placeholder="Ano V"></div></div>
  <label for="imp">Colar o índice ou o JSON da edição</label><textarea id="imp" placeholder="Uma linha por artigo:  página | secção | título&#10;2 | Notícias | Visita de estudo ao Pico&#10;5 | Ambiente | Brigada Eco-escola&#10;&#10;Ou cola o JSON que o Claude gera a partir do Canva."></textarea>
  <div class="row" style="margin-top:8px"><button class="btn" id="lerImp" style="flex:0 0 auto">Acrescentar artigos</button><span class="msg" id="impMsg"></span></div></div>
- <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
+ ${extrasEdicao(r)}
+ <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><div style="flex:1 1 100%"><label>Resumo (opcional: aparece no arquivo e na página para partilhar)</label><input data-f="r" data-i="${i}" maxlength="200" value="${esc(a.r||'')}"></div><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
   <div class="chips">${a.b.map((b,j)=>`<span class="chip"><b>${TIPOS[b.t]}</b>${b.t==='fotos'?' · '+b.n+' fotos':b.q?' · '+esc(b.q.slice(0,50)):''}<button data-rmb="${i}:${j}" aria-label="Remover">×</button></span>`).join('')}</div>
   <div class="row"><select data-nt="${i}" style="flex:0 1 190px">${Object.entries(TIPOS).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select><input data-nq="${i}" placeholder="Pergunta (ou nº de fotos)" style="flex:2 1 200px"><input data-no="${i}" placeholder="Opções separadas por vírgula; no quiz, * na certa" style="flex:2 1 220px"><button class="btn sm" data-add="${i}" style="flex:0 0 auto">+ Bloco</button></div></div>`).join('')}</div>
  <div class="row" style="margin-top:18px"><button class="btn pri" id="guardar" style="flex:0 0 auto">${confirmar==='sobre'?'Substituir a edição existente?':'Guardar edição'}</button><button class="btn" id="cancelar" style="flex:0 0 auto">Cancelar</button><span class="msg" id="gMsg"></span></div>`;
  const sync=()=>{r.n=Number($('#en').value)||r.n;r.titulo=$('#et').value.trim();r.ano=$('#ea').value.trim();pane().querySelectorAll('[data-f]').forEach(x=>{r.artigos[x.dataset.i][x.dataset.f]=x.value.trim()})};
+ bindExtras(r,sync);
  $('#lerImp').onclick=()=>{sync();const m=$('#impMsg');try{const res=parseImport($('#imp').value);
    if(res.json){const j=res.json,arts=Array.isArray(j)?j:j.artigos;if(!Array.isArray(arts))throw new Error('sem artigos');
     if(!Array.isArray(j)){if(j.n)r.n=Number(j.n);if(j.titulo)r.titulo=j.titulo;if(j.ano)r.ano=j.ano}
@@ -415,14 +464,16 @@ function editor(){
    let nb={t};
    if(t==='fotos')nb.n=Math.max(1,Math.min(40,parseInt(q)||6));
    else if(t==='sondagem'||t==='quiz'){if(!q||os.length<2){b.textContent='Falta pergunta ou opções';return}nb.q=q;nb.c=Math.max(0,os.findIndex(o=>o.startsWith('*')));nb.o=os.map(o=>o.replace(/^\*/,'').trim());if(t==='sondagem')delete nb.c}
-   else if(t!=='reacoes')nb.q=q||({estrelas:'Que nota dás?',comentario:'Deixa a tua opinião',sugestao:'Tens uma sugestão?'})[t];
+   else if(t==='texto'){const raw=pane().querySelector(`[data-no="${i}"]`).value.trim();if(!raw){b.textContent='Escreve o texto em Opções';return}nb.q=q||'In English';nb.x=raw}
+   else if(t==='audio'){escolherAudio(i,q);return}
+   else if(t!=='reacoes')nb.q=q||({estrelas:'Que nota dás?',comentario:'Deixa a tua opinião',sugestao:'Tens uma sugestão?',perguntas:'Que pergunta gostavas de fazer?'})[t];
    r.artigos[i].b.push(nb);editor()}};
  $('#cancelar').onclick=()=>{rasc=null;confirmar=null;painel()};
  $('#guardar').onclick=async()=>{sync();const m=$('#gMsg');
   if(!r.artigos.length){m.className='msg err';m.textContent='A edição não tem artigos.';return}
   const ids=new Set();r.artigos.forEach(a=>{a.id=slug(a.id||a.ti);let id=a.id,k=2;while(ids.has(id))id=a.id+'-'+k++;a.id=id;ids.add(id)});
   if(r.novo&&edicao(r.n)&&confirmar!=='sobre'){confirmar='sobre';editor();$('#gMsg').className='msg err';$('#gMsg').textContent='Já existe uma edição N.º'+r.n+'. Clica outra vez para substituir.';return}
-  const e={n:r.n,titulo:r.titulo,ano:r.ano,artigos:r.artigos};
+  const e={n:r.n,titulo:r.titulo,ano:r.ano,artigos:r.artigos,capa:(r.capa&&r.capa.q&&(r.capa.o||[]).length>=2)?r.capa:null,caca:(r.caca||[]).filter(p=>p.q&&(p.o||[]).length>=2),pdf:r.pdf||''};
   try{await db.guardarEdicao(e);if(r.novo){await db.setDestaque(e.n);dest=e.n}await carregar();rasc=null;confirmar=null;edSel=e.n;aba='qr';painel()}
   catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível guardar.'}};
 }
@@ -430,12 +481,12 @@ function editor(){
 /* --- Moderação --- */
 async function pModeracao(){
  const lista=await db.comentarios(verTodos?{}:{estado:'pendente'}).catch(()=>[]);
- const tit=(n,id)=>{const a=edicao(n)?.artigos.find(x=>x.id===id);return a?`N.º${n} · pág. ${a.p} · ${a.ti}`:`N.º${n} · ${id}`};
+ const tit=(n,id)=>{const a=edicao(n)?.artigos.find(x=>x.id===id);return a?`N.º${n} · pág. ${a.p} · ${a.ti}`:`N.º${n} · ${({_familias:'Mural das famílias',_capa:'Capa'})[id]||id}`};
  pane().innerHTML=`<div class="row" style="align-items:center"><h3 style="flex:1 1 auto;margin:0">${verTodos?'Todas as mensagens':'À espera de aprovação'} (${lista.length})</h3><button class="btn sm" id="tog" style="flex:0 0 auto">${verTodos?'Ver só pendentes':'Ver todas'}</button></div>
  ${lista.map(c=>{const mau=MAUS.some(w=>(c.texto+' '+c.nome).toLowerCase().includes(w));
-  return `<div class="card"><p class="note" style="margin:0 0 6px">${esc(tit(c.ed,c.art))} · ${c.tipo==='sugestao'?'Sugestão':'Comentário'} · ${esc(new Date(c.criado).toLocaleString('pt-PT'))} ${mau?'<span class="flag">verificar linguagem</span>':''}</p>
+  return `<div class="card"><p class="note" style="margin:0 0 6px">${esc(tit(c.ed,c.art))} · ${TIPOC[c.tipo]||c.tipo} · ${esc(new Date(c.criado).toLocaleString('pt-PT'))} ${mau?'<span class="flag">verificar linguagem</span>':''}</p>
   <b>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''}</b><p style="margin:4px 0 10px">${esc(c.texto)}</p>
-  <div style="display:flex;gap:6px;flex-wrap:wrap">${c.estado!=='aprovado'?`<button class="btn sm pri" data-mod="${esc(c.id)}" data-e="aprovado">${c.tipo==='sugestao'?'Marcar como lida':'Aprovar'}</button>`:'<span class="ok">Aprovado</span>'}${c.estado!=='rejeitado'?`<button class="btn sm" data-mod="${esc(c.id)}" data-e="rejeitado">Rejeitar</button>`:'<span class="err">Rejeitado</span>'}</div></div>`}).join('')||'<p class="note">Não há nada à espera. 🎉</p>'}`;
+  <div style="display:flex;gap:6px;flex-wrap:wrap">${c.estado!=='aprovado'?`<button class="btn sm pri" data-mod="${esc(c.id)}" data-e="aprovado">${c.tipo==='sugestao'||c.tipo==='pergunta'?'Marcar como lida':'Aprovar'}</button>`:'<span class="ok">Aprovado</span>'}${c.estado!=='rejeitado'?`<button class="btn sm" data-mod="${esc(c.id)}" data-e="rejeitado">Rejeitar</button>`:'<span class="err">Rejeitado</span>'}</div></div>`}).join('')||'<p class="note">Não há nada à espera. 🎉</p>'}`;
  $('#tog').onclick=()=>{verTodos=!verTodos;painel()};
  pane().onclick=async ev=>{const b=ev.target.closest('[data-mod]');if(!b)return;b.disabled=true;await db.moderar(b.dataset.mod,b.dataset.e);painel()};
 }
@@ -452,10 +503,10 @@ async function pResultados(){
    if(b.t==='sondagem'||b.t==='quiz'){b.o.forEach((o,oi)=>csv.push([a.p,a.ti,TIPOS[b.t],b.q,o,c[oi]||0]));
     return `<p style="margin:10px 0 6px"><b>${esc(b.q)}</b>${b.t==='quiz'&&t?` · ${Math.round((c[b.c]||0)*100/t)}% acertaram`:''}</p><div class="opts res">${b.o.map((o,oi)=>{const p=t?Math.round((c[oi]||0)*100/t):0;return `<div class="opt"><span class="bar" style="width:${p}%"></span><span>${esc(o)}</span><span class="pct">${c[oi]||0} · ${p}%</span></div>`}).join('')}</div>`}
    if(b.t==='estrelas'){let s=0;for(const k in c)s+=Number(k)*c[k];csv.push([a.p,a.ti,TIPOS[b.t],b.q,'media',t?(s/t).toFixed(2):'']);return `<p>${esc(b.q)} <b>${t?(s/t).toFixed(1)+' ★':'sem votos'}</b> <span class="note">(${t})</span></p>`}
-   const n=coms.filter(x=>x.art===a.id&&x.tipo===b.t).length;return `<p>${TIPOS[b.t]}: <b>${n}</b> recebidos</p>`}).join('');
+   if(b.t==='texto'||b.t==='audio')return '';const n=coms.filter(x=>x.art===a.id&&x.tipo===(b.t==='perguntas'?'pergunta':b.t)).length;return `<p>${TIPOS[b.t]}: <b>${n}</b> recebidos</p>`}).join('');
   return `<div class="card"><span class="tag">pág. ${esc(a.p)}</span> <b>${esc(a.ti)}</b> <span class="note">· ${tot} interações</span>${blocos}</div>`}).join('');
- pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><button class="btn sm" id="csv" style="flex:0 0 auto">Copiar resultados (CSV)</button></div>${html}`;
- bindSel(pResultados);
+ pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><a class="btn sm" href="#e${e.n}-relatorio" style="flex:0 0 auto;text-decoration:none;line-height:26px">Relatório (PDF)</a><a class="btn sm" href="#e${e.n}-top" style="flex:0 0 auto;text-decoration:none;line-height:26px">Ranking</a><a class="btn sm" href="#tv" style="flex:0 0 auto;text-decoration:none;line-height:26px">Modo TV</a><button class="btn sm" id="melhores" style="flex:0 0 auto">Melhores do ano</button><button class="btn sm" id="csv" style="flex:0 0 auto">Copiar resultados (CSV)</button></div>${html}`;
+ bindSel(pResultados);const mb=$('#melhores');if(mb)mb.onclick=()=>melhoresAno(mb);
  $('#csv').onclick=async ev=>{try{await navigator.clipboard.writeText(csv.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n'));ev.target.textContent='Copiado! Cola no Excel.'}catch(e){ev.target.textContent='Não deu para copiar'}};
 }
 
@@ -474,10 +525,10 @@ function qrImg(url,titulo,sub){
 function pQR(){
  const e=edicao(edSel||dest);if(!e){pane().innerHTML='<p class="note">Sem edições.</p>';return}
  const base=cfg.base||location.href.split('#')[0];
- const itens=[{a:null,t:'Participa!',s:'Repórter da Calheta n.º'+e.n,f:'QR-n'+e.n+'-capa'}].concat(e.artigos.map(a=>({a,t:'Dá a tua opinião!',s:'pág. '+a.p+' · '+a.ti,f:'QR-n'+e.n+'-p'+String(a.p).padStart(2,'0')+'-'+a.id})));
+ const itens=[{a:null,t:'Participa!',s:'Repórter da Calheta n.º'+e.n,f:'QR-n'+e.n+'-capa'}].concat(e.artigos.map(a=>({a,t:'Dá a tua opinião!',s:'pág. '+a.p+' · '+a.ti,f:'QR-n'+e.n+'-p'+String(a.p).padStart(2,'0')+'-'+a.id}))).concat(extrasQR(e,base));
  pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><p class="note" style="flex:2 1 300px;margin:0">Os QR apontam para <b>${esc(base)}</b>. ${cfg.base?'':'Define o endereço público em <b>Ligação</b> antes de imprimir.'}</p></div>
  <p class="note">Descarrega cada imagem e arrasta-a para o Canva, junto ao artigo. O primeiro é para a capa e abre a lista de todos os artigos.</p>
- <div class="qrgrid">${itens.map((it,i)=>{const url=urlArtigo(e,it.a),src=qrImg(url,it.t,it.s);return `<div class="card"><img src="${src}" alt="Código QR: ${esc(it.s)}"><p style="margin:8px 0 4px;font-weight:700;line-height:1.25">${esc(it.a?it.a.ti:'Capa: todos os artigos')}</p><p class="note" style="margin:0 0 8px">${it.a?'pág. '+esc(it.a.p):'N.º'+e.n}</p><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><a class="btn sm" href="${src}" download="${esc(it.f)}.png" style="text-decoration:none;line-height:26px">Descarregar</a><button class="btn sm" data-url="${esc(url)}">Copiar ligação</button></div></div>`}).join('')}</div>`;
+ <div class="qrgrid">${itens.map((it,i)=>{const url=it.url||urlArtigo(e,it.a),src=qrImg(url,it.t,it.s);return `<div class="card"><img src="${src}" alt="Código QR: ${esc(it.s)}"><p style="margin:8px 0 4px;font-weight:700;line-height:1.25">${esc(it.a?it.a.ti:(it.nome||'Capa: todos os artigos'))}</p><p class="note" style="margin:0 0 8px">${it.a?'pág. '+esc(it.a.p):'N.º'+e.n}</p><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><a class="btn sm" href="${src}" download="${esc(it.f)}.png" style="text-decoration:none;line-height:26px">Descarregar</a><button class="btn sm" data-url="${esc(url)}">Copiar ligação</button></div></div>`}).join('')}</div>`;
  bindSel(pQR);
  pane().onclick=async ev=>{
   const dl=ev.target.closest('a[download]');
@@ -500,7 +551,7 @@ const ESTADOS={recebido:['Recebido','A equipa do jornal ainda não leu.'],revisa
 const estTag=e=>`<span class="est est-${esc(e)}">${esc((ESTADOS[e]||[e])[0])}</span>`;
 const palavras=t=>(String(t||'').match(/\S+/g)||[]).length;
 const extDe=b=>({'image/png':'png','image/webp':'webp','image/heic':'heic','image/heif':'heif'})[b&&b.type]||'jpg';
-const MAXF=12,CAMPOS=['seccao','titulo','entrada','texto','autores','turma','creditos_fotos','notas','pt','pq','po'];
+const MAXF=12,CAMPOS=['ingles','seccao','titulo','entrada','texto','autores','turma','creditos_fotos','notas','pt','pq','po'];
 const urlRedacao=()=>(cfg.base||location.href.split('#')[0])+'#redacao';
 const d2b=u=>{const [h,b]=u.split(','),bin=atob(b),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return new Blob([a],{type:h.slice(5).split(';')[0]})};
 const textoDe=s=>[s.titulo,s.entrada,s.texto,'Texto: '+s.autores+(s.turma?' ('+s.turma+')':''),s.creditos_fotos?'Fotografias: '+s.creditos_fotos:''].filter(Boolean).join('\n\n');
@@ -516,7 +567,7 @@ async function comprimir(file){
  if(file.size<=10e6&&/^image\//.test(file.type))return file;
  throw new Error('imagem');
 }
-function secoes(){const s=new Set(['Notícias','Reportagem','Entrevista','Crónica','Ambiente','Desporto Escolar','Dias especiais','Escrita criativa','Sugestões']);eds.forEach(e=>e.artigos.forEach(a=>{if(a.s)s.add(a.s)}));return [...s]}
+function secoes(){const s=new Set(['Notícias','Reportagem','Entrevista','Crónica','Calheta (a nossa vila)','Ambiente','Desporto Escolar','Dias especiais','Escrita criativa','Sugestões']);eds.forEach(e=>e.artigos.forEach(a=>{if(a.s)s.add(a.s)}));return [...s]}
 function novoForm(){const r=LS.get('rc-rascunho',null)||{},o={fotos:[],removidas:[],autorizacao:false};CAMPOS.forEach(k=>o[k]=String(r[k]||''));return o}
 let rForm=null,rAba='novo',rMsg='';
 
@@ -541,10 +592,11 @@ async function redacao(){
  main.innerHTML=`<span class="tag">Redação${info.edicao?' · N.º'+esc(info.edicao):''}</span>
  <h2 class="t">${ed?'Corrige o teu artigo':'Envia o teu artigo'}</h2>
  <p class="lead">${info.edicao?`Estamos a preparar o n.º${esc(info.edicao)}. `:''}${prazo&&!isNaN(prazo)?`Entrega até <b>${esc(prazo.toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long'}))}</b>. `:''}${info.msg?esc(info.msg):'A equipa do jornal lê tudo antes de publicar.'}</p>
- <div class="tabs"><button class="btn sm ${rAba==='novo'?'on':''}" data-raba="novo">${ed?'Corrigir artigo':'Novo artigo'}</button><button class="btn sm ${rAba==='meus'?'on':''}" data-raba="meus">Os meus artigos${minhas.length?' ('+minhas.length+')':''}</button><a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Voltar ao jornal</a></div>
+ <div class="tabs"><button class="btn sm ${rAba==='novo'?'on':''}" data-raba="novo">${ed?'Corrigir artigo':'Novo artigo'}</button><button class="btn sm ${rAba==='meus'?'on':''}" data-raba="meus">Os meus artigos${minhas.length?' ('+minhas.length+')':''}</button><button class="btn sm ${rAba==='pautas'?'on':''}" data-raba="pautas">Pautas</button><button class="btn sm ${rAba==='guia'?'on':''}" data-raba="guia">Guia de escrita</button><button class="btn sm ${rAba==='cartao'?'on':''}" data-raba="cartao">Cartão</button><a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Voltar ao jornal</a></div>
  <div id="rpane"></div>`;
  main.querySelectorAll('[data-raba]').forEach(b=>b.onclick=()=>{rAba=b.dataset.raba;redacao()});
- rAba==='meus'?rMeus(minhas):rNovo(info);
+ {const L=lembreteHTML(info,minhas);if(L)main.querySelector('.lead').insertAdjacentHTML('afterend',L)}
+ const fx={meus:()=>rMeus(minhas),pautas:rPautas,guia:rGuia,cartao:rCartao}[rAba];fx?fx():rNovo(info);
 }
 
 function rNovo(info){
@@ -570,16 +622,26 @@ function rNovo(info){
   <p class="note" style="margin-top:0">Aparece na Participa, na página que o QR do teu artigo abre.</p>
   <label for="r-pt">Tipo</label><select id="r-pt" name="pt"><option value="">Sem pergunta</option><option value="sondagem" ${f.pt==='sondagem'?'selected':''}>Votação (opinião)</option><option value="quiz" ${f.pt==='quiz'?'selected':''}>Quiz (há uma resposta certa)</option></select>
   <div id="r-pw" class="${f.pt?'':'hide'}"><label for="r-pq">Pergunta</label><input id="r-pq" name="pq" maxlength="160" value="${esc(f.pq)}"><label for="r-po">Opções, uma por linha</label><textarea id="r-po" name="po" maxlength="600" placeholder="No quiz, põe * antes da resposta certa">${esc(f.po)}</textarea></div></div>
+ <div class="card"><h3>Extras (opcional)</h3><label for="r-en" style="margin-top:0">Versão curta em inglês</label><textarea id="r-en" name="ingles" maxlength="3000" style="min-height:80px" placeholder="Um resumo em inglês, se quiseres praticar">${esc(f.ingles||'')}</textarea>
+  <label>Áudio: lê o teu artigo em voz alta</label><div class="row" id="r-aud" style="align-items:center"></div><p class="note">Fica na página do artigo, para quem prefere ouvir.</p></div>
  <div class="card"><label for="r-n" style="margin-top:0">Recado para a equipa do jornal (opcional)</label><textarea id="r-n" name="notas" maxlength="600" style="min-height:64px">${esc(f.notas)}</textarea></div>
+ <div class="card"><h3>Antes de enviar</h3><ul class="chk-list" id="r-chk"></ul></div>
  <div class="row"><button class="btn pri" style="flex:0 0 auto">${f.id?'Enviar correções':'Enviar para a redação'}</button>${f.id?'<button class="btn" type="button" id="r-cancel" style="flex:0 0 auto">Cancelar</button>':''}<span class="msg" id="r-msg"></span></div>
  <p class="note">Nos nomes, só o primeiro nome e a inicial. Não escrevas moradas, telefones nem coisas privadas sobre outras pessoas.</p></form>`;
  const form=$('#rf'),m=$('#r-msg'),T=s=>String(s||'').trim();
  const sync=()=>{const fd=new FormData(form);CAMPOS.forEach(k=>f[k]=String(fd.get(k)??''));f.autorizacao=$('#r-au').checked;form.querySelectorAll('[data-leg]').forEach(x=>{const o=f.fotos[x.dataset.leg];if(o)o.legenda=x.value})};
- const thumbs=()=>{$('#r-th').innerHTML=f.fotos.map((x,i)=>`<div class="th">${x.url?`<img src="${esc(x.url)}" alt="Foto ${i+1}">`:'<div class="ph">sem pré-visualização</div>'}<div class="thb"><b>Foto ${i+1}</b>${i?`<button type="button" class="btn sm" data-up="${i}" aria-label="Passar a foto ${i+1} para antes">←</button>`:''}<button type="button" class="btn sm" data-rmf="${i}" aria-label="Retirar a foto ${i+1}">×</button></div><input data-leg="${i}" maxlength="160" placeholder="Legenda" aria-label="Legenda da foto ${i+1}" value="${esc(x.legenda||'')}"></div>`).join('')||'<p class="note" style="margin:0">Ainda sem fotos.</p>'};
+ const thumbs=()=>{$('#r-th').innerHTML=f.fotos.map((x,i)=>`<div class="th">${x.url?`<img src="${esc(x.url)}" alt="Foto ${i+1}">`:'<div class="ph">sem pré-visualização</div>'}<div class="thb"><b>Foto ${i+1}</b>${i?`<button type="button" class="btn sm" data-up="${i}" aria-label="Passar a foto ${i+1} para antes">←</button>`:''}<button type="button" class="btn sm" data-rmf="${i}" aria-label="Retirar a foto ${i+1}">×</button></div><input data-leg="${i}" maxlength="160" placeholder="Legenda" aria-label="Legenda da foto ${i+1}" value="${esc(x.legenda||'')}"></div>`).join('')||'<p class="note" style="margin:0">Ainda sem fotos.</p>';chkUpd()};
  const pal=()=>{const n=palavras($('#r-x').value);$('#r-pal').textContent=n+(n===1?' palavra':' palavras')+'. Como referência, uma página com 2 ou 3 fotos leva cerca de 300 a 400 palavras.'};
- const onIn=ev=>{sync();if(ev.target.id==='r-x')pal();if(ev.target.id==='r-pt')$('#r-pw').classList.toggle('hide',!f.pt);if(!f.id)LS.set('rc-rascunho',Object.fromEntries(CAMPOS.map(k=>[k,f[k]])))};
+ const onIn=ev=>{sync();chkUpd();if(ev.target.id==='r-x')pal();if(ev.target.id==='r-pt')$('#r-pw').classList.toggle('hide',!f.pt);if(!f.id)LS.set('rc-rascunho',Object.fromEntries(CAMPOS.map(k=>[k,f[k]])))};
  form.addEventListener('input',onIn);form.addEventListener('change',onIn);
- thumbs();pal();
+ const chkUpd=()=>{const el=$('#r-chk');if(el)el.innerHTML=verificar(f).map(([ok,t])=>`<li class="${ok?'ok':'av'}">${ok?'✓':'!'} ${esc(t)}</li>`).join('')};
+ let rec=null;
+ const audUI=()=>{const el=$('#r-aud');if(!el)return;el.innerHTML=f.audio?`<audio controls src="${esc(f.audio.url||'')}" style="flex:1 1 240px"></audio><button type="button" class="btn sm" id="r-arm" style="flex:0 0 auto">Retirar</button>`:`${window.MediaRecorder?'<button type="button" class="btn" id="r-rec" style="flex:0 0 auto">● Gravar</button>':''}<button type="button" class="btn" id="r-afb" style="flex:0 0 auto">Escolher ficheiro</button><input type="file" id="r-af" accept="audio/*" class="hide"><span class="note" id="r-ast" style="margin:0"></span>`;
+  const novo=bl=>{if(f.audio&&f.audio.path)f.removidas.push(f.audio.path);f.audio={blob:bl,url:URL.createObjectURL(bl)};audUI()};
+  const arm=$('#r-arm');if(arm)arm.onclick=()=>{if(f.audio&&f.audio.path)f.removidas.push(f.audio.path);f.audio=null;audUI()};
+  const afb=$('#r-afb');if(afb){afb.onclick=()=>$('#r-af').click();$('#r-af').onchange=()=>{const x=$('#r-af').files[0];if(!x)return;if(x.size>10e6){$('#r-ast').textContent='O ficheiro tem mais de 10 MB.';return}novo(x)}}
+  const rb=$('#r-rec');if(rb)rb.onclick=async()=>{if(rec){rec.stop();return}try{const st=await navigator.mediaDevices.getUserMedia({audio:true}),ch=[];rec=new MediaRecorder(st);rec.ondataavailable=ev=>ch.push(ev.data);rec.onstop=()=>{st.getTracks().forEach(t=>t.stop());const bl=new Blob(ch,{type:rec.mimeType||'audio/webm'});rec=null;novo(bl)};rec.start();rb.textContent='■ Parar';$('#r-ast').textContent='A gravar…'}catch(e){rec=null;$('#r-ast').textContent='Não foi possível usar o microfone. Escolhe um ficheiro.'}}};
+ thumbs();pal();chkUpd();audUI();
  $('#r-fb').onclick=()=>$('#r-f').click();
  $('#r-f').onchange=async()=>{sync();const fs=[...$('#r-f').files];$('#r-f').value='';let erro='';
   for(const file of fs){if(f.fotos.length>=MAXF){erro='Máximo de '+MAXF+' fotos.';break}
@@ -603,7 +665,8 @@ function rNovo(info){
   const btn=form.querySelector('button.pri');btn.disabled=true;
   try{const fotos=[];let k=0;
    for(const x of f.fotos){if(!x.path){m.className='msg';m.textContent=`A enviar a foto ${++k}…`;x.path=await db.subirFoto(x.blob,extDe(x.blob))}fotos.push({path:x.path,legenda:T(x.legenda),nome:x.nome||''})}
-   const dados={seccao:T(f.seccao),titulo:T(f.titulo),entrada:T(f.entrada),texto:T(f.texto),autores:T(f.autores),turma:T(f.turma),creditos_fotos:T(f.creditos_fotos),notas:T(f.notas),pergunta,fotos,autorizacao:!!f.autorizacao};
+   let audio=null;if(f.audio){if(!f.audio.path){m.className='msg';m.textContent='A enviar o áudio…';const cb=limpaTipo(f.audio.blob);f.audio.path=await db.subirFoto(cb,extA(cb))}audio=f.audio.path}
+   const dados={ingles:T(f.ingles),audio,seccao:T(f.seccao),titulo:T(f.titulo),entrada:T(f.entrada),texto:T(f.texto),autores:T(f.autores),turma:T(f.turma),creditos_fotos:T(f.creditos_fotos),notas:T(f.notas),pergunta,fotos,autorizacao:!!f.autorizacao};
    if(f.id){await db.editarSub(f.id,dados);if(f.removidas.length)await db.apagarFotos(f.removidas).catch(e=>console.warn(e))}
    else{dados.edicao=Number(info.edicao)||null;await db.submeter(dados);LS.set('rc-rascunho',null)}
    rMsg=f.id?'Correções enviadas. A equipa vai voltar a ler.':'Recebido, obrigado! Acompanha aqui o estado do teu artigo.';rForm=null;rAba='meus';redacao()}
@@ -616,12 +679,13 @@ function rMeus(lista){
  <p class="note">${esc((ESTADOS[s.estado]||['',''])[1])}${(s.estado==='aceite'||s.estado==='publicado')&&s.edicao?' N.º'+esc(s.edicao)+(s.pagina?', pág. '+esc(s.pagina):'')+'.':''}</p>
  ${s.nota_equipa?`<div class="notaeq"><b>Nota da equipa:</b> ${esc(s.nota_equipa)}</div>`:''}
  ${s.estado==='recebido'||s.estado==='alteracoes'?`<button class="btn sm" data-red="${esc(s.id)}" style="margin-top:12px">Corrigir</button>`:''}</div>`}).join('')||'<p class="note">Ainda não enviaste nenhum artigo deste aparelho.</p>'}
+ ${lista.some(s=>s.estado==='publicado')?`<p class="note"><b>O teu portefólio:</b> ${lista.filter(s=>s.estado==='publicado').map(s=>esc(s.titulo)+(s.edicao?' (n.º'+esc(s.edicao)+(s.pagina?', pág. '+esc(s.pagina):'')+')':'')).join(' · ')}</p>`:''}
  <p class="note">Os teus artigos ficam ligados a este telemóvel ou computador. Podes corrigi-los enquanto a equipa não os aceitar.</p>`;
  rMsg='';
  rp.onclick=async ev=>{const b=ev.target.closest('[data-red]');if(!b)return;const s=lista.find(x=>x.id===b.dataset.red);if(!s)return;b.disabled=true;
-  let urls={};try{urls=await db.urlsFotos((s.fotos||[]).map(x=>x.path))}catch(e){console.warn(e)}
+  let urls={};try{urls=await db.urlsFotos((s.fotos||[]).map(x=>x.path).concat(s.audio?[s.audio]:[]))}catch(e){console.warn(e)}
   const p=s.pergunta||{};
-  rForm={id:s.id,nota_equipa:s.nota_equipa,seccao:s.seccao||'',titulo:s.titulo||'',entrada:s.entrada||'',texto:s.texto||'',autores:s.autores||'',turma:s.turma||'',creditos_fotos:s.creditos_fotos||'',notas:s.notas||'',autorizacao:!!s.autorizacao,pt:p.t||'',pq:p.q||'',po:(p.o||[]).map((o,i)=>(p.t==='quiz'&&i===p.c?'*':'')+o).join('\n'),fotos:(s.fotos||[]).map(x=>Object.assign({},x,{url:urls[x.path]||''})),removidas:[]};
+  rForm={id:s.id,ingles:s.ingles||'',audio:s.audio?{path:s.audio,url:urls[s.audio]||''}:null,nota_equipa:s.nota_equipa,seccao:s.seccao||'',titulo:s.titulo||'',entrada:s.entrada||'',texto:s.texto||'',autores:s.autores||'',turma:s.turma||'',creditos_fotos:s.creditos_fotos||'',notas:s.notas||'',autorizacao:!!s.autorizacao,pt:p.t||'',pq:p.q||'',po:(p.o||[]).map((o,i)=>(p.t==='quiz'&&i===p.c?'*':'')+o).join('\n'),fotos:(s.fotos||[]).map(x=>Object.assign({},x,{url:urls[x.path]||''})),removidas:[]};
   rAba='novo';redacao()};
 }
 
@@ -633,6 +697,9 @@ function detalhe(s,urls){
  return `<div class="art">
  ${s.entrada?`<p style="margin-top:0"><b>${esc(s.entrada)}</b></p>`:''}
  <div class="texto">${esc(s.texto)}</div>
+ <p class="note">Ocupa cerca de ${fmt1(pags(s))} ${pags(s)>1?'páginas':'página'} (${palavras(s.texto)} palavras, ${fs.length} ${fs.length===1?'foto':'fotos'}).</p>${avisoAut(s)}
+ ${s.ingles?`<h3 style="margin-top:16px">Versão em inglês</h3><div class="texto">${esc(s.ingles)}</div>`:''}
+ ${s.audio?`<h3 style="margin-top:16px">Áudio</h3><audio controls style="width:100%" src="${esc(urls[s.audio]||'')}"></audio>`:''}
  ${fs.length?`<h3 style="margin-top:16px">Fotografias${s.creditos_fotos?` <span class="note">· ${esc(s.creditos_fotos)}</span>`:''}</h3>
  <div class="thumbs">${fs.map((f,i)=>`<div class="th">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="Foto ${i+1}">`:'<div class="ph">sem pré-visualização</div>'}<b>Foto ${i+1}</b>${f.legenda?`<span class="ls">${esc(f.legenda)}</span>`:''}</div>`).join('')}</div>
  <p class="note">${s.autorizacao?'O autor confirmou a autorização de imagem.':'<span class="err">O autor não confirmou a autorização de imagem.</span>'}</p>`:''}
@@ -649,8 +716,10 @@ function edicaoDe(lista,n){
  return {n,titulo:ex?ex.titulo:'',ano:ex?ex.ano:(eds.length?eds[eds.length-1].ano:''),artigos:lista.map(s=>{let id=slug(s.titulo),k=2;while(ids.has(id))id=slug(s.titulo)+'-'+k++;ids.add(id);
   const b=[{t:'reacoes'}],p=s.pergunta;if((s.fotos||[]).length)b.push({t:'fotos',n:s.fotos.length});
   if(p&&Array.isArray(p.o)&&(p.t==='sondagem'||p.t==='quiz'))b.push(p.t==='quiz'?{t:'quiz',q:p.q,o:p.o,c:p.c}:{t:'sondagem',q:p.q,o:p.o});
+  if(s.ingles)b.push({t:'texto',q:'In English',x:s.ingles});
+  if(s.audio)b.push({t:'audio',q:'Ouve o artigo',url:'sub:'+s.audio});
   b.push({t:'comentario',q:'Deixa uma mensagem aos autores'});
-  return {id,p:s.pagina||'',s:s.seccao||'Notícias',ti:s.titulo,b}})};
+  return {id,p:s.pagina||'',s:s.seccao||'Notícias',ti:s.titulo,r:s.entrada||'',au:s.autores+(s.turma?' ('+s.turma+')':''),b}})};
 }
 async function pacote(lista,n,nome){
  if(!window.JSZip)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
@@ -670,10 +739,11 @@ async function pacote(lista,n,nome){
  await baixar(await z.generateAsync({type:'blob'}),nome);
 }
 async function pRedacao(){
+ autCache=await db.autorizacoes().catch(()=>[]);const minhasS=await meusSecs();
  const [lista,info,cod]=await Promise.all([db.subs().catch(e=>{console.warn(e);return []}),db.redacaoInfo().catch(()=>({})),db.codigoRedacao().catch(()=>'')]);
  const proxN=Number(info.edicao)||(eds.reduce((m,e)=>Math.max(m,e.n),0)+1);
- const vis=lista.filter(FILTROS[rFiltro][1]),ab=vis.find(s=>s.id===rAberto);
- const urls=ab&&(ab.fotos||[]).length?await db.urlsFotos(ab.fotos.map(f=>f.path)).catch(()=>({})):{};
+ const vis=lista.filter(FILTROS[rFiltro][1]).filter(s=>!soMinhas||!minhasS.length||minhasS.includes(s.seccao)),ab=vis.find(s=>s.id===rAberto);
+ const urls=ab&&((ab.fotos||[]).length||ab.audio)?await db.urlsFotos((ab.fotos||[]).map(f=>f.path).concat(ab.audio?[ab.audio]:[])).catch(()=>({})):{};
  const dt=s=>esc(new Date(s.criado).toLocaleDateString('pt-PT',{day:'numeric',month:'short'}));
  pane().innerHTML=`
  <div class="card"><h3>Receção de artigos</h3><form id="rcfg">
@@ -682,9 +752,9 @@ async function pRedacao(){
   <div><label for="ri-c">Código da redação</label><input id="ri-c" value="${esc(cod)}" autocomplete="off"></div></div>
   <label for="ri-m">Recado para os jornalistas (opcional)</label><input id="ri-m" maxlength="200" value="${esc(info.msg||'')}" placeholder="ex.: Procuramos reportagens sobre o Natal na escola">
   <label class="chk"><input type="checkbox" id="ri-a" ${info.aberta!==false?'checked':''}> Receção aberta (desliga quando o jornal já está a ser montado)</label>
-  <div class="row" style="margin-top:12px"><button class="btn pri sm" style="flex:0 0 auto">Guardar</button><button type="button" class="btn sm" id="ri-l" style="flex:0 0 auto">Copiar ligação</button><button type="button" class="btn sm" id="ri-q" style="flex:0 0 auto">QR da redação (PNG)</button><button type="button" class="btn sm" id="ri-r" style="flex:0 0 auto">${confirmar==='revogar'?'Confirmar: tirar o acesso?':'Tirar o acesso a todos'}</button><span class="msg" id="ri-msg"></span></div>
+  <div class="row" style="margin-top:12px"><button class="btn pri sm" style="flex:0 0 auto">Guardar</button><button type="button" class="btn sm" id="ri-l" style="flex:0 0 auto">Copiar ligação</button><button type="button" class="btn sm" id="ri-q" style="flex:0 0 auto">QR da redação (PNG)</button><button type="button" class="btn sm" id="ri-lem" style="flex:0 0 auto">Copiar lembrete</button><button type="button" class="btn sm" id="ri-r" style="flex:0 0 auto">${confirmar==='revogar'?'Confirmar: tirar o acesso?':'Tirar o acesso a todos'}</button><span class="msg" id="ri-msg"></span></div>
  </form><p class="note">Os jornalistas abrem <b>${esc(urlRedacao())}</b> e entram com o código. Quem já entrou mantém o acesso mesmo que mudes o código; no fim do ano letivo, usa "Tirar o acesso a todos".</p></div>
- <div class="tabs" style="margin-top:18px">${Object.entries(FILTROS).map(([k,[l,fn]])=>`<button class="btn sm ${rFiltro===k?'on':''}" data-filtro="${k}">${l}${k!=='todos'?' ('+lista.filter(fn).length+')':''}</button>`).join('')}</div>
+ <div class="tabs" style="margin-top:18px">${Object.entries(FILTROS).map(([k,[l,fn]])=>`<button class="btn sm ${rFiltro===k?'on':''}" data-filtro="${k}">${l}${k!=='todos'?' ('+lista.filter(fn).length+')':''}</button>`).join('')}${minhasS.length?`<button class="btn sm ${soMinhas?'on':''}" data-sominhas="1">Só as minhas secções</button>`:''}</div>
  ${vis.map(s=>{const nf=(s.fotos||[]).length,o=s.id===rAberto;return `<div class="card"><div class="row" style="align-items:center"><div style="flex:3 1 260px"><span class="lt">${esc(s.titulo)}</span><span class="ls">${esc(s.seccao||'Sem secção')} · ${esc(s.autores)}${s.turma?' ('+esc(s.turma)+')':''} · ${palavras(s.texto)} palavras · ${nf} ${nf===1?'foto':'fotos'} · ${dt(s)}</span></div>
   <div style="flex:0 0 auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap">${s.edicao?`<span class="note" style="margin:0">N.º${esc(s.edicao)}${s.pagina?' · pág. '+esc(s.pagina):''}</span>`:''}${estTag(s.estado)}<button class="btn sm" data-abrir="${esc(s.id)}">${o?'Fechar':'Abrir'}</button></div></div>
   ${o?detalhe(s,urls):''}</div>`}).join('')||`<p class="note">${rFiltro==='tratar'?'Não há artigos por tratar.':'Nada aqui.'}</p>`}
@@ -698,19 +768,21 @@ async function pRedacao(){
   try{await db.setRedacaoInfo({edicao:Number($('#ri-n').value)||null,prazo:$('#ri-p').value||'',msg:$('#ri-m').value.trim(),aberta:$('#ri-a').checked});if(c!==cod)await db.setCodigoRedacao(c);msg('#ri-msg','Guardado.',1)}
   catch(e){console.warn(e);msg('#ri-msg','Não foi possível guardar.')}};
  $('#ri-l').onclick=async ev=>{try{await navigator.clipboard.writeText(urlRedacao());ev.target.textContent='Copiada!'}catch(e){ev.target.textContent=urlRedacao()}};
+ $('#ri-lem').onclick=async ev=>{const alt=lista.filter(s=>s.estado==='alteracoes'),p=info.prazo?new Date(info.prazo+'T12:00').toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long'}):'';const t=`Repórter da Calheta${info.edicao?' n.º'+info.edicao:''}: ${p?'o prazo de entrega acaba '+p+'. ':''}Enviem os vossos artigos em ${urlRedacao()}`+(alt.length?`\n\nÀ espera de correção:\n${alt.map(s=>'- '+s.titulo+' ('+s.autores+')').join('\n')}`:'');try{await navigator.clipboard.writeText(t);ev.target.textContent='Copiado!'}catch(e){ev.target.textContent='Não deu para copiar'}};
  $('#ri-q').onclick=async()=>{const src=qrImg(urlRedacao(),'Redação','Envia o teu artigo para o jornal');if(src)await baixar(d2b(src),'QR-redacao.png')};
  $('#ri-r').onclick=async()=>{if(confirmar!=='revogar'){confirmar='revogar';return pRedacao()}confirmar=null;let ok=true;try{await db.limparRedatores()}catch(e){console.warn(e);ok=false}await pRedacao();msg('#ri-msg',ok?'Feito: todos vão precisar do código para voltar a entrar.':'Não foi possível tirar o acesso.',ok)};
  const aceites=()=>{const n=Number($('#x-n').value);return [n,lista.filter(s=>s.estado==='aceite'&&Number(s.edicao)===n).sort((a,b)=>(parseInt(a.pagina)||999)-(parseInt(b.pagina)||999))]};
  const vazio=n=>msg('#x-msg',`Ainda não há artigos aceites para o n.º${n}. Abre cada artigo, escolhe "Aceite" e indica a edição e a página.`);
  $('#x-zip').onclick=async ev=>{const [n,l]=aceites();if(!l.length)return vazio(n);ev.target.disabled=true;msg('#x-msg','A preparar o pacote…',1);
   try{await pacote(l,n,'Reporter-n'+n+'-artigos.zip');msg('#x-msg',`Pacote com ${l.length} ${l.length===1?'artigo':'artigos'} pronto.`,1)}catch(e){console.warn(e);msg('#x-msg','Não foi possível criar o pacote.')}ev.target.disabled=false};
- $('#x-ed').onclick=()=>{const [n,l]=aceites();if(!l.length)return vazio(n);const novo=edicaoDe(l,n),ex=edicao(n);
+ $('#x-ed').onclick=async ev=>{const [n,l]=aceites();if(!l.length)return vazio(n);const novo=edicaoDe(l,n),ex=edicao(n);
   if(ex){rasc=JSON.parse(JSON.stringify(ex));const ids=new Set(rasc.artigos.map(a=>a.id));novo.artigos.forEach(a=>{if(!ids.has(a.id))rasc.artigos.push(a)});rasc.artigos.sort((a,b)=>(parseInt(a.p)||999)-(parseInt(b.p)||999))}
   else rasc=Object.assign(novo,{novo:true});
-  aba='edicoes';painel()};
+  ev.target.disabled=true;await publicarAudios(rasc,ev.target);aba='edicoes';painel()};
  $('#x-pub').onclick=async ev=>{const [n,l]=aceites();if(!l.length)return vazio(n);ev.target.disabled=true;
   try{for(const s of l)await db.editarSub(s.id,{estado:'publicado'});painel()}catch(e){console.warn(e);msg('#x-msg','Não foi possível atualizar.');ev.target.disabled=false}};
  pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.sominhas){soMinhas=!soMinhas;return pRedacao()}
   if(d.filtro){rFiltro=d.filtro;rAberto=null;confirmar=null;return pRedacao()}
   if(d.abrir){rAberto=rAberto===d.abrir?null:d.abrir;confirmar=null;return pRedacao()}
   const s=lista.find(x=>x.id===(d.guardar||d.copiar||d.zip||d.apagar));if(!s)return;
@@ -721,7 +793,431 @@ async function pRedacao(){
  };
 }
 
+/* ======================= v1.2 ======================= */
+const TIPOC={comentario:'Comentário',sugestao:'Sugestão',pergunta:'Pergunta para entrevista',familia:'Mensagem de família'};
+const normT=t=>String(t||'').toUpperCase().replace(/\s+/g,'').replace(/[ºª°.]/g,'').slice(0,12);
+const fmtT=t=>{const m=normT(t).match(/^(\d{1,2})([A-Z]{0,3})$/);return m?(m[1]+'.º'+(m[2]?' '+m[2]:'')):String(t||'').trim().slice(0,12)};
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const fmt1=x=>Number(x).toLocaleString('pt-PT',{maximumFractionDigits:2});
+const fmtData=d=>{const x=new Date(d+'T12:00');return isNaN(x)?String(d||''):x.toLocaleDateString('pt-PT',{weekday:'short',day:'numeric',month:'short'})};
+const pags=s=>Math.max(.25,Math.round((palavras(s.texto)/450+(s.fotos||[]).length*.18+(s.entrada?.05:0))*4)/4);
+const extA=b=>{const t=(b&&b.type)||'';return t.includes('webm')?'webm':t.includes('ogg')?'ogg':(t.includes('mp4')||t.includes('m4a')||t.includes('aac'))?'m4a':t.includes('mpeg')?'mp3':t.includes('wav')?'wav':'webm'};
+const limpaTipo=b=>new Blob([b],{type:((b&&b.type)||'audio/webm').split(';')[0]});
+async function urlMedia(u){if(!u)return '';if(u.startsWith('idb:')){const b=await idb.get(u.slice(4));return b?URL.createObjectURL(b):''}return u}
+async function resolverMedia(root){for(const el of root.querySelectorAll('[data-media]')){try{el.src=await urlMedia(el.dataset.media)}catch(e){console.warn(e)}}}
+function certasDe(e){const o={};e.artigos.forEach(a=>a.b.forEach((b,bi)=>{if(b.t==='quiz')o[a.id+'|'+bi]=String(b.c)}));(e.caca||[]).forEach(c=>o['_caca|'+c.id]=String(c.c));return o}
+function statsEd(e,cont){
+ const arts=[],fotos=[],quiz=[];
+ e.artigos.forEach(a=>{const ca=cont[a.id]||{};let tot=0;for(const ch in ca)tot+=soma(ca[ch]);arts.push({a,tot});
+  a.b.forEach((b,bi)=>{if(b.t==='fotos')for(let k=1;k<=b.n;k++){const n=soma(ca[bi+':'+k]);if(n)fotos.push({a,k,n})}
+   if(b.t==='quiz'){const c=ca[String(bi)]||{},t=soma(c);if(t)quiz.push({a,q:b.q,t,pct:Math.round((c[b.c]||0)*100/t)})}})});
+ const ordem=arts.slice().sort((x,y)=>y.tot-x.tot);fotos.sort((x,y)=>y.n-x.n);quiz.sort((x,y)=>x.pct-y.pct);
+ return {arts,ordem,fotos,quiz,total:arts.reduce((s,x)=>s+x.tot,0)};
+}
+const barras=rows=>`<div class="opts res">${rows.map(([l,v,max,suf])=>`<div class="opt"><span class="bar" style="width:${max?Math.round(v*100/max):0}%"></span><span>${esc(l)}</span><span class="pct">${esc(v)}${suf||''}</span></div>`).join('')}</div>`;
+
+/* --- dados: modo demonstração --- */
+Object.assign(local,{
+ async getDef(k,d){const v=(this.d.defs||{})[k];return v===undefined?d:v},
+ async setDef(k,v){(this.d.defs=this.d.defs||{})[k]=v;this.save()},
+ async minhaTurma(){return LS.get('rc-turma',null)},
+ async setTurma(t){LS.set('rc-turma',t)},
+ async ranking(ed){const t=LS.get('rc-turma',null),e=edicao(ed);if(!t||!e)return [];const cert=certasDe(e);let inter=0,certas=0;
+  for(const k in this.d.votos){const [en,art,ch]=k.split('|');if(Number(en)!==ed)continue;const o=this.d.votos[k][dev];if(o==null)continue;inter++;if(cert[art+'|'+ch]===String(o))certas++}
+  const com=this.d.coms.filter(c=>c.ed===ed&&c.estado==='aprovado'&&(c.tipo==='comentario'||c.tipo==='familia')).length;
+  return inter||com?[{turma:t,leitores:1,interacoes:inter,certas,comentarios:com,pontos:inter+4*certas+5*com}]:[]},
+ P(k){return this.d[k]||(this.d[k]=[])},
+ async pautas(){return this.P('pautas').slice().sort((a,b)=>(a.data||'9')<(b.data||'9')?-1:1)},
+ async guardarPauta(p){const L=this.P('pautas');if(p.id){const x=L.find(y=>y.id===p.id);if(x)Object.assign(x,p)}else L.push(Object.assign({estado:'aberta',criado:new Date().toISOString()},p,{id:Date.now().toString(36)+Math.random().toString(36).slice(2,5)}));this.save()},
+ async apagarPauta(id){this.d.pautas=this.P('pautas').filter(x=>x.id!==id);this.save()},
+ async ficarPauta(id,nome){const p=this.P('pautas').find(x=>x.id===id);if(!p||p.estado!=='aberta'||!String(nome||'').trim())return false;Object.assign(p,{estado:'atribuida',jornalista:dev,jornalista_nome:nome});this.save();return true},
+ async largarPauta(id){const p=this.P('pautas').find(x=>x.id===id);if(p&&p.jornalista===dev){Object.assign(p,{estado:'aberta',jornalista:null,jornalista_nome:null});this.save()}},
+ async autorizacoes(){return this.P('autoriz')},
+ async guardarAutorizacoes(rows){this.d.autoriz=rows;this.save()},
+ async professores(){return this.d.profs||(this.d.profs=[{email:'demo@escola.pt',seccoes:[]}])},
+ async guardarProfessor(p){const L=await this.professores(),x=L.find(y=>y.email===p.email);x?Object.assign(x,p):L.push(p);this.save()},
+ async apagarProfessor(email){this.d.profs=(await this.professores()).filter(x=>x.email!==email);this.save()},
+ async meuEmail(){return 'demo@escola.pt'},
+ async subirPublico(b,ext){const k='pub/'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)+'.'+ext;await idb.put(k,b);return 'idb:'+k},
+ async uid(){return dev}
+});
+/* --- dados: Supabase --- */
+function extrasSupa(cl,o){
+ const chk=r=>{if(r.error)throw r.error;return r.data};
+ Object.assign(o,{
+  async getDef(k,d){const r=chk(await cl.from('definicoes').select('valor').eq('chave',k).maybeSingle());if(!r)return d;try{return JSON.parse(r.valor)}catch(e){return r.valor}},
+  async setDef(k,v){chk(await cl.from('definicoes').upsert({chave:k,valor:JSON.stringify(v)}))},
+  async minhaTurma(){const u=await o.uid();const r=chk(await cl.from('leitores').select('turma').eq('utilizador',u).maybeSingle());return r?r.turma:null},
+  async setTurma(t){LS.set('rc-turma',t);chk(await cl.from('leitores').upsert({utilizador:await o.uid(),turma:t,atualizado:new Date().toISOString()}))},
+  async ranking(ed){return chk(await cl.rpc('ranking_turmas',{p_edicao:ed})).map(r=>({turma:r.turma,leitores:+r.leitores,interacoes:+r.interacoes,certas:+r.certas,comentarios:+r.comentarios,pontos:+r.pontos}))},
+  async pautas(){return chk(await cl.from('pautas').select('*').order('data',{ascending:true,nullsFirst:false}).order('criado'))},
+  async guardarPauta(p){const c=Object.assign({},p);if(c.id){const id=c.id;delete c.id;chk(await cl.from('pautas').update(c).eq('id',id))}else chk(await cl.from('pautas').insert(c))},
+  async apagarPauta(id){chk(await cl.from('pautas').delete().eq('id',id))},
+  async ficarPauta(id,nome){return !!chk(await cl.rpc('ficar_pauta',{p_id:id,p_nome:nome}))},
+  async largarPauta(id){chk(await cl.rpc('largar_pauta',{p_id:id}))},
+  async autorizacoes(){return chk(await cl.from('autorizacoes').select('turma,nome,autoriza,obs').order('turma').order('nome'))},
+  async guardarAutorizacoes(rows){chk(await cl.rpc('substituir_autorizacoes',{p_linhas:rows}))},
+  async professores(){return chk(await cl.from('professores').select('email,seccoes').order('email'))},
+  async guardarProfessor(p){chk(await cl.from('professores').upsert({email:p.email,seccoes:p.seccoes||[]}))},
+  async apagarProfessor(email){chk(await cl.from('professores').delete().eq('email',email))},
+  async meuEmail(){const {data}=await cl.auth.getSession();return (data.session&&data.session.user&&data.session.user.email)||''},
+  async subirPublico(b,ext){const path=new Date().getFullYear()+'/'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)+'.'+ext;chk(await cl.storage.from('publico').upload(path,b,{contentType:b.type||undefined}));return cl.storage.from('publico').getPublicUrl(path).data.publicUrl}
+ });
+}
+
+/* --- 2, 3: turma do leitor (concurso entre turmas) --- */
+async function posArtigo(e,a){
+ resolverMedia(main);
+ const box=document.createElement('div');box.className='card turma';
+ const [t,lista]=await Promise.all([db.minhaTurma().catch(()=>LS.get('rc-turma',null)),db.getDef('turmas',[]).catch(()=>[])]);
+ if(!atual||atual.a!==a)return;
+ main.appendChild(box);
+ const mostrar=v=>{box.className='note turma';box.innerHTML=`A tua turma: <b>${esc(v)}</b> · <a href="#e${e.n}-top">ranking das turmas</a> · <button type="button" class="lk" id="tch">mudar</button>`;$('#tch').onclick=()=>{box.className='card turma';pedir(v)}};
+ const pedir=v=>{box.innerHTML=`<h3>Em que turma andas?</h3><p class="note" style="margin-top:0">Conta para o concurso entre turmas: cada voto, resposta certa e comentário aprovado dá pontos à tua turma.</p><div class="row"><div>${lista.length?`<select id="tsel" aria-label="Turma"><option value="">Escolhe…</option>${lista.map(x=>`<option ${x===v?'selected':''}>${esc(x)}</option>`).join('')}</select>`:`<input id="tsel" maxlength="12" placeholder="ex.: 8.º A" aria-label="Turma" value="${esc(v||'')}">`}</div><button type="button" class="btn pri" id="tok" style="flex:0 0 auto">Guardar</button><button type="button" class="btn" id="tno" style="flex:0 0 auto">Não digo</button></div>`;
+  $('#tok').onclick=async()=>{const x=fmtT($('#tsel').value);if(!x)return;try{await db.setTurma(x)}catch(err){console.warn(err)}LS.set('rc-turma-pedida',1);mostrar(x)};
+  $('#tno').onclick=()=>{LS.set('rc-turma-pedida',1);box.remove()}};
+ if(t)mostrar(t);else if(!LS.get('rc-turma-pedida',0))pedir('');else box.remove();
+}
+
+/* --- 4, 7 e atalhos na página da edição --- */
+async function posIndice(e){
+ const box=$('#capa');if(!box)return;
+ const ant=eds.filter(x=>x.n<e.n&&x.capa&&x.capa.q).pop(),temCapa=!!(e.capa&&e.capa.q);
+ let c={},m={},ca={},mc={};
+ try{[c,m,ca,mc]=await Promise.all([temCapa?db.contagens(e.n,'_capa'):{},temCapa?db.meus(e.n,'_capa'):{},ant?db.contagens(ant.n,'_capa'):{},(e.caca||[]).length?db.meus(e.n,'_caca'):{}])}catch(err){console.warn(err)}
+ if(!$('#capa'))return;
+ let h='';
+ if(temCapa){const cc=c['0']||{},tot=soma(cc),mine=m['0'];
+  h+=`<div class="card capa"><span class="tag">Pergunta da capa</span><h3 style="margin-top:12px">${esc(e.capa.q)}</h3><div class="opts">${e.capa.o.map((o,oi)=>{const p=tot?Math.round((cc[oi]||0)*100/tot):0;return `<button class="opt ${mine===String(oi)?'mine':''}" data-cvote="${oi}">${mine!=null?`<span class="bar" style="width:${p}%"></span>`:''}<span>${esc(o)}</span>${mine!=null?`<span class="pct">${p}%</span>`:''}</button>`}).join('')}</div><p class="note">${mine!=null?`${tot} ${tot===1?'voto':'votos'}. Podes mudar o teu voto. O resultado sai no próximo número.`:'Vota para veres os resultados.'}</p></div>`}
+ if(ant){const cc=ca['0']||{},tot=soma(cc);if(tot){const top=ant.capa.o.map((o,oi)=>[o,Math.round((cc[oi]||0)*100/tot),100,'%']).sort((x,y)=>y[1]-x[1]);h+=`<div class="card"><h3>No n.º${ant.n} perguntámos: ${esc(ant.capa.q)}</h3>${barras(top)}<p class="note">${tot} votos.</p></div>`}}
+ const qz=e.artigos.find(a=>a.s==='Quiz da edição'),nc=(e.caca||[]).length,nf=(e.caca||[]).filter(x=>mc[x.id]!=null).length;
+ const at=[[`#e${e.n}-top`,'Ranking','As turmas, os artigos e as fotos com mais participação'],qz?[`#e${e.n}-${qz.id}`,'Quiz da edição','Leste o jornal todo? Prova!']:null,nc?[null,'Caça ao QR',`Há ${nc} códigos escondidos pela escola. Encontraste ${nf}.`]:null,[`#e${e.n}-ler`,'Ler o jornal',e.pdf?'A edição completa no ecrã':'O índice e os resumos, para partilhar'],['#arquivo','Arquivo','Procura nas edições antigas'],['#familias','Famílias','O mural de mensagens das famílias'],['#redacao','Redação','Escreve para o jornal']].filter(Boolean);
+ h+=`<div class="atalhos">${at.map(([u,t,s])=>u?`<a href="${u}"><b>${esc(t)}</b><span>${esc(s)}</span></a>`:`<div class="at"><b>${esc(t)}</b><span>${esc(s)}</span></div>`).join('')}</div>`;
+ box.innerHTML=h;
+ box.onclick=async ev=>{const b=ev.target.closest('[data-cvote]');if(!b)return;b.disabled=true;try{const mm=await db.meus(e.n,'_capa');await db.votar(e.n,'_capa','0',mm['0']===b.dataset.cvote?null:b.dataset.cvote)}catch(err){console.warn(err)}posIndice(e)};
+}
+
+/* --- 1: ranking da edição --- */
+async function verTop(e){
+ main.innerHTML='<p class="note">A contar…</p>';
+ const [cont,rank]=await Promise.all([db.todasContagens(e.n).catch(()=>({})),db.ranking(e.n).catch(()=>[])]);
+ if(location.hash!=='#e'+e.n+'-top')return;
+ const st=statsEd(e,cont),top=st.ordem.filter(x=>x.tot).slice(0,8);
+ main.innerHTML=`<span class="tag">N.º${e.n} · Ranking</span><h2 class="t">O que a escola mais leu</h2>
+ <p class="lead">${st.total} interações até agora. Atualiza sozinho cada vez que abres esta página.</p>
+ <div class="card"><h3>Concurso entre turmas</h3>${rank.length?barras(rank.slice(0,12).map(r=>[r.turma+' · '+r.leitores+(r.leitores===1?' leitor':' leitores'),r.pontos,rank[0].pontos,' pts'])):'<p class="note">Ainda nenhuma turma pontuou. Indica a tua turma na página de um artigo.</p>'}<p class="note">1 ponto por voto ou reação, mais 4 por resposta certa (quizzes e caça ao QR) e mais 5 por comentário aprovado.</p></div>
+ <div class="card"><h3>Artigos com mais participação</h3>${top.length?barras(top.map(x=>['pág. '+x.a.p+' · '+x.a.ti,x.tot,top[0].tot])):'<p class="note">Ainda sem votos.</p>'}</div>
+ ${st.fotos.length?`<div class="card"><h3>As fotos preferidas</h3>${barras(st.fotos.slice(0,6).map(f=>['Foto '+f.k+' · pág. '+f.a.p+' · '+f.a.ti,f.n,st.fotos[0].n,' ♥']))}</div>`:''}
+ ${st.quiz.length?`<div class="card"><h3>Quizzes: quantos acertaram</h3>${barras(st.quiz.map(q=>[q.q,q.pct,100,'%']))}</div>`:''}
+ <p class="note"><a href="#e${e.n}">Voltar à edição</a> · <a href="#tv">Abrir em modo TV</a></p>`;
+}
+
+/* --- 1: modo TV (para a televisão da entrada) --- */
+let tvTimer=null;
+async function verTV(){
+ document.body.classList.add('tvmode');atual=null;main.classList.remove('wide');
+ const e=edicao(dest)||eds[eds.length-1];if(!e){main.innerHTML='<div class="card">Ainda não há edições.</div>';return}
+ let i=0,slides=[];
+ const carregar=async()=>{const [cont,rank,cc]=await Promise.all([db.todasContagens(e.n).catch(()=>({})),db.ranking(e.n).catch(()=>[]),db.contagens(e.n,'_capa').catch(()=>({}))]);slides=slidesTV(e,statsEd(e,cont),rank,cc)};
+ const mostrar=()=>{if(location.hash!=='#tv'){clearInterval(tvTimer);tvTimer=null;return}main.innerHTML=`<div class="tv">${slides[i%slides.length]}</div>`;i++};
+ await carregar();clearInterval(tvTimer);mostrar();let n=0;
+ tvTimer=setInterval(async()=>{if(++n%5===0)await carregar();mostrar()},12000);
+}
+function slidesTV(e,st,rank,capaC){
+ const S=[],k=`<p class="tvk">Repórter da Calheta · N.º${e.n}</p>`,top=st.ordem.filter(x=>x.tot).slice(0,5);
+ if(rank.length)S.push(`${k}<h2>Concurso entre turmas</h2>${barras(rank.slice(0,6).map(r=>[r.turma,r.pontos,rank[0].pontos,' pts']))}`);
+ if(top.length)S.push(`${k}<h2>Os artigos mais participados</h2>${barras(top.map(x=>[x.a.ti,x.tot,top[0].tot]))}`);
+ if(st.fotos.length)S.push(`${k}<h2>As fotos preferidas</h2>${barras(st.fotos.slice(0,5).map(f=>['Foto '+f.k+' · '+f.a.ti,f.n,st.fotos[0].n,' ♥']))}`);
+ if(e.capa&&e.capa.q){const c=capaC['0']||{},t=soma(c);if(t)S.push(`${k}<h2>${esc(e.capa.q)}</h2>${barras(e.capa.o.map((o,j)=>[o,Math.round((c[j]||0)*100/t),100,'%']))}`)}
+ const base=cfg.base||location.href.split('#')[0];
+ S.push(`${k}<div class="tvqr"><img src="${qrImg(base+'#e'+e.n,'Participa!','Aponta a câmara')}" alt="Código QR da Participa"><div><h2>Leste o jornal? Participa!</h2><p>Vota, reage às fotos, responde aos quizzes e ganha pontos para a tua turma.</p></div></div>`);
+ return S.map(s=>`<div class="tvs">${s}</div>`);
+}
+
+/* --- 7: caça ao QR --- */
+async function verCaca(n,id){
+ atual=null;main.classList.remove('wide');window.scrollTo(0,0);
+ const e=edicao(n),c=e&&(e.caca||[]).find(x=>x.id===id);
+ if(!c){main.innerHTML='<div class="card">Esta pista já não existe.</div>';return}
+ $('#edmeta').textContent='N.º'+e.n+' · Caça ao QR';
+ const meus=await db.meus(e.n,'_caca').catch(()=>({}));
+ const mine=meus[id],idx=e.caca.indexOf(c)+1,feitas=e.caca.filter(x=>meus[x.id]!=null),certas=feitas.filter(x=>String(x.c)===String(meus[x.id])).length;
+ main.innerHTML=`<span class="tag">Caça ao QR · pista ${idx} de ${e.caca.length}</span><h2 class="t">Encontraste uma pista!</h2>
+ <p class="lead">${c.local?'Estás em: <b>'+esc(c.local)+'</b>. ':''}Responde para ganhares pontos para a tua turma. Só tens uma tentativa.</p>
+ <div class="card"><h3>${esc(c.q)}</h3><div class="opts">${c.o.map((o,oi)=>{let cls='';if(mine!=null){if(oi===c.c)cls='right';else if(String(oi)===mine)cls='wrong'}return `<button class="opt ${cls}" data-cc="${oi}" ${mine!=null?'disabled':''}><span>${esc(o)}${mine!=null&&oi===c.c?' ✓':''}</span></button>`}).join('')}</div>
+ ${mine!=null?(String(mine)===String(c.c)?'<p class="ok">Certo! +4 pontos para a tua turma.</p>':'<p class="err">Não é bem isso. A resposta certa está assinalada.</p>'):''}</div>
+ <div class="card"><h3>Já encontraste ${feitas.length} de ${e.caca.length} · ${certas} certas</h3><ul class="pistas">${e.caca.map((x,j)=>`<li class="${meus[x.id]!=null?'ok':''}">${meus[x.id]!=null?'✓ '+esc(x.local||'Pista '+(j+1)):'Pista por descobrir'}</li>`).join('')}</ul></div>
+ <p class="note"><a href="#e${e.n}">Ver o jornal na Participa</a> · <a href="#e${e.n}-top">Ranking das turmas</a></p>`;
+ main.onclick=async ev=>{const b=ev.target.closest('[data-cc]');if(!b||mine!=null||location.hash!=='#caca-'+n+'-'+id)return;b.disabled=true;try{await db.votar(e.n,'_caca',id,b.dataset.cc)}catch(err){console.warn(err)}main.onclick=null;verCaca(n,id)};
+}
+
+/* --- 17: arquivo pesquisável --- */
+function verArquivo(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Arquivo';window.scrollTo(0,0);
+ const all=eds.slice().reverse().flatMap(e=>e.artigos.map(a=>({e,a,txt:norm([a.ti,a.s,a.r,a.au,'pag '+a.p].join(' '))})));
+ const secs=[...new Set(all.map(x=>x.a.s).filter(Boolean))].sort();
+ main.innerHTML=`<span class="tag">Arquivo</span><h2 class="t">Tudo o que já escrevemos</h2>
+ <p class="lead">${all.length} artigos em ${eds.length} ${eds.length===1?'edição':'edições'}.</p>
+ <label for="aq">Procurar</label><input id="aq" type="search" placeholder="Tema, título, turma, autor…">
+ <div class="row" style="margin-top:8px"><div><label for="as">Secção</label><select id="as"><option value="">Todas</option>${secs.map(s=>`<option>${esc(s)}</option>`).join('')}</select></div><div><label for="ae">Edição</label><select id="ae"><option value="">Todas</option>${eds.map(e=>`<option value="${e.n}">N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select></div></div>
+ <ul class="list" id="al" style="margin-top:12px"></ul>`;
+ const draw=()=>{const q=norm($('#aq').value).split(/\s+/).filter(Boolean),s=$('#as').value,en=Number($('#ae').value);
+  const r=all.filter(x=>q.every(w=>x.txt.includes(w))&&(!s||x.a.s===s)&&(!en||x.e.n===en));
+  $('#al').innerHTML=r.map(x=>`<li><a href="#e${x.e.n}-${esc(x.a.id)}"><span class="pg">n.º${x.e.n}<br>pág. ${esc(x.a.p)}</span><span><span class="lt">${esc(x.a.ti)}</span><span class="ls">${esc(x.a.s)}${x.a.au?' · '+esc(x.a.au):''}${x.a.r?' · '+esc(x.a.r):''}</span></span><span class="n">${esc(x.e.titulo)}</span></a></li>`).join('')||'<li class="note">Não encontrei nada.</li>'};
+ ['aq','as','ae'].forEach(id=>$('#'+id).addEventListener('input',draw));draw();
+}
+
+/* --- 21, 22: página para partilhar e edição digital (PDF) --- */
+function verLer(e){
+ main.innerHTML=`<span class="tag">${esc(e.ano||'')} · N.º${e.n}</span><h2 class="t">Repórter da Calheta n.º${e.n}</h2>
+ <p class="lead">${esc(e.titulo||'')} · Jornal da Escola Básica e Secundária da Calheta, São Jorge.</p>
+ ${e.pdf?'<div id="pdfv" class="pdfv"><p class="note">A abrir o jornal…</p></div>':'<p class="note">A versão digital (PDF) desta edição ainda não foi publicada.</p>'}
+ <h3 style="margin-top:22px">Nesta edição</h3><ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}${a.r?' · '+esc(a.r):''}</span></span><span class="n">Participar</span></a></li>`).join('')}</ul>
+ <div class="row" style="margin-top:16px"><button class="btn" id="partilhar" style="flex:0 0 auto">Copiar a ligação desta página</button><a class="btn" href="#e${e.n}" style="flex:0 0 auto;text-decoration:none;line-height:26px">Participar</a></div>`;
+ $('#partilhar').onclick=async ev=>{const u=(cfg.base||location.href.split('#')[0])+'#e'+e.n+'-ler';try{await navigator.clipboard.writeText(u);ev.target.textContent='Copiada!'}catch(err){ev.target.textContent=u}};
+ if(e.pdf)mostrarPDF(e);
+}
+async function mostrarPDF(e){
+ const box=$('#pdfv');
+ try{
+  if(!window.pdfjsLib){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'}
+  const doc=await window.pdfjsLib.getDocument(await urlMedia(e.pdf)).promise;if(!$('#pdfv'))return;
+  box.innerHTML=`<div class="pdfbar"><button class="btn sm" id="pp" aria-label="Página anterior">←</button><span id="pn"></span><button class="btn sm" id="px" aria-label="Página seguinte">→</button></div><canvas id="pc"></canvas><div class="chips" id="parts"></div>`;
+  let pg=1;
+  const draw=async()=>{const page=await doc.getPage(pg),v0=page.getViewport({scale:1}),sc=Math.min(2.5,(box.clientWidth||700)/v0.width)*(window.devicePixelRatio||1),vp=page.getViewport({scale:sc}),c=$('#pc');if(!c)return;c.width=vp.width;c.height=vp.height;await page.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+   $('#pn').textContent=`pág. ${pg} de ${doc.numPages}`;$('#parts').innerHTML=e.artigos.filter(a=>String(a.p)===String(pg)).map(a=>`<a class="chip" href="#e${e.n}-${esc(a.id)}">Participar: ${esc(a.ti)}</a>`).join('')};
+  $('#pp').onclick=()=>{if(pg>1){pg--;draw()}};$('#px').onclick=()=>{if(pg<doc.numPages){pg++;draw()}};
+  box.tabIndex=0;box.onkeydown=ev=>{if(ev.key==='ArrowLeft')$('#pp').click();if(ev.key==='ArrowRight')$('#px').click()};
+  draw();
+ }catch(err){console.warn(err);if($('#pdfv'))box.innerHTML='<p class="note">Não foi possível abrir o PDF.</p>'}
+}
+
+/* --- 23: mural das famílias --- */
+async function verFamilias(){
+ atual=null;main.classList.remove('wide');$('#edmeta').textContent='Famílias';window.scrollTo(0,0);
+ const e=edicao(dest)||eds[eds.length-1];
+ const lista=await db.comentarios({tipo:'familia',estado:'aprovado'}).catch(()=>[]);
+ if(location.hash!=='#familias')return;
+ main.innerHTML=`<span class="tag">Famílias</span><h2 class="t">Mural das famílias</h2>
+ <p class="lead">Pais, mães e encarregados de educação: deixem uma mensagem aos alunos, aos jornalistas ou à escola. As mensagens aparecem depois de um professor as ler.</p>
+ ${e?`<div class="card"><form id="ff"><div class="row"><div><label for="fn">Nome</label><input id="fn" maxlength="30" placeholder="ex.: Mãe da Inês"></div><div style="flex:0 1 140px"><label for="ft">Turma do educando</label><input id="ft" maxlength="10" placeholder="ex.: 5.º B"></div></div><label for="fx">Mensagem</label><textarea id="fx" maxlength="400"></textarea><div class="row" style="margin-top:10px"><button class="btn pri" style="flex:0 0 auto">Enviar</button><span class="msg"></span></div><p class="note">Não escrevas apelidos, moradas nem telefones.</p></form></div>`:''}
+ <ul class="coms">${lista.map(c=>`<li><small>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''}</small><br>${esc(c.texto)}</li>`).join('')||'<li class="note">Ainda não há mensagens. Sejam os primeiros!</li>'}</ul>`;
+ const f=$('#ff');if(f)f.onsubmit=async ev=>{ev.preventDefault();const m=f.querySelector('.msg'),t=$('#fx').value.trim();if(t.length<3){m.className='msg err';m.textContent='Escreve um pouco mais.';return}
+  const b=f.querySelector('button');b.disabled=true;try{await db.comentar({ed:e.n,art:'_familias',tipo:'familia',nome:$('#fn').value.trim().slice(0,30),turma:$('#ft').value.trim().slice(0,10),texto:t.slice(0,400)});f.reset();m.className='msg ok';m.textContent='Obrigado! A mensagem aparece depois de lida.'}catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível enviar.'}b.disabled=false};
+}
+
+/* --- 18: relatório da edição --- */
+async function verRelatorio(e){
+ main.innerHTML='<p class="note">A preparar o relatório…</p>';
+ const [cont,rank,coms]=await Promise.all([db.todasContagens(e.n).catch(()=>({})),db.ranking(e.n).catch(()=>[]),db.comentarios({ed:e.n}).catch(()=>[])]);
+ if(location.hash!=='#e'+e.n+'-relatorio')return;
+ const st=statsEd(e,cont),apr=coms.filter(c=>c.estado==='aprovado'&&c.tipo==='comentario');
+ const sond=[];e.artigos.forEach(a=>a.b.forEach((b,bi)=>{if(b.t!=='sondagem')return;const c=(cont[a.id]||{})[String(bi)]||{},t=soma(c);if(!t)return;const mx=b.o.map((o,oi)=>[o,c[oi]||0]).sort((x,y)=>y[1]-x[1])[0];sond.push({a,q:b.q,t,top:mx[0],p:Math.round(mx[1]*100/t)})}));
+ main.innerHTML=`<div class="row noprint" style="margin-bottom:12px"><button class="btn pri" id="imp" style="flex:0 0 auto">Imprimir ou guardar em PDF</button><a class="btn" href="#painel" style="flex:0 0 auto;text-decoration:none;line-height:26px">Voltar ao painel</a></div>
+ <span class="tag">Relatório · N.º${e.n}</span><h2 class="t">Participação dos leitores no n.º${e.n}</h2>
+ <p class="lead">${esc(e.titulo||'')} · gerado a ${esc(new Date().toLocaleDateString('pt-PT'))}</p>
+ <div class="kpis"><div class="kpi"><b>${st.total}</b>interações</div><div class="kpi"><b>${rank.reduce((t,r)=>t+r.leitores,0)}</b>leitores com turma</div><div class="kpi"><b>${rank.length}</b>turmas a participar</div><div class="kpi"><b>${coms.length}</b>mensagens recebidas</div><div class="kpi"><b>${e.artigos.length}</b>artigos</div></div>
+ <div class="card"><h3>Participação por artigo</h3><table class="t"><thead><tr><th>Pág.</th><th>Artigo</th><th class="nu">Interações</th></tr></thead><tbody>${st.arts.map(x=>`<tr><td>${esc(x.a.p)}</td><td>${esc(x.a.ti)}</td><td class="nu">${x.tot}</td></tr>`).join('')}</tbody></table></div>
+ ${rank.length?`<div class="card"><h3>Concurso entre turmas</h3><table class="t"><thead><tr><th>Turma</th><th class="nu">Leitores</th><th class="nu">Interações</th><th class="nu">Certas</th><th class="nu">Comentários</th><th class="nu">Pontos</th></tr></thead><tbody>${rank.map(r=>`<tr><td>${esc(r.turma)}</td><td class="nu">${r.leitores}</td><td class="nu">${r.interacoes}</td><td class="nu">${r.certas}</td><td class="nu">${r.comentarios}</td><td class="nu"><b>${r.pontos}</b></td></tr>`).join('')}</tbody></table></div>`:''}
+ ${sond.length?`<div class="card"><h3>Votações</h3>${sond.map(s=>`<p>${esc(s.q)} <b>${esc(s.top)} (${s.p}%)</b> <span class="note">· ${s.t} votos · ${esc(s.a.ti)}</span></p>`).join('')}</div>`:''}
+ ${st.quiz.length?`<div class="card"><h3>Quizzes</h3>${st.quiz.map(q=>`<p>${esc(q.q)} <b>${q.pct}% acertaram</b> <span class="note">· ${q.t} respostas · ${esc(q.a.ti)}</span></p>`).join('')}</div>`:''}
+ ${apr.length?`<div class="card"><h3>O que os leitores disseram</h3><ul class="coms">${apr.slice(0,12).map(c=>`<li><small>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''}</small><br>${esc(c.texto)}</li>`).join('')}</ul></div>`:''}`;
+ $('#imp').onclick=()=>{try{window.print()}catch(err){}};
+}
+
+/* --- 25: melhores do ano --- */
+async function melhoresAno(btn){
+ btn.disabled=true;btn.textContent='A contar…';
+ const todos=[];
+ for(const e of eds){const cont=await db.todasContagens(e.n).catch(()=>({}));statsEd(e,cont).ordem.slice(0,4).forEach(x=>{if(x.tot)todos.push({e,a:x.a,tot:x.tot})})}
+ todos.sort((x,y)=>y.tot-x.tot);const sel=todos.slice(0,12);
+ if(!sel.length){btn.disabled=false;btn.textContent='Ainda sem votos';return}
+ const d=new Date(),y=d.getMonth()>=8?d.getFullYear():d.getFullYear()-1;
+ rasc={n:eds.reduce((m,e)=>Math.max(m,e.n),0)+1,titulo:'especial fim de ano '+y+'/'+(y+1),ano:eds.length?eds[eds.length-1].ano:'',novo:true,
+  capa:{t:'sondagem',q:'Qual foi o melhor artigo do ano?',o:sel.slice(0,8).map(x=>x.a.ti.slice(0,60))},
+  artigos:sel.map(x=>({id:slug('n'+x.e.n+'-'+x.a.id),p:'',s:x.a.s,ti:x.a.ti,r:'Do n.º'+x.e.n+(x.a.r?': '+x.a.r:''),au:x.a.au||'',b:[{t:'reacoes'},{t:'comentario',q:'Porque é que este artigo foi dos melhores?'}]}))};
+ aba='edicoes';painel();
+}
+
+/* --- 14, 15: plano da edição e contador de páginas --- */
+let planoN=null,planoNP=28,soMinhas=true,autCache=[],portAutor='';
+async function meusSecs(){try{const em=await db.meuEmail(),ps=await db.professores();return ((ps.find(p=>p.email===em)||{}).seccoes)||[]}catch(e){return []}}
+const avisoAut=s=>{if(!(s.fotos||[]).length||!s.turma)return '';const sem=autCache.filter(a=>!a.autoriza&&fmtT(a.turma)===fmtT(s.turma));return sem.length?`<div class="notaeq"><b>Atenção:</b> na turma ${esc(fmtT(s.turma))} há ${sem.length} ${sem.length===1?'aluno':'alunos'} sem autorização de imagem (${sem.map(a=>esc(a.nome)+(a.obs?' · '+esc(a.obs):'')).join(', ')}). Confirma que não aparecem nas fotos.</div>`:''};
+async function pPlano(){
+ const [lista,info,np]=await Promise.all([db.subs().catch(()=>[]),db.redacaoInfo().catch(()=>({})),db.getDef('paginas',28).catch(()=>28)]);
+ const n=planoN||Number(info.edicao)||(eds.reduce((m,e)=>Math.max(m,e.n),0)+1);planoNP=Math.max(4,Math.min(64,Number(np)||28));
+ const arts=lista.filter(s=>Number(s.edicao)===n&&['recebido','revisao','alteracoes','aceite'].includes(s.estado));
+ const porPag={},semPag=[];arts.forEach(s=>{const p=parseInt(s.pagina);if(p&&p<=planoNP)(porPag[p]=porPag[p]||[]).push(s);else semPag.push(s)});
+ const tot=arts.reduce((t,s)=>t+pags(s),0);
+ pane().innerHTML=`<div class="row" style="align-items:end"><div style="flex:0 1 120px"><label for="pl-n">Edição N.º</label><input id="pl-n" type="number" min="1" value="${n}"></div><div style="flex:0 1 120px"><label for="pl-p">Páginas</label><input id="pl-p" type="number" min="4" max="64" step="2" value="${planoNP}"></div>
+ <p class="note" style="flex:3 1 300px;margin:0">${arts.length} artigos para este número, cerca de <b>${fmt1(tot)}</b> páginas. Arrasta cada artigo para uma página ou escolhe-a na lista. A moldura vermelha avisa que a página está a encher demais.</p></div>
+ <div class="card"><h3>Ainda sem página (${semPag.length})</h3><div class="pag solta" data-drop="">${semPag.map(cartaoPlano).join('')||'<p class="note" style="margin:0">Todos os artigos têm página.</p>'}</div></div>
+ <div class="plano">${Array.from({length:planoNP},(_,i)=>{const p=i+1,L=porPag[p]||[],oc=L.reduce((t,s)=>t+pags(s),0);return `<div class="pag ${oc>1.15?'cheia':oc>0?'usada':''}" data-drop="${p}"><div class="pagh"><b>pág. ${p}</b><span>${oc?'≈ '+fmt1(oc):''}</span></div>${L.map(cartaoPlano).join('')}</div>`}).join('')}</div>
+ <p class="note">Estimativa: cerca de 450 palavras por página, mais 0,18 de página por foto.</p>`;
+ $('#pl-n').onchange=()=>{planoN=Number($('#pl-n').value)||null;pPlano()};
+ $('#pl-p').onchange=async()=>{try{await db.setDef('paginas',Number($('#pl-p').value)||28)}catch(e){console.warn(e)}pPlano()};
+ const mover=async(id,p)=>{try{await db.editarSub(id,{pagina:p?String(p):null})}catch(e){console.warn(e)}pPlano()};
+ pane().onchange=ev=>{const s=ev.target.closest('[data-pg]');if(s)mover(s.dataset.pg,s.value)};
+ pane().ondragstart=ev=>{const c=ev.target.closest('[data-id]');if(c)ev.dataTransfer.setData('text/plain',c.dataset.id)};
+ pane().ondragover=ev=>{const z=ev.target.closest('[data-drop]');if(z){ev.preventDefault();z.classList.add('sobre')}};
+ pane().ondragleave=ev=>{const z=ev.target.closest('[data-drop]');if(z)z.classList.remove('sobre')};
+ pane().ondrop=ev=>{const z=ev.target.closest('[data-drop]');if(!z)return;ev.preventDefault();const id=ev.dataTransfer.getData('text/plain');if(id)mover(id,z.dataset.drop)};
+}
+function cartaoPlano(s){return `<div class="pl-a" draggable="true" data-id="${esc(s.id)}"><span class="lt">${esc(s.titulo)}</span><span class="ls">${esc(s.seccao||'Sem secção')} · ≈${fmt1(pags(s))} pág. · ${esc((ESTADOS[s.estado]||[s.estado])[0])}</span><select data-pg="${esc(s.id)}" aria-label="Página de ${esc(s.titulo)}"><option value="">Sem página</option>${Array.from({length:planoNP},(_,i)=>`<option value="${i+1}" ${i+1===parseInt(s.pagina)?'selected':''}>pág. ${i+1}</option>`).join('')}</select></div>`}
+
+/* --- 8, 24: pautas (painel) --- */
+const pautaTag=p=>p.estado==='aberta'?'<span class="est est-recebido">Livre</span>':p.estado==='atribuida'?`<span class="est est-alteracoes">${esc(p.jornalista_nome||'Atribuída')}</span>`:'<span class="est est-publicado">Feita</span>';
+const pautaInfo=p=>[p.data?fmtData(p.data):'',p.seccao,p.entidade?'Parceria: '+p.entidade:''].filter(Boolean).map(esc).join(' · ');
+async function pPautas(){
+ const L=await db.pautas().catch(e=>{console.warn(e);return []});
+ pane().innerHTML=`<div class="card"><h3>Nova pauta</h3><form id="pf"><label for="p-t" style="margin-top:0">O que é preciso cobrir</label><input id="p-t" maxlength="140" placeholder="ex.: Corta-mato escolar, fase de ilha">
+ <div class="row"><div style="flex:0 1 170px"><label for="p-d">Data</label><input id="p-d" type="date"></div><div><label for="p-s">Secção</label><input id="p-s" list="p-sl" maxlength="40"><datalist id="p-sl">${secoes().map(s=>`<option value="${esc(s)}">`).join('')}</datalist></div><div><label for="p-e">Entidade parceira (opcional)</label><input id="p-e" maxlength="80" placeholder="ex.: Casa do Povo"></div></div>
+ <label for="p-x">Detalhes</label><textarea id="p-x" maxlength="600" style="min-height:64px" placeholder="Hora, local, com quem falar, quantas fotos"></textarea>
+ <div class="row" style="margin-top:10px"><button class="btn pri sm" style="flex:0 0 auto">Publicar pauta</button><span class="msg" id="p-msg"></span></div></form>
+ <p class="note">Os jornalistas veem as pautas na Redação e ficam com uma. Para notícias da vila, indica a entidade parceira (Câmara, Casa do Povo, associações).</p></div>
+ ${L.map(p=>`<div class="card"><div class="row" style="align-items:center"><div style="flex:3 1 260px"><span class="lt">${esc(p.titulo)}</span><span class="ls">${pautaInfo(p)}</span></div><div style="flex:0 0 auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap">${pautaTag(p)}${p.estado!=='feita'?`<button class="btn sm" data-feita="${esc(p.id)}">Marcar feita</button>`:''}${p.estado==='atribuida'?`<button class="btn sm" data-liberta="${esc(p.id)}">Libertar</button>`:''}<button class="btn sm" data-apg="${esc(p.id)}">${confirmar==='pauta'+p.id?'Confirmar?':'Apagar'}</button></div></div>${p.descricao?`<p style="margin:8px 0 0">${esc(p.descricao)}</p>`:''}</div>`).join('')||'<p class="note">Ainda não há pautas.</p>'}`;
+ $('#pf').onsubmit=async ev=>{ev.preventDefault();const t=$('#p-t').value.trim(),m=$('#p-msg');if(!t){m.className='msg err';m.textContent='Escreve o tema.';return}
+  try{await db.guardarPauta({titulo:t,data:$('#p-d').value||null,seccao:$('#p-s').value.trim()||null,entidade:$('#p-e').value.trim()||null,descricao:$('#p-x').value.trim()||null});pPautas()}catch(e){console.warn(e);m.className='msg err';m.textContent='Não foi possível guardar.'}};
+ pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;try{
+  if(d.feita){await db.guardarPauta({id:d.feita,estado:'feita'});return pPautas()}
+  if(d.liberta){await db.guardarPauta({id:d.liberta,estado:'aberta',jornalista:null,jornalista_nome:null});return pPautas()}
+  if(d.apg){if(confirmar!=='pauta'+d.apg){confirmar='pauta'+d.apg;return pPautas()}confirmar=null;await db.apagarPauta(d.apg);return pPautas()}}catch(e){console.warn(e)}};
+}
+
+/* --- 8: pautas (jornalistas) --- */
+async function rPautas(){
+ const rp=$('#rpane');const [L0,eu]=await Promise.all([db.pautas().catch(()=>[]),db.uid().catch(()=>null)]);const L=L0.filter(p=>p.estado!=='feita');
+ if(!$('#rpane'))return;
+ rp.innerHTML=`<p class="note" style="margin-top:0">Assuntos que a equipa precisa que alguém cubra. Fica com um e combina os pormenores com o professor.</p>${L.map(p=>{const minha=p.jornalista&&p.jornalista===eu;return `<div class="card"><div class="row" style="align-items:center"><div style="flex:3 1 220px"><span class="lt">${esc(p.titulo)}</span><span class="ls">${pautaInfo(p)}</span></div><div style="flex:0 0 auto">${pautaTag(p)}</div></div>${p.descricao?`<p style="margin:8px 0 0">${esc(p.descricao)}</p>`:''}
+ ${p.estado==='aberta'?`<div class="row" style="margin-top:10px"><input data-nome="${esc(p.id)}" maxlength="60" aria-label="O teu nome" placeholder="O teu nome (ex.: Ana S.)" value="${esc(LS.get('rc-nome-jorn','')||'')}"><button class="btn sm pri" data-ficar="${esc(p.id)}" style="flex:0 0 auto">Fico com esta</button></div>`:minha?`<button class="btn sm" data-largar="${esc(p.id)}" style="margin-top:10px">Largar esta pauta</button>`:''}</div>`}).join('')||'<p class="note">Não há pautas livres de momento.</p>'}`;
+ rp.onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.ficar){const inp=[...rp.querySelectorAll('[data-nome]')].find(x=>x.dataset.nome===d.ficar),nome=inp?inp.value.trim():'';if(!nome){if(inp)inp.focus();return}LS.set('rc-nome-jorn',nome);b.disabled=true;const ok=await db.ficarPauta(d.ficar,nome).catch(()=>false);if(ok)rPautas();else b.textContent='Já foi atribuída'}
+  if(d.largar){await db.largarPauta(d.largar).catch(()=>{});rPautas()}};
+}
+
+/* --- 9: guia de escrita --- */
+function rGuia(){
+ $('#rpane').innerHTML=`<div class="card guia">
+ <details open><summary>Notícia</summary><p>Conta o que aconteceu, do mais importante para o menos importante. O primeiro parágrafo responde a <b>quem</b>, <b>o quê</b>, <b>quando</b> e <b>onde</b>; os seguintes explicam <b>como</b> e <b>porquê</b>. Frases curtas, uma ideia por parágrafo.</p>
+ <p class="ex">Exemplo inventado: Na quarta-feira, 12 de novembro, cerca de 80 alunos do 2.º ciclo participaram na limpeza da praia do porto da Calheta. A atividade foi organizada pela Brigada Eco-escola e recolheu doze sacos de lixo, sobretudo plástico.
+"Encontrámos muitas tampas de garrafa", contou a Beatriz, do 6.º A.</p></details>
+ <details><summary>Reportagem</summary><p>Leva o leitor ao local. Descreve o que viste, ouviste e sentiste, e dá voz a várias pessoas. Começa com uma cena ou uma frase de alguém, e não com "No dia…".</p></details>
+ <details><summary>Entrevista</summary><p>Prepara 8 a 10 perguntas abertas (que não se respondem com sim ou não). Pede autorização para gravar. Escreve as respostas como foram ditas, corta as repetições e mostra o texto ao entrevistado antes de enviar. Podes pedir perguntas aos leitores com o bloco "Perguntas dos leitores".</p></details>
+ <details><summary>Crónica e opinião</summary><p>Aqui podes escrever na primeira pessoa e dar a tua opinião, mas com argumentos. Termina com uma ideia forte que fique na cabeça do leitor.</p></details>
+ <details><summary>Títulos e entradas</summary><p>Título até 12 palavras, com um verbo sempre que possível ("Alunos limpam praia da Calheta"). A entrada é uma ou duas frases que resumem o artigo e convidam a ler.</p></details>
+ <details><summary>Legendas e fotografias</summary><p>Cada foto precisa de legenda: quem aparece e o que está a acontecer. Fotos na horizontal, com luz, sem dedos à frente. Só fotografa caras de quem tem autorização de imagem; na dúvida, fotografa de costas ou de longe.</p></details>
+ <details><summary>Regras de ouro</summary><p>Escreve só o que é verdade e verifica nomes, datas e números. Não copies textos da internet: se usares informação de um site, diz de onde veio. Respeita a privacidade: nada de moradas, telefones ou assuntos pessoais de outras pessoas. Na dúvida, pergunta ao professor.</p></details>
+ </div>`;
+}
+
+/* --- 10: verificação antes de enviar --- */
+function verificar(f){
+ const out=[],T=String(f.titulo||'').trim(),nt=palavras(T),pal=palavras(f.texto),pars=String(f.texto||'').split(/\n+/).filter(p=>p.trim()),longos=pars.filter(p=>palavras(p)>110).length;
+ out.push([!!T&&nt<=12,!T?'Falta o título':nt<=12?'Título curto e direto':'O título tem '+nt+' palavras: tenta ficar até 12']);
+ out.push([!!String(f.entrada||'').trim(),String(f.entrada||'').trim()?'Tem entrada':'Sem entrada: uma frase a resumir ajuda o leitor']);
+ out.push([pal>=80,pal>=80?'Texto com '+pal+' palavras':'Texto curto ('+pal+' palavras)']);
+ out.push([!longos,longos?longos+(longos===1?' parágrafo muito longo':' parágrafos muito longos')+': divide-os':'Parágrafos com bom tamanho']);
+ const temData=/(\d{1,2}\s+de\s+[a-zç]+|\d{1,2}\/\d{1,2}|segunda|terça|quarta|quinta|sexta|sábado|domingo|ontem|semana passada|dia\s+\d)/i.test(f.texto||'');
+ out.push([temData,temData?'Diz quando aconteceu':'Não encontrei a data: diz quando aconteceu']);
+ if((f.fotos||[]).length){const s=f.fotos.filter(x=>!String(x.legenda||'').trim()).length;out.push([!s,s?s+(s===1?' foto sem legenda':' fotos sem legenda'):'Todas as fotos têm legenda'])}
+ const grita=/[A-ZÁÉÍÓÚÂÊÔÃÕÇ ]{25,}/.test(f.texto||'');out.push([!grita,grita?'Há frases inteiras em maiúsculas':'Sem frases em maiúsculas']);
+ return out;
+}
+
+/* --- 11: cartão de jornalista --- */
+function rCartao(){
+ const rp=$('#rpane'),c=LS.get('rc-cartao',{})||{};
+ rp.innerHTML=`<div class="card"><div class="row"><div><label for="k-n" style="margin-top:0">Nome</label><input id="k-n" maxlength="30" value="${esc(c.n||LS.get('rc-nome-jorn','')||'')}" placeholder="ex.: Ana Silva"></div><div style="flex:0 1 120px"><label for="k-t" style="margin-top:0">Turma</label><input id="k-t" maxlength="10" value="${esc(c.t||'')}"></div><div><label for="k-f" style="margin-top:0">Função</label><select id="k-f">${['Jornalista','Repórter fotográfico/a','Repórter de vídeo','Entrevistador/a','Editor/a','Revisor/a'].map(x=>`<option ${x===c.f?'selected':''}>${x}</option>`).join('')}</select></div></div></div>
+ <div class="cartao"><img id="k-img" alt="Pré-visualização do cartão de jornalista"></div>
+ <div class="row" style="margin-top:12px"><button class="btn pri" id="k-dl" style="flex:0 0 auto">Descarregar cartão (PNG)</button><span class="note">Imprime em tamanho de cartão (8,5 × 5,4 cm) e plastifica.</span></div>`;
+ const fontes=document.fonts&&document.fonts.load?Promise.all(['400 60px "UnifrakturMaguntia"','700 30px "Kalam"','600 60px "Fredoka"','400 20px "Source Sans 3"'].map(f=>document.fonts.load(f).catch(()=>{}))):Promise.resolve();
+ const draw=async()=>{await fontes;const n=$('#k-n').value.trim()||'O teu nome',t=$('#k-t').value.trim(),f=$('#k-f').value;LS.set('rc-cartao',{n:$('#k-n').value,t,f});
+  const W=1012,H=638,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext&&cv.getContext('2d');if(!x)return;
+  x.fillStyle='#fff';x.fillRect(0,0,W,H);x.fillStyle='#16181d';x.textAlign='center';x.font='400 76px "UnifrakturMaguntia", serif';x.fillText('Repórter da Calheta',W/2,104);
+  x.fillRect(40,128,W-80,5);x.fillRect(40,138,W-80,2);x.font='19px "Source Sans 3", sans-serif';x.fillStyle='#5b5f6d';x.fillText('Jornal da Escola Básica e Secundária da Calheta · São Jorge',W/2,174);
+  x.save();x.translate(70,262);x.rotate(-0.03);x.font='700 34px "Kalam", cursive';x.textAlign='left';const tw=x.measureText(f).width;x.fillStyle='#ffd84d';x.fillRect(0,-38,tw+30,50);x.fillStyle='#16181d';x.fillText(f,15,0);x.restore();
+  x.textAlign='left';x.fillStyle='#1f5fbf';let fs=72;x.font=`600 ${fs}px "Fredoka", sans-serif`;while(x.measureText(n).width>W-380&&fs>36){fs-=4;x.font=`600 ${fs}px "Fredoka", sans-serif`}x.fillText(n,70,362);
+  x.fillStyle='#16181d';x.font='600 30px "Source Sans 3", sans-serif';if(t)x.fillText('Turma '+t.replace(/^turma\s*/i,''),70,414);
+  const d=new Date(),y=d.getMonth()>=8?d.getFullYear():d.getFullYear()-1;x.font='26px "Source Sans 3", sans-serif';x.fillStyle='#5b5f6d';x.fillText('Ano letivo '+y+'/'+(y+1),70,458);
+  if(window.qrcode){const q=window.qrcode(0,'M');q.addData(cfg.base||location.href.split('#')[0]);q.make();const mc=q.getModuleCount(),s=Math.floor(200/mc),ox=W-70-mc*s,oy=236;x.fillStyle='#16181d';for(let r=0;r<mc;r++)for(let k=0;k<mc;k++)if(q.isDark(r,k))x.fillRect(ox+k*s,oy+r*s,s,s);x.font='600 18px "Source Sans 3", sans-serif';x.textAlign='center';x.fillText('Participa',ox+mc*s/2,oy+mc*s+26)}
+  x.fillStyle='#ffd84d';x.fillRect(0,H-26,W,26);$('#k-img').src=cv.toDataURL('image/png')};
+ rp.oninput=draw;rp.onchange=draw;draw();
+ $('#k-dl').onclick=()=>{const s=$('#k-img').src;if(s&&s.startsWith('data:'))baixar(d2b(s),'cartao-'+slug($('#k-n').value||'jornalista')+'.png')};
+}
+
+/* --- 16: lembretes de prazo --- */
+function lembreteHTML(info,minhas){
+ const out=[];
+ if(info.prazo&&info.aberta!==false){const d=Math.round((new Date(info.prazo+'T00:00')-new Date(new Date().toDateString()))/864e5);if(d>=0&&d<=3)out.push(d===0?'Hoje é o último dia para entregar artigos!':d===1?'Falta 1 dia para o fim do prazo.':`Faltam ${d} dias para o fim do prazo.`)}
+ const alt=minhas.filter(s=>s.estado==='alteracoes').length;if(alt)out.push(`Tens ${alt} ${alt===1?'artigo':'artigos'} à espera de correção: vê em "Os meus artigos".`);
+ return out.length?`<div class="notaeq" style="margin:0 0 14px">${out.map(esc).join('<br>')}</div>`:'';
+}
+
+/* --- 5, 6: áudio e inglês no editor de edições --- */
+function escolherAudio(i,q){const inp=document.createElement('input');inp.type='file';inp.accept='audio/*';inp.onchange=async()=>{const f=inp.files[0];if(!f)return;try{const cb=limpaTipo(f);const url=await db.subirPublico(cb,extA(cb));rasc.artigos[i].b.push({t:'audio',q:q||'Ouve o artigo',url});editor()}catch(e){console.warn(e)}};inp.click()}
+async function publicarAudios(r,btn){
+ for(const a of r.artigos)for(const b of a.b){if(b.t!=='audio'||!String(b.url||'').startsWith('sub:'))continue;
+  try{if(btn)btn.textContent='A publicar o áudio…';const bl=await db.blobFoto(b.url.slice(4));if(!bl)throw 0;b.url=await db.subirPublico(limpaTipo(bl),extA(bl))}catch(e){console.warn(e);b.url=''}}
+ r.artigos.forEach(a=>{a.b=a.b.filter(b=>b.t!=='audio'||b.url)});
+}
+
+/* --- 4, 7, 22, 2: extras do editor de edições --- */
+function extrasEdicao(r){
+ const c=r.capa||{},cc=r.caca||[];
+ return `<div class="card"><h3>Pergunta da capa</h3><p class="note" style="margin-top:0">Aparece no topo da página da edição, a que o QR da capa abre. O resultado mostra-se no número seguinte.</p><div class="row"><div style="flex:2 1 260px"><label for="cq">Pergunta</label><input id="cq" value="${esc(c.q||'')}" maxlength="160"></div><div style="flex:2 1 260px"><label for="co">Opções, separadas por vírgula</label><input id="co" value="${esc((c.o||[]).join(', '))}"></div></div></div>
+ <div class="card"><h3>Caça ao QR (${cc.length} ${cc.length===1?'pista':'pistas'})</h3><p class="note" style="margin-top:0">Esconde códigos QR pela escola. Cada pista tem uma pergunta sobre um artigo e as respostas certas dão pontos à turma. Os QR aparecem em Códigos QR.</p>
+ ${cc.map((p,i)=>`<div class="row" style="align-items:end"><div style="flex:1 1 140px"><label for="cc${i}l">Onde fica</label><input id="cc${i}l" data-cc="${i}" data-k="local" value="${esc(p.local)}" placeholder="ex.: Biblioteca"></div><div style="flex:2 1 220px"><label for="cc${i}q">Pergunta</label><input id="cc${i}q" data-cc="${i}" data-k="q" value="${esc(p.q)}"></div><div style="flex:2 1 220px"><label for="cc${i}o">Opções (* na certa)</label><input id="cc${i}o" data-cc="${i}" data-k="o" value="${esc((p.o||[]).filter(Boolean).map((o,j)=>(j===p.c?'*':'')+o).join(', '))}"></div><button type="button" class="btn sm" data-ccrm="${i}" style="flex:0 0 auto">Remover</button></div>`).join('')}
+ <button type="button" class="btn sm" id="ccadd" style="margin-top:10px">+ Pista</button></div>
+ <div class="card"><h3>Edição digital (PDF)</h3><p class="note" style="margin-top:0">Exporta o jornal do Canva em PDF e carrega-o aqui (até 50 MB). Fica na página "Ler o jornal", com ligações aos artigos de cada página.</p><div class="row" style="align-items:center"><span style="flex:2 1 200px">${r.pdf?'<span class="ok">PDF carregado.</span>':'Sem PDF.'}</span><button type="button" class="btn sm" id="pdfb" style="flex:0 0 auto">${r.pdf?'Trocar PDF':'Carregar PDF'}</button>${r.pdf?'<button type="button" class="btn sm" id="pdfrm" style="flex:0 0 auto">Retirar</button>':''}<input type="file" id="pdff" accept="application/pdf" class="hide"><span class="msg" id="pdfmsg"></span></div></div>
+ <div class="row" style="margin:6px 0 14px"><button type="button" class="btn sm" id="quized" style="flex:0 0 auto">+ Artigo "Quiz da edição"</button><span class="note" style="flex:3 1 240px;margin:0">Cria um artigo só com perguntas sobre os outros artigos; depois junta-lhe blocos de quiz.</span></div>`;
+}
+function bindExtras(r,sync){
+ const cap=()=>{const q=$('#cq').value.trim(),o=$('#co').value.split(',').map(x=>x.trim()).filter(Boolean);r.capa=q?{t:'sondagem',q,o}:null};
+ const ccs=()=>pane().querySelectorAll('[data-cc]').forEach(x=>{const p=r.caca[x.dataset.cc];if(!p)return;if(x.dataset.k==='o'){const os=x.value.split(',').map(y=>y.trim()).filter(Boolean);p.c=Math.max(0,os.findIndex(y=>y.startsWith('*')));p.o=os.map(y=>y.replace(/^\*/,'').trim())}else p[x.dataset.k]=x.value.trim()});
+ const tudo=()=>{sync();cap();ccs()};
+ $('#cq').oninput=cap;$('#co').oninput=cap;pane().querySelectorAll('[data-cc]').forEach(x=>x.oninput=ccs);
+ $('#ccadd').onclick=()=>{tudo();(r.caca=r.caca||[]).push({id:Math.random().toString(36).slice(2,7),local:'',q:'',o:[],c:0});editor()};
+ pane().querySelectorAll('[data-ccrm]').forEach(b=>b.onclick=()=>{tudo();r.caca.splice(Number(b.dataset.ccrm),1);editor()});
+ $('#quized').onclick=()=>{tudo();if(!r.artigos.some(a=>a.s==='Quiz da edição'))r.artigos.push({id:'quiz-da-edicao',p:'',s:'Quiz da edição',ti:'Quiz da edição: leste o jornal todo?',b:[]});editor()};
+ $('#pdfb').onclick=()=>$('#pdff').click();
+ $('#pdff').onchange=async()=>{const f=$('#pdff').files[0];if(!f)return;const m=$('#pdfmsg');m.className='msg';m.textContent='A carregar…';try{tudo();r.pdf=await db.subirPublico(f,'pdf');editor()}catch(e){console.warn(e);m.className='msg err';m.textContent='Não foi possível carregar.'}};
+ const rm=$('#pdfrm');if(rm)rm.onclick=()=>{tudo();r.pdf='';editor()};
+}
+function extrasQR(e,base){
+ return (e.caca||[]).map((c,i)=>({a:null,url:base+'#caca-'+e.n+'-'+c.id,t:'Caça ao QR',s:'Pista '+(i+1)+(c.local?' · '+c.local:''),nome:'Caça ao QR · pista '+(i+1)+(c.local?' ('+c.local+')':''),f:'QR-n'+e.n+'-caca-'+(i+1)}))
+  .concat([{a:null,url:base+'#familias',t:'Famílias',s:'Deixa uma mensagem à escola',nome:'Mural das famílias',f:'QR-familias'},{a:null,url:base+'#redacao',t:'Redação',s:'Envia o teu artigo',nome:'Redação (para os jornalistas)',f:'QR-redacao'}]);
+}
+
+/* --- 12, 19, 20 e turmas: separador Escola --- */
+const grupoTurma=L=>{const g={};L.forEach(a=>(g[a.turma]=g[a.turma]||[]).push(a.nome+(a.obs?' ('+a.obs+')':'')));return Object.keys(g).sort().map(t=>`<b>${esc(t)}:</b> ${g[t].map(esc).join(', ')}`).join('<br>')};
+async function pEscola(){
+ const R=await Promise.all([db.getDef('turmas',[]),db.professores(),db.autorizacoes(),db.subs(),db.meuEmail()].map(p=>p.catch(e=>{console.warn(e);return null})));
+ const turmas=R[0]||[],profs=R[1]||[],aut=R[2]||[],subs=R[3]||[],eu=R[4]||'',sem=aut.filter(a=>!a.autoriza);
+ const autores=[...new Set(subs.filter(s=>s.estado==='publicado'||s.estado==='aceite').map(s=>s.autores))].sort();
+ const port=subs.filter(s=>s.autores===portAutor&&(s.estado==='publicado'||s.estado==='aceite')).sort((a,b)=>(a.edicao||0)-(b.edicao||0)||(parseInt(a.pagina)||0)-(parseInt(b.pagina)||0));
+ pane().innerHTML=`<div class="card"><h3>Turmas da escola</h3><p class="note" style="margin-top:0">Os leitores escolhem a turma desta lista para o concurso entre turmas. Uma turma por linha.</p><textarea id="es-t" style="min-height:120px" placeholder="5.º A&#10;5.º B&#10;6.º A">${esc(turmas.join('\n'))}</textarea><div class="row" style="margin-top:8px"><button class="btn sm pri" id="es-ts" style="flex:0 0 auto">Guardar turmas</button><span class="msg" id="es-tm"></span></div></div>
+ <div class="card"><h3>Equipa de professores</h3><p class="note" style="margin-top:0">Cada professor pode ficar com secções; na Redação vê primeiro os artigos das suas secções. Um professor novo precisa também de conta no Supabase (Authentication → Users), com o mesmo email.</p>
+ ${profs.map((p,i)=>`<div class="row" style="align-items:end"><div style="flex:2 1 240px"><label for="es-s${i}">${esc(p.email)}${p.email===eu?' (tu)':''}</label><input id="es-s${i}" data-sec="${i}" value="${esc((p.seccoes||[]).join(', '))}" placeholder="Secções, separadas por vírgula"></div><button class="btn sm" data-psave="${i}" style="flex:0 0 auto">Guardar</button>${p.email!==eu?`<button class="btn sm" data-pdel="${i}" style="flex:0 0 auto">${confirmar==='prof'+p.email?'Confirmar?':'Retirar'}</button>`:''}</div>`).join('')}
+ <div class="row" style="align-items:end;margin-top:12px"><div style="flex:2 1 240px"><label for="es-pe">Acrescentar professor (email)</label><input id="es-pe" type="email"></div><button class="btn sm" id="es-pa" style="flex:0 0 auto">Acrescentar</button><span class="msg" id="es-pm"></span></div></div>
+ <div class="card"><h3>Autorizações de imagem</h3><p class="note" style="margin-top:0">Cola a lista, uma linha por aluno: <b>turma | nome | sim ou não | observação</b>. Na Redação aparece um aviso quando um artigo com fotos vem de uma turma com alunos sem autorização. Só os professores veem esta lista.</p>
+ <textarea id="es-a" style="min-height:140px" placeholder="8.º A | Ana Silva | sim&#10;8.º A | Rui Melo | não | só de costas">${esc(aut.map(a=>[a.turma,a.nome,a.autoriza?'sim':'não'].concat(a.obs?[a.obs]:[]).join(' | ')).join('\n'))}</textarea>
+ <div class="row" style="margin-top:8px"><button class="btn sm pri" id="es-as" style="flex:0 0 auto">Guardar lista</button><span class="msg" id="es-am"></span></div>
+ ${sem.length?`<p style="margin-bottom:0"><b>Sem autorização (${sem.length})</b><br>${grupoTurma(sem)}</p>`:aut.length?'<p class="ok">Todos os alunos da lista têm autorização.</p>':''}</div>
+ <div class="card"><h3>Portefólio de um jornalista</h3><p class="note" style="margin-top:0">Os artigos aceites e publicados de cada autor, para a avaliação.</p><select id="es-pf" aria-label="Autor"><option value="">Escolhe o autor…</option>${autores.map(a=>`<option ${a===portAutor?'selected':''}>${esc(a)}</option>`).join('')}</select>
+ ${portAutor?`<table class="t" style="margin-top:12px"><thead><tr><th>N.º</th><th>Pág.</th><th>Artigo</th><th class="nu">Palavras</th><th class="nu">Fotos</th><th>Estado</th></tr></thead><tbody>${port.map(s=>`<tr><td>${esc(s.edicao||'')}</td><td>${esc(s.pagina||'')}</td><td>${esc(s.titulo)}<br><span class="note">${esc(s.seccao||'')}</span></td><td class="nu">${palavras(s.texto)}</td><td class="nu">${(s.fotos||[]).length}</td><td>${esc((ESTADOS[s.estado]||[''])[0])}</td></tr>`).join('')}</tbody></table><button class="btn sm" id="es-pc" style="margin-top:10px">Copiar lista</button>`:''}</div>`;
+ const msg=(id,t,ok)=>{const el=$(id);if(el){el.className='msg '+(ok?'ok':'err');el.textContent=t}};
+ $('#es-ts').onclick=async()=>{const L=[...new Set($('#es-t').value.split('\n').map(fmtT).filter(Boolean))];try{await db.setDef('turmas',L);$('#es-t').value=L.join('\n');msg('#es-tm','Guardado: '+L.length+' turmas.',1)}catch(e){console.warn(e);msg('#es-tm','Não foi possível guardar.')}};
+ $('#es-as').onclick=async()=>{const rows=$('#es-a').value.split('\n').map(l=>l.split('|').map(x=>x.trim())).filter(p=>p[1]).map(([t,n,a,o])=>({turma:fmtT(t),nome:n.slice(0,120),autoriza:/^(s|sim|y|yes|1|x)/i.test(a||''),obs:(o||'').slice(0,200)}));try{await db.guardarAutorizacoes(rows);pEscola()}catch(e){console.warn(e);msg('#es-am','Não foi possível guardar.')}};
+ $('#es-pa').onclick=async()=>{const em=$('#es-pe').value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(em))return msg('#es-pm','Email inválido.');try{await db.guardarProfessor({email:em,seccoes:[]});pEscola()}catch(e){console.warn(e);msg('#es-pm','Não foi possível acrescentar.')}};
+ $('#es-pf').onchange=()=>{portAutor=$('#es-pf').value;pEscola()};
+ const pc=$('#es-pc');if(pc)pc.onclick=async()=>{const t='Portefólio de '+portAutor+'\n'+port.map(s=>`n.º${s.edicao||'?'} pág. ${s.pagina||'?'} · ${s.titulo} (${palavras(s.texto)} palavras, ${(s.fotos||[]).length} fotos)`).join('\n');try{await navigator.clipboard.writeText(t);pc.textContent='Copiado!'}catch(e){pc.textContent='Não deu para copiar'}};
+ pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.psave){const p=profs[d.psave];try{await db.guardarProfessor({email:p.email,seccoes:pane().querySelector(`[data-sec="${d.psave}"]`).value.split(',').map(x=>x.trim()).filter(Boolean)});b.textContent='Guardado!'}catch(e){console.warn(e);b.textContent='Erro'}}
+  if(d.pdel){const p=profs[d.pdel];if(confirmar!=='prof'+p.email){confirmar='prof'+p.email;return pEscola()}confirmar=null;try{await db.apagarProfessor(p.email)}catch(e){console.warn(e)}pEscola()}};
+}
+
 window.addEventListener('hashchange',()=>{if(location.hash!=='#painel')main.classList.remove('wide')});
+window.addEventListener('hashchange',()=>{document.body.classList.toggle('tvmode',location.hash==='#tv');main.onclick=null});
 init();
 }
 </script>
