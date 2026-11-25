@@ -97,13 +97,13 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <script>
 {
 /* ======== CONFIGURAÇÃO (preencher ao pôr a app online) ======== */
-const CONFIG={supabaseUrl:'',supabaseKey:'',base:'',pinDemo:'calheta'};
+const CONFIG={supabaseUrl:'https://pjnuoykywyvnzgwrsftq.supabase.co',supabaseKey:'sb_publishable_X2ddhD0IPo78DG6rmNAIig_FtEKcpLR',base:'https://escola-basica-e-secundaria-da-calheta.github.io/reporter-calheta/',pinDemo:'calheta'};
 
 const $=s=>document.querySelector(s);
 const main=$('#main');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const cfg=Object.assign({},CONFIG,LS.get('rc-config',{}));
+const cfg=Object.assign({},CONFIG);{const o=LS.get('rc-config',{});for(const k in o)if(o[k])cfg[k]=o[k]}
 let dev=LS.get('rc-dev',null);
 if(!dev){dev=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2);LS.set('rc-dev',dev)}
 const slug=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'artigo';
@@ -186,7 +186,7 @@ async function init(){
    await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js');
    const cl=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseKey);
    const {data}=await cl.auth.getSession();
-   if(!data.session)await cl.auth.signInAnonymously();
+   if(!data.session){const r=await cl.auth.signInAnonymously();if(r.error)throw r.error}
    db=supa(cl);modo='online';
   }catch(e){console.warn(e);modo='erro'}
  }
