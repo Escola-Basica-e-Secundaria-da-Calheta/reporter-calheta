@@ -309,7 +309,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6.1</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -627,11 +627,11 @@ async function painel(){
   return}
  const pend=(await db.comentarios({estado:'pendente'}).catch(()=>[])).length;
  const novos=(await db.subs().catch(()=>[])).filter(s=>s.estado==='recebido').length,bd={moderacao:pend,redacao:novos};
- const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['estatisticas','Estatísticas'],['comunidade','Comunidade'],['escola','Escola'],['ligacao','Ligação']];
+ const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['word','Fotos do Word'],['estatisticas','Estatísticas'],['comunidade','Comunidade'],['escola','Escola'],['ligacao','Ligação']];
  main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Ver o jornal</a>${modo==='online'?'<button class="btn sm" id="sair" style="flex:none">Terminar sessão</button>':''}</div><div id="pane"></div>`;
  {const sb=$('#sair');if(sb)sb.onclick=async()=>{sb.disabled=true;try{await db.cl.auth.signOut();await db.cl.auth.signInAnonymously()}catch(e){console.warn(e)}prof=false;await carregar();painel()}}
  main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;rasc=aba==='edicoes'?rasc:null;painel()});
- ({estatisticas:pEstat,comunidade:pComunidade,pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
+ ({estatisticas:pEstat,comunidade:pComunidade,pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,word:pWord,ligacao:pLigacao})[aba]();
 }
 const pane=()=>$('#pane');
 const selEd=()=>`<select id="selEd" style="max-width:320px">${eds.map(e=>`<option value="${e.n}" ${e.n===(edSel||dest)?'selected':''}>N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select>`;
@@ -801,6 +801,74 @@ function pQR(){
   const pp=ev.target.closest('[data-pzpng]');if(pp){const [aid,bi,sol]=pp.dataset.pzpng.split(':'),a=e.artigos.find(x=>x.id===aid),b=a&&a.b[Number(bi)];if(b)await baixar(d2b(pngPassatempo(b,sol==='1')),(sol==='1'?'solucao-':'')+slug(b.q||TIPOS[b.t])+'-n'+e.n+'.png');return}
   const pt=ev.target.closest('[data-pztx]');if(pt){const [aid,bi]=pt.dataset.pztx.split(':'),b=e.artigos.find(x=>x.id===aid).b[Number(bi)],T=h=>b.w.filter(q=>q.h===h).map(q=>q.n+'. '+q.d).join('\n');try{await navigator.clipboard.writeText('Horizontais\n'+T(true)+'\n\nVerticais\n'+T(false));pt.textContent='Copiadas!'}catch(err){pt.textContent='Não deu para copiar'}return}
   const b=ev.target.closest('[data-url]');if(!b)return;try{await navigator.clipboard.writeText(b.dataset.url);b.textContent='Copiada!'}catch(e){b.textContent=b.dataset.url}};
+}
+
+/* --- Fotos do Word: tira as imagens de um .docx (ou PowerPoint, Excel, LibreOffice) sem sair do browser --- */
+let wordF=[];
+const WF_MIME={jpg:'image/jpeg',jpeg:'image/jpeg',jfif:'image/jpeg',png:'image/png',gif:'image/gif',webp:'image/webp',bmp:'image/bmp',svg:'image/svg+xml',tif:'image/tiff',tiff:'image/tiff',heic:'image/heic',emf:'image/emf',wmf:'image/wmf'};
+const WF_KB=n=>n>=1048576?(n/1048576).toFixed(1).replace('.',',')+' MB':Math.max(1,Math.round(n/1024))+' KB';
+const WF_NAT=(a,b)=>a.localeCompare(b,'pt',{numeric:true});
+/* Junta o destino de uma relação à pasta da parte que a refere (ex.: word/ + media/image1.jpeg). */
+function wfCaminho(parte,alvo){
+ if(/^[a-z]+:/i.test(alvo))return '';
+ const seg=alvo[0]==='/'?[]:parte.split('/').slice(0,-1);
+ alvo.replace(/^\//,'').split('/').forEach(x=>{if(x==='..')seg.pop();else if(x&&x!=='.')seg.push(x)});
+ try{return decodeURIComponent(seg.join('/'))}catch(e){return seg.join('/')}
+}
+async function lerOffice(file){
+ if(!window.JSZip)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+ let z;try{z=await window.JSZip.loadAsync(file)}catch(e){throw new Error(/\.(doc|ppt|xls)$/i.test(file.name)?'antigo':'formato')}
+ const nomes=Object.keys(z.files).filter(n=>!z.files[n].dir);
+ const media=nomes.filter(n=>/^(?:(?:word|ppt|xl|visio)\/media|Pictures|media)\/[^/]+$/i.test(n)&&/\.[a-z0-9]{2,5}$/i.test(n));
+ if(!nomes.some(n=>/^(word|ppt|xl)\/|^content\.xml$|^\[Content_Types\]\.xml$/.test(n))&&!media.length)throw new Error('formato');
+ /* Ordem em que as fotos aparecem no documento (a pasta media nem sempre a respeita). */
+ const partes=nomes.filter(n=>/^word\/document\.xml$|^ppt\/slides\/slide\d+\.xml$|^xl\/drawings\/drawing\d+\.xml$|^content\.xml$/.test(n)).sort(WF_NAT),ordem=[];
+ for(const parte of partes){try{
+  const xml=await z.file(parte).async('string');
+  if(parte==='content.xml'){for(const m of xml.matchAll(/xlink:href="([^"]+)"/g)){const c=wfCaminho(parte,m[1].replace(/&amp;/g,'&'));if(media.includes(c)&&!ordem.includes(c))ordem.push(c)}continue}
+  const rp=parte.replace(/([^/]+)$/,'_rels/$1.rels'),rf=z.file(rp);if(!rf)continue;
+  const rels={};for(const m of (await rf.async('string')).matchAll(/<Relationship\b[^>]*>/g)){const id=/\bId="([^"]+)"/.exec(m[0]),t=/\bTarget="([^"]+)"/.exec(m[0]);if(id&&t)rels[id[1]]=wfCaminho(parte,t[1].replace(/&amp;/g,'&'))}
+  for(const m of xml.matchAll(/\br:(?:embed|id|link|pict)="([^"]+)"/g)){const c=rels[m[1]];if(c&&media.includes(c)&&!ordem.includes(c))ordem.push(c)}
+ }catch(e){console.warn(e)}}
+ media.sort(WF_NAT).forEach(c=>{if(!ordem.includes(c))ordem.push(c)});
+ const base=(file.name.replace(/\.[^.]+$/,'').replace(/[\\/:*?"<>|]+/g,'-').trim()||'documento').slice(0,60),pad=x=>String(x).padStart(2,'0'),fotos=[];
+ for(const c of ordem){
+  const ext=c.split('.').pop().toLowerCase(),dados=await z.file(c).async('arraybuffer');if(!dados.byteLength)continue;
+  const blob=new Blob([dados],{type:WF_MIME[ext]||'application/octet-stream'}),f={blob,nome:`${base}-${pad(fotos.length+1)}.${ext==='jpeg'||ext==='jfif'?'jpg':ext}`,url:URL.createObjectURL(blob),w:0,h:0};
+  await new Promise(ok=>{const im=new Image();im.onload=()=>{f.w=im.naturalWidth;f.h=im.naturalHeight;ok()};im.onerror=ok;im.src=f.url});
+  fotos.push(f)}
+ return {doc:file.name,base,fotos};
+}
+function pWord(){
+ const tot=wordF.reduce((n,d)=>n+d.fotos.length,0);
+ pane().innerHTML=`<div class="card" id="wdrop"><h3>Tirar as fotos de um documento Word</h3>
+  <p class="note" style="margin-top:0">Escolhe o documento (ou vários) e a app mostra todas as fotos que lá estão, prontas a descarregar. Deixa de ser preciso mudar a extensão para .zip e ir à pasta <i>media</i>. O documento é aberto neste aparelho: nada é enviado para a internet.</p>
+  <div class="row" style="align-items:center;margin-top:10px"><button class="btn pri" id="wbt" type="button" style="flex:0 0 auto">Escolher documentos</button><span class="note" style="flex:2 1 220px;margin:0">ou arrasta-os para aqui · Word (.docx), PowerPoint (.pptx), Excel (.xlsx) e LibreOffice (.odt)</span></div>
+  <input type="file" id="wf" multiple hidden accept=".docx,.docm,.dotx,.pptx,.ppsx,.potx,.xlsx,.odt,.odp,.ods,.doc,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+  <p class="msg" id="wm" role="status" style="margin:10px 0 0"></p></div>
+ ${wordF.length>1?`<div class="row" style="align-items:center"><b style="flex:1 1 auto">${wordF.length} documentos · ${tot} fotos</b><button class="btn pri" data-wtudo="1" style="flex:0 0 auto">Descarregar tudo (ZIP)</button><button class="btn" data-wlimpar="1" style="flex:0 0 auto">Limpar</button></div>`:''}
+ ${wordF.map((d,di)=>`<h3 style="margin-top:22px;overflow-wrap:anywhere">${esc(d.doc)}</h3>
+  <div class="row" style="align-items:center;margin-bottom:10px"><span class="note" style="flex:1 1 160px;margin:0">${d.fotos.length?d.fotos.length+(d.fotos.length===1?' foto':' fotos')+', pela ordem em que aparecem no documento':'Este documento não tem fotos.'}</span>${d.fotos.length>1?`<button class="btn sm pri" data-wzip="${di}" style="flex:0 0 auto">Descarregar todas (ZIP)</button>`:''}<button class="btn sm" data-wtirar="${di}" style="flex:0 0 auto">Retirar da lista</button></div>
+  <div class="qrgrid">${d.fotos.map((f,fi)=>`<div class="card">${f.w?`<img src="${f.url}" alt="Foto ${fi+1} de ${esc(d.doc)}" loading="lazy" style="height:150px;object-fit:contain">`:`<div class="note" style="height:150px;display:flex;align-items:center;justify-content:center;margin:0;padding:0 8px">Sem pré-visualização (formato ${esc(f.nome.split('.').pop().toUpperCase())})</div>`}
+   <p style="margin:8px 0 4px;font-weight:700;line-height:1.25;overflow-wrap:anywhere">${esc(f.nome)}</p><p class="note" style="margin:0 0 8px">${f.w?f.w+' × '+f.h+' px · ':''}${WF_KB(f.blob.size)}</p><button class="btn sm" data-wfoto="${di}:${fi}">Descarregar</button></div>`).join('')}</div>`).join('')}
+ ${wordF.some(d=>d.fotos.some(f=>!f.w))?'<p class="note">As imagens sem pré-visualização (EMF, WMF, TIFF) são formatos que o browser e o Canva não abrem. Descarrega-as à mesma ou, no Word, clica na imagem com o botão direito → "Guardar como imagem" → PNG.</p>':''}
+ ${wordF.length?'<p class="note">As fotos saem tal como estão guardadas no documento, sem os recortes feitos no Word. Se o Word as tiver reduzido ao guardar, pede o ficheiro original a quem as tirou.</p>':''}`;
+ const inp=$('#wf'),m=$('#wm'),drop=$('#wdrop');
+ const juntar=async lista=>{const fs=[...lista];if(!fs.length)return;const bt=$('#wbt');bt.disabled=true;const erros=[];let novas=0;
+  for(const [i,file] of fs.entries()){m.className='msg';m.textContent=`A abrir ${file.name}${fs.length>1?' ('+(i+1)+' de '+fs.length+')':''}…`;
+   try{const r=await lerOffice(file),j=wordF.findIndex(d=>d.doc===r.doc);if(j>=0){wordF[j].fotos.forEach(f=>URL.revokeObjectURL(f.url));wordF[j]=r}else wordF.push(r);novas+=r.fotos.length}
+   catch(e){console.warn(e);erros.push(e.message==='antigo'?`${file.name}: é do formato antigo (.doc). Abre-o no Word e faz Ficheiro → Guardar como → Documento do Word (.docx).`:e.message==='formato'?`${file.name}: não é um documento Word, PowerPoint, Excel ou LibreOffice.`:`${file.name}: não foi possível abrir (pode estar protegido com palavra-passe ou falta a ligação à internet).`)}}
+  if(aba!=='word')return;pWord();const m2=$('#wm');m2.className=erros.length?'msg err':'msg ok';m2.textContent=(erros.length<fs.length?`${novas} ${novas===1?'foto encontrada':'fotos encontradas'}. `:'')+erros.join(' ')};
+ $('#wbt').onclick=()=>inp.click();inp.onchange=()=>juntar(inp.files);
+ drop.ondragover=ev=>{ev.preventDefault();drop.style.outline='3px dashed var(--ink)'};drop.ondragleave=()=>{drop.style.outline=''};
+ drop.ondrop=ev=>{ev.preventDefault();drop.style.outline='';juntar(ev.dataTransfer.files)};
+ pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.wfoto){const [di,fi]=d.wfoto.split(':').map(Number),f=wordF[di].fotos[fi];return baixar(f.blob,f.nome)}
+  if(d.wtirar){wordF.splice(Number(d.wtirar),1)[0].fotos.forEach(f=>URL.revokeObjectURL(f.url));return pWord()}
+  if(d.wlimpar){wordF.forEach(x=>x.fotos.forEach(f=>URL.revokeObjectURL(f.url)));wordF=[];return pWord()}
+  if(d.wzip||d.wtudo){const t=b.textContent;b.disabled=true;b.textContent='A preparar…';try{const z=new window.JSZip(),docs=d.wzip?[wordF[Number(d.wzip)]]:wordF,usados={};
+    docs.forEach(x=>{let p='';if(!d.wzip){let n=x.base;while(usados[n])n+='_';usados[n]=1;p=n+'/'}x.fotos.forEach(f=>z.file(p+f.nome,f.blob))});
+    await baixar(await z.generateAsync({type:'blob'}),d.wzip?docs[0].base+'-fotos.zip':'fotos-dos-documentos.zip');b.textContent=t}catch(e){console.warn(e);b.textContent='Não foi possível criar o ZIP'}b.disabled=false}};
 }
 
 /* --- Ligação --- */
