@@ -1,5 +1,5 @@
 /* Repórter da Calheta · Participa — service worker (app instalável, leitura sem rede e avisos) */
-const CACHE='participa-v161';
+const CACHE='participa-v162';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./','./index.html','./manifest.webmanifest','./icone-192.png'])).catch(()=>{}));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 /* Rede primeiro (para ver sempre a versão nova); sem rede, usa a cópia guardada. Só a própria app e as letras/bibliotecas. */
