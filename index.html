@@ -309,7 +309,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5.4</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5.5</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -662,7 +662,7 @@ function alertaEd(t){setTimeout(()=>{const m=$('#gMsg');if(m){m.className=/^Feit
 function editor(){
  const r=rasc;if(!r.novo&&r.n0==null)r.n0=r.n;
  pane().innerHTML=`<h3>${r.novo?'Importar nova edição':'Editar edição N.º'+r.n}</h3>
- <div class="card"><div class="row"><div style="flex:0 1 110px"><label for="en">Número</label><input id="en" type="number" min="1" value="${esc(r.n)}"></div><div><label for="et">Meses</label><input id="et" value="${esc(r.titulo)}" placeholder="novembro | dezembro 2025"></div><div style="flex:0 1 140px"><label for="ea">Ano</label><input id="ea" value="${esc(r.ano)}" placeholder="Ano V"></div></div>
+ <div class="card"><div class="row"><div style="flex:0 1 110px"><label for="en">Número</label><input id="en" type="number" min="1" value="${esc(r.n)}"></div><div><label for="et">Período</label><input id="et" list="et-l" value="${esc(r.titulo)}" placeholder="${esc(periodosSug()[0])}"><datalist id="et-l">${periodosSug().map(x=>`<option value="${esc(x)}">`).join('')}</datalist></div><div style="flex:0 1 140px"><label for="ea">Ano</label><input id="ea" value="${esc(r.ano)}" placeholder="Ano V"></div></div>
  <label for="imp">Colar o índice ou o JSON da edição</label><textarea id="imp" placeholder="Uma linha por artigo:  página | secção | título&#10;2 | Notícias | Visita de estudo ao Pico&#10;5 | Ambiente | Brigada Eco-escola&#10;&#10;Ou cola o JSON que o Claude gera a partir do Canva."></textarea>
  <div class="row" style="margin-top:8px"><button class="btn" id="lerImp" style="flex:0 0 auto">Acrescentar artigos</button><span class="msg" id="impMsg"></span></div></div>
  ${extrasEdicao(r)}
@@ -1988,6 +1988,10 @@ function cruzPista(box,b){
 /* ======================= v1.5: importar a edição a partir do PDF e ler o PDF no telemóvel ======================= */
 const PDFJS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
 async function pdfLib(){if(!window.pdfjsLib){await loadScript(PDFJS+'pdf.min.js');window.pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+'pdf.worker.min.js'}return window.pdfjsLib}
+/* As edições passaram a ser por período letivo (ex.: "1.º período 2026/2027"); as antigas, por meses, continuam como estão. */
+function anoLetivo(d){d=d||new Date();const a=d.getFullYear();return d.getMonth()>=8?a+'/'+(a+1):(a-1)+'/'+a}
+function periodosSug(){const al=anoLetivo(),m=new Date().getMonth(),atual=m>=8?1:m<=2?2:3;return [1,2,3].map(i=>((i+atual-2)%3)+1).map(i=>i+'.º período '+al)}
+function periodoDe(t){t=String(t||'');const m=t.match(/\b([123])\s*\.?\s*[º°o]?\s*per[íi]odo\b(?:[^\d]{0,24}(\d{4})\s*[\/–-]\s*(\d{2,4}))?/i);if(!m)return '';const yy=m[2]?[m[2],m[3]]:(t.match(/\b(20\d\d)\s*[\/–-]\s*(\d{2}|20\d\d)\b/)||[]).slice(1);let y='';if(yy[0]){y=' '+yy[0]+'/'+(yy[1].length===2?yy[0].slice(0,2)+yy[1]:yy[1])}return m[1]+'.º período'+y}
 const MESES='janeiro|fevereiro|março|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro';
 
 /* --- 1. ler o PDF: linhas de texto (com tamanho e posição) e fotografias de cada página --- */
@@ -2025,7 +2029,7 @@ function analisarPDF(pags){
  const lixo=l=>/^\d{1,3}$/.test(l.s)||/^p[áa]g\.?\s*\d+$/i.test(l.s)||/rep[óo]rter da calheta/i.test(l.s)&&l.h>T||repetida(l.s);
  const capa=pags[0]?pags[0].linhas.map(l=>l.s).join(' \n '):'';
  const info={n:(capa.match(/n\.?\s*[º°o]\s*(\d{1,3})\b/i)||[])[1],ano:(capa.match(/\bano\s+([IVXLC]{1,6})\b/i)||[])[1],
-  titulo:((capa.match(new RegExp(`((?:${MESES})(?:\\s*[|/–-]\\s*(?:${MESES}))?\\s*(?:de\\s*)?\\d{4})`,'i'))||[])[1]||'').toLowerCase().replace(/\s*([|/–-])\s*/,' | ').replace(/\s+de\s+/,' ')};
+  titulo:periodoDe(capa)||((capa.match(new RegExp(`((?:${MESES})(?:\\s*[|/–-]\\s*(?:${MESES}))?\\s*(?:de\\s*)?\\d{4})`,'i'))||[])[1]||'').toLowerCase().replace(/\s*([|/–-])\s*/,' | ').replace(/\s+de\s+/,' ')};
  const arts=[];let ultimaSec='',pendSec='';
  for(const p of pags){
   const Ls=p.linhas.filter(l=>!lixo(l)),daPag=[];let cur=null,ultTit=null;

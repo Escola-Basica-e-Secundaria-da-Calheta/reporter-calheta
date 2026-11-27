@@ -11,6 +11,7 @@ Webapp interativa do jornal da Escola Básica e Secundária da Calheta. Cada art
 - v1.5.2: retirado o mapa das notícias (`#mapa`, o campo "Onde aconteceu" no painel e a biblioteca Leaflet).
 - v1.5.3: retirada a agenda da escola (`#agenda` e o cartão "Agenda da escola" no painel → Comunidade; na barra de baixo, sem passatempos, aparece "Ler"). Ao desligar o modo visão reduzida, as cores e o tamanho da letra voltam ao que estavam antes de o ligar.
 - v1.5.4: correções encontradas por revisão — leitor (deslizar no índice, caça ao QR, "Ver a solução" já não dá pontos, "Repor" com visão reduzida, palavras longas com letra grande) e painel (renumerar edição sem apagar outra, importar JSON completo, destaque ao apagar edição, PDF depois de uma falha, ano da capa, moderação e edições sem botões presos). `v14.sql`: regras de segurança na base de dados (aplicado a 27/11/2026).
+- v1.5.5: as edições passam a ser por período letivo ("1.º período 2026/2027"): no painel → Edições o campo "Meses" passou a "Período", com sugestões do ano letivo, e a leitura do PDF encontra o período e o ano letivo na capa (as edições antigas, por meses, ficam como estão).
 - Outras páginas: `#e<N.º>-top` (ranking e concurso entre turmas), `#tv` (modo TV para a entrada), `#e<N.º>-ler` (página para partilhar e PDF da edição), `#e<N.º>-relatorio` (relatório para imprimir), `#arquivo`, `#familias`, `#caca-<N.º>-<pista>` (caça ao QR).
 
 ## Base de dados
