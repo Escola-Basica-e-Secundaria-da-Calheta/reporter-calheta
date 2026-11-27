@@ -107,6 +107,7 @@ textarea{min-height:96px;resize:vertical}
 .chk input{width:22px;height:22px;flex:none;margin:2px 0 0}
 .texto{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;max-height:520px;overflow:auto}
 .notaeq{background:var(--hls);border-radius:10px;padding:10px 12px;margin-top:10px}
+.aj summary{cursor:pointer;padding:2px 0}.aj-c{margin-top:8px}.aj-c ol,.aj-c ul{padding-left:20px;margin:6px 0}.aj-c li{margin-bottom:6px}.aj-c p{margin:6px 0}
 .est{display:inline-block;border-radius:999px;padding:2px 10px;font-size:0.8125rem;font-weight:700;border:1.5px solid var(--line);white-space:nowrap}
 .est-recebido,.est-revisao{border-color:var(--blue);color:var(--blue)}.est-alteracoes{border-color:var(--hl);background:var(--hls)}.est-aceite,.est-publicado{border-color:var(--ok);color:var(--ok)}.est-recusado{border-color:var(--bad);color:var(--bad)}
 .ver{display:inline-block;font-size:0.75rem;font-weight:700;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:0 7px;margin-left:2px;vertical-align:1px}
@@ -322,7 +323,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6.2</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6.3</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -640,11 +641,12 @@ async function painel(){
   return}
  const pend=(await db.comentarios({estado:'pendente'}).catch(()=>[])).length;
  const novos=(await db.subs().catch(()=>[])).filter(s=>s.estado==='recebido').length,bd={moderacao:pend,redacao:novos};
- const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['word','Fotos do Word'],['estatisticas','Estatísticas'],['comunidade','Comunidade'],['escola','Escola'],['ligacao','Ligação']];
- main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm fim" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Ver o jornal</a>${modo==='online'?'<button class="btn sm" id="sair" style="flex:none">Terminar sessão</button>':''}</div><div id="pane"></div>`;
+ const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['word','Fotos do Word'],['estatisticas','Estatísticas'],['comunidade','Comunidade'],['escola','Escola'],['ligacao','Ligação'],['ajuda','Ajuda']];
+ main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm fim" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Ver o jornal</a>${modo==='online'?'<button class="btn sm" id="sair" style="flex:none">Terminar sessão</button>':''}</div>${AJ_ABA[aba]?`<p class="note" style="margin:0 0 10px;text-align:right"><a href="#" id="ajlink">❓ Ajuda: como funciona «${esc((T.find(x=>x[0]===aba)||[])[1]||'')}»</a></p>`:''}<div id="pane"></div>`;
  {const sb=$('#sair');if(sb)sb.onclick=async()=>{sb.disabled=true;try{await db.cl.auth.signOut();await db.cl.auth.signInAnonymously()}catch(e){console.warn(e)}prof=false;await carregar();painel()}}
- main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;rasc=aba==='edicoes'?rasc:null;painel()});
- ({estatisticas:pEstat,comunidade:pComunidade,pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,word:pWord,ligacao:pLigacao})[aba]();
+ main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;if(aba==='ajuda')ajudaSec='fluxo';rasc=aba==='edicoes'?rasc:null;painel()});
+ {const al=$('#ajlink');if(al)al.onclick=ev=>{ev.preventDefault();ajudaSec=AJ_ABA[aba];aba='ajuda';rasc=null;painel()}}
+ ({estatisticas:pEstat,comunidade:pComunidade,pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,word:pWord,ligacao:pLigacao,ajuda:pAjuda})[aba]();
 }
 const pane=()=>$('#pane');
 const selEd=()=>`<select id="selEd" style="max-width:320px">${eds.map(e=>`<option value="${e.n}" ${e.n===(edSel||dest)?'selected':''}>N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select>`;
@@ -961,6 +963,77 @@ function pLigacao(){
  <p class="note">A chave pública pode estar na página: quem protege os dados são as regras da base de dados (os alunos só votam e comentam; aprovar e importar edições exige conta de professor). Para a Redação, corre também <b>redacao.sql</b> no editor SQL do Supabase, depois de supabase.sql.</p></div>`;
  $('#cfgf').onsubmit=ev=>{ev.preventDefault();LS.set('rc-config',{base:$('#cb').value.trim(),supabaseUrl:$('#cu').value.trim(),supabaseKey:$('#ck').value.trim()});location.hash='inicio';location.reload()};
  const l=$('#limpar');if(l)l.onclick=()=>{if(l.dataset.ok){local.d={edicoes:[ED1],destaque:1,votos:{},coms:[]};local.save();carregar().then(painel)}else{l.dataset.ok=1;l.textContent='Confirmar: apagar votos e comentários?'}};
+}
+
+/* ======== Ajuda do painel (resumo do manual + PDF) ======== */
+const MANUAL={url:'manual/Manual-Participa.pdf',versao:'1.6',paginas:26};
+const AJ=[
+ ['fluxo','Como fazer uma edição (os 7 passos)',`<ol>
+  <li><b>Receber os artigos</b> na Redação. Rever, deixar notas e, quando estiver bom, escolher <b>Aceite</b> com o <b>número da edição</b> e a <b>página</b>.</li>
+  <li><b>Criar o jornal na app</b>: Edições → <b>Nova edição</b> → <b>Trazer os artigos aceites da Redação</b> (e <b>+ Artigo</b> para o que faltar) → <b>Guardar edição</b>. Fica em <b>rascunho</b>: os leitores ainda não a veem.</li>
+  <li><b>Fazer o jornal no Canva</b> com o pacote da Redação (<b>Descarregar pacote (ZIP)</b>: textos e fotos já com o nome da página).</li>
+  <li><b>Exportar os QR</b>: Códigos QR → <b>Descarregar todos (ZIP)</b>.</li>
+  <li><b>Pôr os QR no Canva</b>, junto a cada artigo (o nome do ficheiro diz a página), e o QR da capa na primeira página. Exportar em <b>PDF Padrão</b>.</li>
+  <li><b>Carregar o PDF</b>: Edições → Editar → <b>Carregar o PDF da edição</b>. Confirmar <b>Corresponde a</b> em cada artigo → Juntar → Guardar.</li>
+  <li><b>Pôr no ar</b> no dia da distribuição. Depois: Comunidade → <b>Enviar aviso</b> e Redação → <b>Marcar aceites como publicados</b>.</li></ol>
+  <p class="notaeq"><b>Depois de exportar os QR</b>, não mude o número da edição nem apague artigos: o endereço de cada QR leva o número da edição e o identificador do artigo. Títulos, páginas e blocos podem mudar à vontade.</p>`],
+ ['redacao','Redação: receber e rever artigos',`<p><b>Receção de artigos</b>: próxima edição, prazo, código da redação (mínimo 6 caracteres), recado e <b>Receção aberta</b> (desligar quando o jornal começar a ser montado). Botões para copiar a ligação, o QR da redação, um lembrete com o prazo e para <b>tirar o acesso a todos</b> no fim do ano letivo. Mudar o código não tira o acesso a quem já entrou.</p>
+  <p><b>Rever</b>: filtros Por tratar, À espera do autor, Aceites, Publicados, Recusados e Todos. <b>Abrir</b> mostra texto, fotos, áudio e inglês. Para pôr uma <b>nota no texto</b>, selecionar a frase (no telemóvel, tocar e manter) e carregar em <b>Pôr nota</b>. <b>Versões anteriores</b> mostra o que o aluno mudou. No fim escolher Estado, Edição N.º, Página e Nota para o autor → Guardar.</p>
+  <p><b>Fechar a edição</b>: <b>Descarregar pacote (ZIP)</b> (artigos.md, fotos com o nome da página, participa.json), <b>Criar edição na Participa</b>, <b>Marcar aceites como publicados</b>.</p>`],
+ ['pautas','Pautas',`<p>Assuntos que é preciso cobrir: o quê, data, secção, entidade parceira (Câmara, Casa do Povo…) e detalhes → <b>Publicar pauta</b>. Os jornalistas ficam com uma na Redação.</p>`],
+ ['plano','Plano das páginas',`<p>Indicar a edição e o número de páginas. A app estima o espaço de cada artigo (≈450 palavras por página + 0,18 de página por foto). Arrastar cada artigo para uma página ou escolhê-la na lista (no telemóvel). A moldura vermelha avisa que a página está cheia demais.</p>`],
+ ['edicoes','Edições: criar, editar, rascunho e no ar',`<p>Cada edição mostra o estado (<b>Rascunho</b> ou <b>No ar</b>), quantos artigos tem, se os QR já foram exportados e se o PDF já foi carregado.</p>
+  <ul><li><b>Nova edição</b>: número e período já preenchidos; <b>Trazer os artigos aceites da Redação</b>; <b>+ Artigo</b>; ou colar um índice <code>página | secção | título</code>.</li>
+  <li><b>Blocos</b> de cada artigo: escolher o tipo, preencher e <b>+ Bloco</b>. No quiz, <b>*</b> antes da opção certa. Sopa de letras: palavras separadas por vírgula. Cruzadas: <code>PALAVRA=pista; PALAVRA=pista</code>.</li>
+  <li><b>Pergunta da capa</b>, <b>Caça ao QR</b> (uma pista por QR escondido) e <b>+ Artigo “Quiz da edição”</b>.</li>
+  <li><b>Pôr no ar</b> (dois toques), <b>Tirar do ar</b>, <b>Pôr em destaque</b>, <b>Copiar JSON</b> (cópia de segurança), <b>Apagar</b>.</li></ul>
+  <p>Uma edição em rascunho só é vista pelos professores com sessão iniciada. Quem ler um QR dela vê “Este número ainda não saiu”.</p>`],
+ ['pdf','Carregar o PDF do jornal',`<ol><li>No Canva: Partilhar → Transferir → <b>PDF Padrão</b> (não “achatado”; até 50 MB).</li>
+  <li>Edições → <b>Editar</b> → <b>Carregar o PDF da edição</b>.</li>
+  <li>Em cada artigo encontrado, confirmar <b>Corresponde a</b>: ligado ao artigo certo, ele mantém o QR impresso e ganha o texto, as fotos e a zona tocável do PDF. <b>Artigo novo</b> cria um artigo sem QR no papel.</li>
+  <li>Se o título mudou quase todo no Canva, a app não adivinha: escolha à mão. Os artigos com pouco texto vêm desmarcados.</li>
+  <li><b>Juntar N artigos à edição</b> → <b>Guardar edição</b>.</li></ol>`],
+ ['qr','Códigos QR',`<p><b>Descarregar todos (ZIP)</b> cria um ZIP com as pastas <b>com-legenda</b> (QR com “Dá a tua opinião!” e o título) e <b>so-codigo</b> (só o quadrado), e uma <b>LISTA.txt</b>. Os nomes levam a página (ex.: <i>QR-n2-p03-…</i>). Também há os QR da caça, das famílias e da Redação.</p>
+  <p>Em cada QR: Descarregar, Copiar ligação e Imagem para redes (1080 × 1350). Passatempos: grelha e solução em PNG. No Canva, não fazer o QR mais pequeno do que 2,5 × 2,5 cm nem o esticar.</p>`],
+ ['word','Fotos do Word',`<p>Para tirar as fotografias de documentos que os alunos enviam em Word (também .pptx, .xlsx e .odt). Escolher ou arrastar um ou vários documentos: a app mostra as fotos pela ordem em que aparecem, para descarregar uma a uma ou todas num ZIP.</p>
+  <p>Antes de descarregar pode-se rodar no próprio cartão (↺ ↻) ou, em <b>Editar</b>, rodar, espelhar, recortar (livre, quadrado, 4:3, 3:4, 16:9) e acertar a luz e o contraste; <b>Repor a original</b> desfaz tudo. Tudo é feito no browser: os documentos não são enviados para lado nenhum.</p>`],
+ ['moderacao','Moderação',`<p>Comentários, cartas, mensagens das famílias, sugestões, perguntas para entrevistas e contactos de acessibilidade. <b>Aprovar</b> (ou Marcar como lida) e <b>Rejeitar</b>. <b>Retidas pelo filtro</b>: mensagens com palavras impróprias; o filtro às vezes engana-se e pode aprovar-se à mesma. Cada comentário aprovado dá 5 pontos à turma.</p>`],
+ ['resultados','Resultados',`<p>Por artigo: reações, fotos mais gostadas, votações, quizzes, estrelas e comentários. <b>Relatório (PDF)</b> para imprimir, <b>Ranking</b>, <b>Modo TV</b> (para um ecrã na entrada), <b>Melhores do ano</b> e <b>Copiar resultados (CSV)</b>.</p>`],
+ ['estatisticas','Estatísticas',`<p>Páginas abertas, leitores diferentes, % que chegaram pelo QR e artigos por leitor; artigos mais lidos, horas e dias, e a lista de artigos que ninguém abriu (QR mal colocado ou pequeno?). Exporta para CSV.</p>`],
+ ['comunidade','Comunidade',`<ul><li><b>Concurso de fotografia</b>: tema, prazo, regras, receber fotos e votação aberta (até 3 votos). Aprovar as fotos; galeria por votos.</li>
+  <li><b>Cartas ao jornal</b>: as aprovadas, com Copiar as cartas para o jornal.</li>
+  <li><b>Avisos no telemóvel</b>: título, mensagem e o que abre → Enviar aviso (dois toques). No iPhone só chega com a app no ecrã principal.</li>
+  <li><b>Declaração de acessibilidade</b>: entidade, email e data da avaliação.</li></ul>`],
+ ['escola','Escola',`<ul><li><b>Turmas da escola</b>: uma por linha. <b>Só estas turmas são aceites</b> no concurso entre turmas; manter a lista completa.</li>
+  <li><b>Equipa de professores</b>: acrescentar o email e as secções. O professor novo precisa também de utilizador no Supabase (Authentication → Users) com o mesmo email <b>confirmado</b>.</li>
+  <li><b>Autorizações de imagem</b>: <code>turma | nome | sim ou não | observação</code>. A Redação avisa quando um artigo com fotos vem de uma turma com alunos sem autorização.</li>
+  <li><b>Portefólio de um jornalista</b>, para a avaliação.</li></ul>`],
+ ['ligacao','Ligação',`<p>Mostra se a app está online ou em modo demonstração e guarda o endereço público (usado nos QR) e os dados do Supabase. No dia a dia não é preciso mexer aqui.</p>`],
+ ['problemas','Problemas frequentes',`<ul><li><b>Um QR abre “Este número ainda não saiu”</b>: a edição está em rascunho → Pôr no ar. Se já está no ar, fechar e voltar a abrir a app.</li>
+  <li><b>Um QR abre a edição mas não o artigo</b>: o artigo foi apagado ou a edição mudou de número. Recriar o artigo com exatamente o mesmo título, ou repor o número.</li>
+  <li><b>Um artigo do PDF ficou como “Artigo novo”</b>: voltar a ler o PDF (Trocar e voltar a ler o PDF) e escolher o artigo em Corresponde a; remover o duplicado.</li>
+  <li><b>“Não encontrei texto no PDF”</b>: exportar do Canva em PDF Padrão, sem achatar.</li>
+  <li><b>Um aluno não encontra a turma</b>: acrescentá-la em Escola → Turmas.</li>
+  <li><b>Um comentário não aparece</b>: está por aprovar ou retido pelo filtro.</li>
+  <li><b>Um jornalista não vê os seus artigos</b>: ficam ligados ao aparelho onde foram enviados.</li>
+  <li><b>Um professor não entra</b>: confirmar que está na Equipa de professores e que o email está confirmado no Supabase.</li>
+  <li><b>Depois das férias a app não carrega</b>: o Supabase gratuito pausa ao fim de cerca de uma semana parado. Entrar em supabase.com → projeto reporter-calheta → Restore.</li></ul>`],
+ ['privacidade','Privacidade e boas práticas',`<ul><li>Nos nomes, só o primeiro nome e a inicial; nunca moradas nem telefones.</li>
+  <li>Confirmar sempre as autorizações de imagem. As fotos da Redação ficam privadas e sem GPS.</li>
+  <li>Nada do que os leitores escrevem aparece sem aprovação.</li>
+  <li>No fim do ano letivo: Redação → Tirar o acesso a todos e mudar o código.</li>
+  <li>Pelo menos dois professores com acesso de administrador ao Supabase e ao GitHub.</li></ul>`]];
+const AJ_ABA={redacao:'redacao',pautas:'pautas',plano:'plano',edicoes:'edicoes',moderacao:'moderacao',resultados:'resultados',qr:'qr',word:'word',estatisticas:'estatisticas',comunidade:'comunidade',escola:'escola',ligacao:'ligacao'};
+let ajudaSec='fluxo';
+function pAjuda(){
+ pane().innerHTML=`<div class="card"><h3 style="margin-top:0">Manual de utilização</h3><p class="note" style="margin-top:0">O manual completo, com imagens, para ler no ecrã, imprimir ou enviar a um colega (versão ${MANUAL.versao}, ${MANUAL.paginas} páginas).</p>
+  <div class="row"><a class="btn pri" href="${MANUAL.url}" download="Manual-Participa-v${MANUAL.versao}.pdf" style="flex:0 0 auto;text-decoration:none">Descarregar o manual (PDF)</a><a class="btn" href="${MANUAL.url}" target="_blank" rel="noopener" style="flex:0 0 auto;text-decoration:none">Abrir num separador novo</a></div></div>
+  <label for="aj-q">Procurar na ajuda</label><input id="aj-q" type="search" placeholder="ex.: QR, PDF, turma, rascunho" autocomplete="off">
+  <p class="note" id="aj-n" role="status" style="margin:6px 0 0"></p>
+  <div id="aj-l">${AJ.map(([k,t,h])=>`<details class="card aj" id="aj-${k}" ${k===ajudaSec?'open':''}><summary><b>${t}</b></summary><div class="aj-c">${h}</div></details>`).join('')}</div>`;
+ const q=$('#aj-q'),n=$('#aj-n');
+ q.oninput=()=>{const v=norm(q.value.trim());let c=0;pane().querySelectorAll('details.aj').forEach(d=>{const ok=!v||norm(d.textContent).includes(v);d.hidden=!ok;if(ok)c++;if(v)d.open=ok});n.textContent=v?(c?`${c} ${c===1?'tema encontrado':'temas encontrados'}.`:'Nada encontrado. Experimenta outra palavra ou descarrega o manual.'):''};
+ const d=$('#aj-'+ajudaSec);if(d&&ajudaSec!=='fluxo')setTimeout(()=>d.scrollIntoView({block:'start',behavior:'smooth'}),0);
 }
 
 /* ======== Redação: os jornalistas enviam artigos ======== */
