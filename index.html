@@ -202,7 +202,7 @@ html[data-vr="1"] .sopa button{font-size:clamp(1rem,5vw,1.5rem)}
 .sopa{touch-action:none}.sopa button.arr{background:var(--blue);color:var(--bg);border-color:var(--blue)}
 .mais-h{margin:26px 0 8px}
 .horas div{cursor:pointer}
-#main{transition:transform .14s ease,opacity .14s ease}#main.sai-esq{transform:translateX(-24px);opacity:.3}#main.sai-dir{transform:translateX(24px);opacity:.3}
+#main{transition:transform .14s ease,opacity .14s ease;overflow-wrap:break-word}#main.sai-esq{transform:translateX(-24px);opacity:.3}#main.sai-dir{transform:translateX(24px);opacity:.3}
 @media(prefers-reduced-motion:reduce){#main{transition:none}}
 .folha-fundo{position:fixed;inset:0;z-index:60;background:rgba(10,12,16,.45);opacity:0;transition:opacity .2s}
 .folha-fundo.aberta{opacity:1}
@@ -461,7 +461,7 @@ const urlArtigo=(e,a)=>(cfg.base||location.href.split('#')[0])+'#e'+e.n+(a?'-'+a
 
 /* ======== Rotas ======== */
 function route(){
- const h=location.hash.slice(1);
+ main.onclick=null;const h=location.hash.slice(1);
  if(h==='painel')return painel();
  if(h==='redacao')return redacao();
  if(h==='tv')return verTV();
@@ -484,7 +484,7 @@ window.addEventListener('hashchange',route);
 
 /* ======== Leitor: índice da edição ======== */
 function verIndice(e){
- const outras=eds.filter(x=>x.n!==e.n);
+ atual=null;const outras=eds.filter(x=>x.n!==e.n);
  main.innerHTML=`
  <span class="tag">${esc(e.ano||'')} · N.º${e.n}</span>
  <h2 class="t">Leste o jornal? Agora é a tua vez.</h2>
@@ -1552,7 +1552,6 @@ function v13Artigo(e,a){
   c.innerHTML=`<details${String(a.tx).length<1500?' open':''}><summary><h3 style="display:inline">Ler o artigo</h3></summary>${a.r?`<p><b>${esc(a.r)}</b></p>`:''}<div class="txt artx">${esc(a.tx)}</div>${a.au?`<p class="note">Texto: ${esc(a.au)}</p>`:''}</details>`;
   lead.after(c);ouvirUI(c,[a.ti,a.r,a.tx].filter(Boolean).join('. '),'pt-PT')}
  main.querySelectorAll('.card').forEach(cd=>{const t=cd.querySelector(':scope > .txt');if(!t||t.classList.contains('artx'))return;const h=(cd.querySelector('h3')||{}).textContent||'';ouvirUI(cd,t.textContent,/english|ingl/i.test(h)?'en-GB':'pt-PT')});
- const row=$('#nav');
  navArtigo(e,a);
  iniciarPassatempos(e,a);
 }
@@ -1632,29 +1631,29 @@ function htmlPassatempo(b,bi,cont){
 async function iniciarPassatempos(e,a){
  const boxes=main.querySelectorAll('[data-pz]');if(!boxes.length)return;
  const meus=await db.meus(e.n,a.id).catch(()=>({})),sol=novaEd(e);
- boxes.forEach(box=>{const bi=Number(box.dataset.pz),b=a.b[bi],K='rc-pz-'+e.n+'-'+a.id+'-'+bi,st=box.querySelector('.pzst'),est=LS.get(K,{});
-  const feito=async()=>{st.className='ok pzst';st.textContent='Resolvido! Parabéns.';if(meus[String(bi)]==null){meus[String(bi)]='1';try{await db.votar(e.n,a.id,String(bi),'1')}catch(err){console.warn(err)}}};
+ boxes.forEach(box=>{const bi=Number(box.dataset.pz),b=a.b[bi],K='rc-pz-'+e.n+'-'+a.id+'-'+bi,st=box.querySelector('.pzst'),est=LS.get(K,{});let viu=!!est.viu;
+  const feito=async()=>{if(viu){st.className='note pzst';st.textContent='Esta é a solução.';return}st.className='ok pzst';st.textContent='Resolvido! Parabéns.';if(meus[String(bi)]==null){meus[String(bi)]='1';try{await db.votar(e.n,a.id,String(bi),'1')}catch(err){console.warn(err)}}};
   const btnSol=()=>{if(!sol||box.querySelector('[data-pzs]'))return;box.insertAdjacentHTML('beforeend','<button type="button" class="btn sm" data-pzs="1">Ver a solução</button>')};
   if(b.t==='sopa'){const achadas=new Set(est.a||[]);let ini=null;
    const pinta=()=>{box.querySelectorAll('.sopa button').forEach(x=>x.classList.remove('ach','sel'));achadas.forEach(w=>{const p=acharSopa(b.g,w);if(p)p.forEach(([r,c])=>{const x=box.querySelector(`[data-rc="${r},${c}"]`);if(x)x.classList.add('ach')})});box.querySelectorAll('.pzw li').forEach(li=>li.classList.toggle('ok',achadas.has(li.dataset.w)));
     st.className='note pzst';st.textContent=`${achadas.size} de ${b.w.length} palavras.`;if(achadas.size===b.w.length)feito()};
    const tenta=L=>{const s=L.map(([r,c])=>b.g[r][c]).join(''),rv=[...s].reverse().join(''),w=b.w.find(w=>w===s||w===rv);if(w&&!achadas.has(w)){achadas.add(w);LS.set(K,{a:[...achadas]});vibrar(25)}pinta()};
    sopaArrastar(box,b,tenta);
-   box.onclick=ev=>{if(ev.target.closest('[data-pzs]')){b.w.forEach(w=>achadas.add(w));pinta();return}const g=box.querySelector('.sopa');if(g&&Date.now()-Number(g.dataset.sk||0)<500)return;const x=ev.target.closest('[data-rc]');if(!x)return;const [r,c]=x.dataset.rc.split(',').map(Number);
+   box.onclick=ev=>{if(ev.target.closest('[data-pzs]')){viu=true;b.w.forEach(w=>achadas.add(w));pinta();return}const g=box.querySelector('.sopa');if(g&&Date.now()-Number(g.dataset.sk||0)<500)return;const x=ev.target.closest('[data-rc]');if(!x)return;const [r,c]=x.dataset.rc.split(',').map(Number);
     if(!ini){ini=[r,c];x.classList.add('sel');return}const [r0,c0]=ini;ini=null;const dr=Math.sign(r-r0),dc=Math.sign(c-c0),len=Math.max(Math.abs(r-r0),Math.abs(c-c0))+1;
     if(!(r===r0||c===c0||Math.abs(r-r0)===Math.abs(c-c0))){pinta();return}let s='';for(let i=0;i<len;i++)s+=b.g[r0+dr*i][c0+dc*i];const rv=[...s].reverse().join('');
     const w=b.w.find(w=>w===s||w===rv);if(w&&!achadas.has(w)){achadas.add(w);LS.set(K,{a:[...achadas]})}pinta()};
    pinta();btnSol()}
   if(b.t==='cruzadas'){const m=celulasCruz(b),ins=[...box.querySelectorAll('input[data-rc]')];ins.forEach(i=>{i.setAttribute('autocorrect','off');i.setAttribute('spellcheck','false');i.setAttribute('enterkeyhint','next')});
    ins.forEach(i=>{if(est[i.dataset.rc])i.value=est[i.dataset.rc]});
-   const guardar=()=>{const o={};ins.forEach(i=>{if(i.value)o[i.dataset.rc]=i.value});LS.set(K,o)};
+   const guardar=()=>{const o={};ins.forEach(i=>{if(i.value)o[i.dataset.rc]=i.value});if(viu)o.viu=1;LS.set(K,o)};
    box.dataset.dir='h';
    box.oninput=ev=>{const i=ev.target.closest('input[data-rc]');if(!i)return;i.value=limpaPal(i.value).slice(-1);i.classList.remove('mal');guardar();if(i.value){const [r,c]=i.dataset.rc.split(',').map(Number),nx=box.querySelector(`[data-rc="${box.dataset.dir!=='v'?r+','+(c+1):(r+1)+','+c}"]`);if(nx&&nx.tagName==='INPUT')nx.focus()}};
    box.onfocusin=ev=>{const i=ev.target.closest('input[data-rc]');if(!i)return;const [r,c]=i.dataset.rc.split(',').map(Number);const h=m[r+','+(c-1)]||m[r+','+(c+1)],v=m[(r-1)+','+c]||m[(r+1)+','+c];if(h&&!v)box.dataset.dir='h';else if(v&&!h)box.dataset.dir='v'};
    box.onkeydown=ev=>{const i=ev.target.closest('input[data-rc]');if(!i)return;const [r,c]=i.dataset.rc.split(',').map(Number),mv={ArrowRight:[0,1],ArrowLeft:[0,-1],ArrowDown:[1,0],ArrowUp:[-1,0]}[ev.key];
     if(ev.key==='Backspace'&&!i.value){const p=box.querySelector(`[data-rc="${box.dataset.dir!=='v'?r+','+(c-1):(r-1)+','+c}"]`);if(p&&p.tagName==='INPUT'){p.focus();ev.preventDefault()}}
     if(mv){box.dataset.dir=mv[0]?'v':'h';const n=box.querySelector(`[data-rc="${(r+mv[0])+','+(c+mv[1])}"]`);if(n&&n.tagName==='INPUT'){n.focus();ev.preventDefault()}}};
-   box.onclick=ev=>{if(ev.target.closest('[data-pzs]')){ins.forEach(i=>{i.value=m[i.dataset.rc];i.classList.remove('mal')});guardar();return}
+   box.onclick=ev=>{if(ev.target.closest('[data-pzs]')){viu=true;ins.forEach(i=>{i.value=m[i.dataset.rc];i.classList.remove('mal')});guardar();return}
     if(!ev.target.closest('[data-pzv]'))return;let vaz=0,mal=0;ins.forEach(i=>{if(!i.value)vaz++;else if(i.value!==m[i.dataset.rc]){mal++;i.classList.add('mal')}});
     if(!vaz&&!mal){vibrar([20,40,20]);return feito()}st.className='note pzst';st.textContent=mal?`${mal} ${mal===1?'letra errada':'letras erradas'} (a vermelho).${vaz?' Faltam '+vaz+'.':''}`:`Está tudo certo até agora. Faltam ${vaz} letras.`};
    cruzPista(box,b);btnSol()}
@@ -2218,9 +2217,9 @@ painelAcc=function(){
   if(b.id==='acc-vr'){ligarVR(!ACC.vr);setTimeout(()=>{const x=$('#acc-vr');if(x)x.focus()},0)}
   if(b.dataset.cores!==undefined){ACC.cores=ACC.cores===b.dataset.cores?'':b.dataset.cores;LS.set('rc-acc',ACC);aplicarAcc()}
   if(b.dataset.tema!==undefined){ACC.cores='';LS.set('rc-acc',ACC);aplicarAcc()}
-  if(b.id==='acc-r'){ACC.vr=0;ACC.cores='';LS.set('rc-acc',ACC);aplicarAcc()}
+  if(b.id==='acc-r'){ACC.vr=0;ACC.cores='';delete ACC.ant;LS.set('rc-acc',ACC);aplicarAcc()}
   if(b.id==='acc-ouvir'){p.remove();lerPagina()}
-  if(b.dataset.cores!==undefined||b.id==='acc-vr'){p.querySelectorAll('[data-fs]').forEach(x=>x.classList.toggle('on',Number(x.dataset.fs)===Number(ACC.fs)));const ps=p.querySelectorAll('[data-cores]');ps.forEach(x=>x.classList.toggle('on',x.dataset.cores===ACC.cores));const v=$('#acc-vr');if(v){v.classList.toggle('pri',!!ACC.vr);v.setAttribute('aria-pressed',!!ACC.vr);v.textContent=ACC.vr?'✓ Modo visão reduzida ligado':'Ligar o modo visão reduzida'}}
+  if(b.dataset.cores!==undefined||b.id==='acc-vr'||b.id==='acc-r'){p.querySelectorAll('[data-fs]').forEach(x=>x.classList.toggle('on',Number(x.dataset.fs)===Number(ACC.fs)));const ps=p.querySelectorAll('[data-cores]');ps.forEach(x=>x.classList.toggle('on',x.dataset.cores===ACC.cores));const v=$('#acc-vr');if(v){v.classList.toggle('pri',!!ACC.vr);v.setAttribute('aria-pressed',!!ACC.vr);v.textContent=ACC.vr?'✓ Modo visão reduzida ligado':'Ligar o modo visão reduzida'}}
  });
 };
 
@@ -2312,7 +2311,7 @@ pComunidade=async function(){await pComunidade0();const d=Object.assign({contact
 aplicarAcc();
 
 window.addEventListener('hashchange',()=>{if(location.hash!=='#painel')main.classList.remove('wide')});
-window.addEventListener('hashchange',()=>{document.body.classList.toggle('tvmode',location.hash==='#tv');main.onclick=null});
+window.addEventListener('hashchange',()=>{document.body.classList.toggle('tvmode',location.hash==='#tv')});
 init();
 }
 </script>
