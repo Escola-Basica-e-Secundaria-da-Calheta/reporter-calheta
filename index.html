@@ -287,7 +287,7 @@ html[data-contraste="1"] .card,html[data-contraste="1"] .opt{border-width:2px}
 .pistas2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}.pistas2 h4{margin:0 0 4px;font:600 1.0625rem "Fredoka",sans-serif}.pistas2 ol{list-style:none;padding:0;margin:0;display:grid;gap:4px}
 .galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}.gf{margin:0;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
 .gf img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--bg)}.gf figcaption{padding:10px;display:grid;gap:6px}
-.mapa{height:min(60vh,460px);border-radius:12px;border:1.5px solid var(--line);margin:14px 0;background:var(--paper)}.mapa .leaflet-popup-content a{color:#1f5fbf}
+
 .agenda{list-style:none;padding:0;margin:0}.ev{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line)}
 .evd{text-align:center;border:1.5px solid var(--ink);border-radius:10px;padding:4px 0;line-height:1.1}.evd b{display:block;font:600 1.375rem "Fredoka",sans-serif}.evd span{font-size:0.8125rem;color:var(--mute);text-transform:uppercase}
 
@@ -311,7 +311,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5.1</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5.2</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -471,7 +471,6 @@ function route(){
  if(h==='familias')return verFamilias();
  if(h==='concurso')return verConcurso();
  if(h==='cartas')return verCartas();
- if(h==='mapa')return verMapa();
  if(h==='agenda')return verAgenda();
  if(h==='acessibilidade')return verAcessibilidade();
  const mc=h.match(/^caca-(\d+)-(.+)$/);if(mc)return verCaca(Number(mc[1]),mc[2]);
@@ -670,7 +669,7 @@ function editor(){
  <label for="imp">Colar o índice ou o JSON da edição</label><textarea id="imp" placeholder="Uma linha por artigo:  página | secção | título&#10;2 | Notícias | Visita de estudo ao Pico&#10;5 | Ambiente | Brigada Eco-escola&#10;&#10;Ou cola o JSON que o Claude gera a partir do Canva."></textarea>
  <div class="row" style="margin-top:8px"><button class="btn" id="lerImp" style="flex:0 0 auto">Acrescentar artigos</button><span class="msg" id="impMsg"></span></div></div>
  ${extrasEdicao(r)}
- <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><div style="flex:1 1 100%"><label>Resumo (opcional: aparece no arquivo e na página para partilhar)</label><input data-f="r" data-i="${i}" maxlength="200" value="${esc(a.r||'')}"></div><div style="flex:1 1 220px"><label>Onde aconteceu (para o mapa)</label><select data-f="lg" data-i="${i}"><option value="">Sem lugar</option>${Object.entries(LOCAIS).map(([k,[n]])=>`<option value="${k}" ${a.lg===k?'selected':''}>${esc(n)}</option>`).join('')}${a.lg&&!LOCAIS[a.lg]?`<option value="${esc(a.lg)}" selected>${esc((localDe(a.lg)||{}).n||a.lg)}</option>`:''}</select></div><div style="flex:3 1 300px"><label>Autores (opcional)</label><input data-f="au" data-i="${i}" maxlength="200" value="${esc(a.au||'')}"></div><details style="flex:1 1 100%" ${a.tx?'open':''}><summary class="note">Texto completo (opcional: para ler, ouvir e pesquisar na Participa)</summary><textarea data-f="tx" data-i="${i}" maxlength="20000" style="min-height:120px">${esc(a.tx||'')}</textarea></details><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
+ <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><div style="flex:1 1 100%"><label>Resumo (opcional: aparece no arquivo e na página para partilhar)</label><input data-f="r" data-i="${i}" maxlength="200" value="${esc(a.r||'')}"></div><div style="flex:3 1 300px"><label>Autores (opcional)</label><input data-f="au" data-i="${i}" maxlength="200" value="${esc(a.au||'')}"></div><details style="flex:1 1 100%" ${a.tx?'open':''}><summary class="note">Texto completo (opcional: para ler, ouvir e pesquisar na Participa)</summary><textarea data-f="tx" data-i="${i}" maxlength="20000" style="min-height:120px">${esc(a.tx||'')}</textarea></details><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
   <div class="chips">${a.b.map((b,j)=>`<span class="chip"><b>${TIPOS[b.t]}</b>${b.t==='fotos'?' · '+b.n+' fotos':b.q?' · '+esc(b.q.slice(0,50)):''}<button data-rmb="${i}:${j}" aria-label="× Remover">×</button></span>`).join('')}</div>
   <div class="row"><select data-nt="${i}" style="flex:0 1 190px">${Object.entries(TIPOS).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select><input data-nq="${i}" placeholder="Pergunta (ou nº de fotos)" style="flex:2 1 200px"><input data-no="${i}" placeholder="Opções separadas por vírgula; no quiz, * na certa" style="flex:2 1 220px"><button class="btn sm" data-add="${i}" style="flex:0 0 auto">+ Bloco</button></div></div>`).join('')}</div>
  <div class="row" style="margin-top:18px"><button class="btn pri" id="guardar" style="flex:0 0 auto">${confirmar==='sobre'?'Substituir a edição existente?':'Guardar edição'}</button><button class="btn" id="cancelar" style="flex:0 0 auto">Cancelar</button><span class="msg" id="gMsg"></span></div>`;
@@ -680,7 +679,7 @@ function editor(){
  $('#lerImp').onclick=()=>{sync();const m=$('#impMsg');try{const res=parseImport($('#imp').value);
    if(res.json){const j=res.json,arts=Array.isArray(j)?j:j.artigos;if(!Array.isArray(arts))throw new Error('sem artigos');
     if(!Array.isArray(j)){if(j.n)r.n=Number(j.n);if(j.titulo)r.titulo=j.titulo;if(j.ano)r.ano=j.ano}
-    arts.forEach(a=>r.artigos.push(Object.assign({id:slug(a.id||a.ti),p:a.p??'',s:a.s||'',ti:String(a.ti||''),b:Array.isArray(a.b)?a.b.filter(b=>TIPOS[b.t]):[]},...['r','au','tx','lg'].filter(k=>a[k]).map(k=>({[k]:String(a[k])})))))}
+    arts.forEach(a=>r.artigos.push(Object.assign({id:slug(a.id||a.ti),p:a.p??'',s:a.s||'',ti:String(a.ti||''),b:Array.isArray(a.b)?a.b.filter(b=>TIPOS[b.t]):[]},...['r','au','tx'].filter(k=>a[k]).map(k=>({[k]:String(a[k])})))))}
    else r.artigos.push(...res);
    editor();$('#impMsg').className='msg ok';$('#impMsg').textContent='Artigos acrescentados. Ajusta os blocos de cada um.'}
   catch(e){m.className='msg err';m.textContent='Não percebi o texto colado. Verifica o formato.'}};
@@ -1193,7 +1192,7 @@ async function verCaca(n,id){
 /* --- 17: arquivo pesquisável --- */
 function verArquivo(){
  atual=null;main.classList.remove('wide');$('#edmeta').textContent='Arquivo';window.scrollTo(0,0);
- const all=eds.slice().reverse().flatMap(e=>e.artigos.map(a=>({e,a,txt:norm([a.ti,a.s,a.r,a.au,a.tx,(localDe(a.lg)||{}).n,'pag '+a.p].join(' '))})));
+ const all=eds.slice().reverse().flatMap(e=>e.artigos.map(a=>({e,a,txt:norm([a.ti,a.s,a.r,a.au,a.tx,'pag '+a.p].join(' '))})));
  const secs=[...new Set(all.map(x=>x.a.s).filter(Boolean))].sort();
  main.innerHTML=`<span class="tag">Arquivo</span><h2 class="t">Tudo o que já escrevemos</h2>
  <p class="lead">${all.length} artigos em ${eds.length} ${eds.length===1?'edição':'edições'}.</p>
@@ -1444,14 +1443,6 @@ const PALAVROES=/(merd|caralh|\bputa|\bputo\b|\bfod[aeiu]|\bfdp\b|\bcabr[ao]|cab
 const temPalavrao=t=>PALAVROES.test(norm(t));
 const AVISO_PAL='A mensagem tem palavras que não são aceites no jornal. Muda-as e volta a enviar.';
 const entradaQR=/^#e\d+-./.test(location.hash);let jaRotou=false;
-const LOCAIS={
- escola:['Escola (EBS da Calheta)',38.6025,-28.0125],calheta:['Calheta',38.6011,-28.0158],velas:['Velas',38.6806,-28.2083],topo:['Topo',38.5497,-27.7597],
- urzelina:['Urzelina',38.6436,-28.1214],manadas:['Manadas',38.6303,-28.0806],'norte-grande':['Norte Grande',38.6697,-28.0436],'norte-pequeno':['Norte Pequeno',38.6378,-27.9958],
- 'ribeira-seca':['Ribeira Seca',38.5772,-27.9628],'santo-antao':['Santo Antão',38.5631,-27.8578],rosais:['Rosais',38.7225,-28.2681],'santo-amaro':['Santo Amaro',38.6911,-28.1608],
- beira:['Beira',38.6986,-28.1847],'faja-cubres':['Fajã dos Cubres',38.6386,-27.9706],'faja-caldeira':['Fajã da Caldeira de Santo Cristo',38.6111,-27.9253],
- 'faja-ouvidor':['Fajã do Ouvidor',38.6797,-28.0806],'faja-sao-joao':['Fajã de São João',38.5583,-27.8478],'pico-esperanca':['Pico da Esperança',38.6497,-28.0742],
- 'serra-topo':['Serra do Topo',38.5792,-27.8525],'ponta-rosais':['Ponta dos Rosais',38.7522,-28.3075]};
-const localDe=lg=>{if(!lg)return null;if(LOCAIS[lg]){const [n,la,lo]=LOCAIS[lg];return {n,la,lo}}const m=String(lg).match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*(?:\|\s*(.*))?$/);return m?{n:m[3]||'Outro lugar',la:+m[1],lo:+m[2]}:null};
 const urlB64=s=>{const p='='.repeat((4-s.length%4)%4),b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))};
 const novaEd=e=>eds.some(x=>x.n>e.n);
 
@@ -1529,11 +1520,10 @@ async function v13Indice(e){
  const [pass,conc,ag]=await Promise.all([passaporte(e),db.getDef('concurso',{}).catch(()=>({})),db.getDef('agenda',[]).catch(()=>[])]);
  if(!$('#v13i'))return;
  const hoje=new Date().toISOString().slice(0,10),prox=(ag||[]).filter(x=>x.d>=hoje).sort((a,b)=>(a.d+a.h)<(b.d+b.h)?-1:1);
- const temPz=e.artigos.find(a=>a.b.some(b=>b.t==='sopa'||b.t==='cruzadas')),temMapa=eds.some(x=>x.artigos.some(a=>localDe(a.lg)));
+ const temPz=e.artigos.find(a=>a.b.some(b=>b.t==='sopa'||b.t==='cruzadas'));
  const at=[conc&&(conc.aberto||conc.votacao)?['#concurso','Concurso de fotografia',conc.tema?'Tema: '+conc.tema:'Envia e vota nas fotos']:null,
   temPz?[`#e${e.n}-${temPz.id}`,'Passatempos','Sopa de letras e palavras cruzadas']:null,
-  ['#cartas','Cartas ao jornal','Escreve à redação'],prox.length?['#agenda','Agenda',prox[0].t+' · '+fmtData(prox[0].d)]:['#agenda','Agenda','O que vem aí na escola'],
-  temMapa?['#mapa','Mapa','As notícias da ilha no mapa']:null].filter(Boolean);
+  ['#cartas','Cartas ao jornal','Escreve à redação'],prox.length?['#agenda','Agenda',prox[0].t+' · '+fmtData(prox[0].d)]:['#agenda','Agenda','O que vem aí na escola']].filter(Boolean);
  box.innerHTML=(pass||'')+`<div class="atalhos">${at.map(([u,t,s])=>`<a href="${u}"><b>${esc(t)}</b><span>${esc(s)}</span></a>`).join('')}</div><div id="avisos"></div>`;
  botaoAvisos($('#avisos'));
 }
@@ -1566,9 +1556,8 @@ function v13Artigo(e,a){
   c.innerHTML=`<details${String(a.tx).length<1500?' open':''}><summary><h3 style="display:inline">Ler o artigo</h3></summary>${a.r?`<p><b>${esc(a.r)}</b></p>`:''}<div class="txt artx">${esc(a.tx)}</div>${a.au?`<p class="note">Texto: ${esc(a.au)}</p>`:''}</details>`;
   lead.after(c);ouvirUI(c,[a.ti,a.r,a.tx].filter(Boolean).join('. '),'pt-PT')}
  main.querySelectorAll('.card').forEach(cd=>{const t=cd.querySelector(':scope > .txt');if(!t||t.classList.contains('artx'))return;const h=(cd.querySelector('h3')||{}).textContent||'';ouvirUI(cd,t.textContent,/english|ingl/i.test(h)?'en-GB':'pt-PT')});
- const row=$('#nav'),L=localDe(a.lg);
+ const row=$('#nav');
  navArtigo(e,a);
- if(L&&row)row.insertAdjacentHTML('beforebegin',`<p class="note">📍 ${esc(L.n)} · <a href="#mapa">ver no mapa</a></p>`);
  iniciarPassatempos(e,a);
 }
 
@@ -1737,25 +1726,6 @@ async function verCartas(){
  const f=$('#kf');if(!f)return;$('#kx').oninput=()=>$('#kc').textContent=$('#kx').value.length+' de 1500 caracteres.';
  f.onsubmit=async ev=>{ev.preventDefault();const m=f.querySelector('.msg'),t=$('#kx').value.trim(),n=$('#kn').value.trim();if(t.length<30){m.className='msg err';m.textContent='Escreve um pouco mais.';return}if(temPalavrao(t+' '+n)){m.className='msg err';m.textContent=AVISO_PAL;return}
   const b=f.querySelector('button');b.disabled=true;try{await db.comentar({ed:e.n,art:'_cartas',tipo:'carta',nome:n.slice(0,30),turma:$('#kt').value.trim().slice(0,10),texto:t.slice(0,1500)});f.reset();m.className='msg ok';m.textContent='Obrigado! A equipa do jornal vai ler a tua carta.'}catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível enviar.'}b.disabled=false};
-}
-
-/* --- 11: mapa das notícias --- */
-async function verMapa(){
- atual=null;main.classList.remove('wide');$('#edmeta').textContent='Mapa';window.scrollTo(0,0);
- const pts=eds.flatMap(e=>e.artigos.map(a=>({e,a,L:localDe(a.lg)}))).filter(x=>x.L);
- main.innerHTML=`<span class="tag">Mapa</span><h2 class="t">As notícias no mapa de São Jorge</h2><p class="lead">${pts.length} ${pts.length===1?'artigo tem':'artigos têm'} lugar marcado. Toca num ponto para abrir o artigo.</p>
- <div class="row"><div><label for="me">Edição</label><select id="me"><option value="">Todas</option>${eds.map(e=>`<option value="${e.n}">N.º${e.n} · ${esc(e.titulo)}</option>`).join('')}</select></div></div>
- <div id="mapa" class="mapa" role="region" aria-label="Mapa das notícias"></div><ul class="list" id="ml"></ul>`;
- try{if(!window.L){const l=document.createElement('link');l.rel='stylesheet';l.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';document.head.appendChild(l);await loadScript('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js')}}catch(e){$('#mapa').innerHTML='<p class="note" style="padding:12px">Não foi possível carregar o mapa.</p>'}
- if(location.hash!=='#mapa')return;
- let mp=null,camada=null;
- if(window.L){mp=L.map('mapa',{scrollWheelZoom:false}).setView([38.64,-28.0],10);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(mp)}
- const draw=()=>{const en=Number($('#me').value),P=pts.filter(x=>!en||x.e.n===en);
-  $('#ml').innerHTML=P.map(x=>`<li><a href="#e${x.e.n}-${esc(x.a.id)}"><span class="pg">n.º${x.e.n}</span><span><span class="lt">${esc(x.a.ti)}</span><span class="ls">📍 ${esc(x.L.n)} · ${esc(x.a.s)}</span></span></a></li>`).join('')||'<li class="note">Nenhum artigo desta edição tem lugar marcado.</li>';
-  if(!mp)return;if(camada)camada.remove();camada=L.layerGroup().addTo(mp);const g={};P.forEach(x=>{const k=x.L.la+','+x.L.lo;(g[k]=g[k]||{L:x.L,l:[]}).l.push(x)});
-  Object.values(g).forEach(({L:p,l})=>L.circleMarker([p.la,p.lo],{radius:9+Math.min(8,l.length*2),color:'#16181d',weight:2,fillColor:'#ffd84d',fillOpacity:.95}).bindPopup(`<b>${esc(p.n)}</b><br>${l.map(x=>`<a href="#e${x.e.n}-${esc(x.a.id)}">${esc(x.a.ti)}</a> <small>(n.º${x.e.n})</small>`).join('<br>')}`).addTo(camada));
-  const b=P.map(x=>[x.L.la,x.L.lo]);if(b.length>1)mp.fitBounds(b,{padding:[30,30],maxZoom:13});else if(b.length)mp.setView(b[0],12)};
- $('#me').onchange=draw;draw();
 }
 
 /* --- 12: agenda da escola --- */
@@ -1966,7 +1936,7 @@ function barraBaixo(){
 function menuMais(){
  if($('#folha'))return fecharFolha();
  const e=edAtual(),pz=pzDe(e),ios=/iphone|ipad|ipod/i.test(navigator.userAgent),inst=window.matchMedia&&matchMedia('(display-mode: standalone)').matches;
- const L=[pz?['#e'+e.n+'-'+pz.id,'Passatempos','Sopa de letras e palavras cruzadas']:['#agenda','Agenda','O que vem aí na escola'],['#concurso','Concurso de fotografia','Envia e vota nas fotos'],['#cartas','Cartas ao jornal','Escreve à redação'],['#mapa','Mapa','As notícias da ilha'],
+ const L=[pz?['#e'+e.n+'-'+pz.id,'Passatempos','Sopa de letras e palavras cruzadas']:['#agenda','Agenda','O que vem aí na escola'],['#concurso','Concurso de fotografia','Envia e vota nas fotos'],['#cartas','Cartas ao jornal','Escreve à redação'],
   ['#e'+e.n+'-ler','Ler o jornal','A edição completa no ecrã'],['#arquivo','Arquivo','Procura nas edições antigas'],['#familias','Famílias','O mural das famílias'],['#redacao','Redação','Escreve para o jornal'],['#acessibilidade','Acessibilidade','Declaração e contacto'],['#painel','Painel do professor','Só para professores']];
  const f=document.createElement('div');f.id='folha';f.className='folha-fundo';
  f.innerHTML=`<div class="folha" role="dialog" aria-modal="true" aria-label="Mais opções"><div class="pega" aria-hidden="true"></div>
@@ -1999,7 +1969,7 @@ new MutationObserver(()=>{if($('#capa')&&main.querySelector('.list'))arrumarIndi
 
 /* --- artigo: anterior/seguinte com o dedo --- */
 let tx0=null;
-main.addEventListener('touchstart',ev=>{if(!atual||ev.touches.length!==1||ev.target.closest('.sopa,.cruz,input,textarea,select,.mapa,audio,.stars'))return tx0=null;tx0=[ev.touches[0].clientX,ev.touches[0].clientY,Date.now()]},{passive:true});
+main.addEventListener('touchstart',ev=>{if(!atual||ev.touches.length!==1||ev.target.closest('.sopa,.cruz,input,textarea,select,audio,.stars'))return tx0=null;tx0=[ev.touches[0].clientX,ev.touches[0].clientY,Date.now()]},{passive:true});
 main.addEventListener('touchend',ev=>{if(!tx0||!atual)return;const t=ev.changedTouches[0],dx=t.clientX-tx0[0],dy=t.clientY-tx0[1],dt=Date.now()-tx0[2];tx0=null;
  if(dt>600||Math.abs(dx)<70||Math.abs(dy)>Math.abs(dx)*.6)return;const {e,a}=atual,i=e.artigos.indexOf(a),alvo=e.artigos[i+(dx<0?1:-1)];
  if(alvo){LS.set('rc-swipe',1);main.classList.add(dx<0?'sai-esq':'sai-dir');setTimeout(()=>{main.classList.remove('sai-esq','sai-dir');location.hash='#e'+e.n+'-'+alvo.id},140)}},{passive:true});
@@ -2329,13 +2299,12 @@ async function verAcessibilidade(){
  main.innerHTML=`<span class="tag">Acessibilidade</span><h2 class="t">Declaração de acessibilidade</h2>
  <p class="lead">A ${esc(d.entidade)} compromete-se a tornar a Participa (${esc(url)}) acessível, de acordo com o Decreto-Lei n.º 83/2018, de 19 de outubro, que transpõe a Diretiva (UE) 2016/2102 relativa à acessibilidade dos sítios web e das aplicações móveis de organismos do setor público.</p>
  <div class="card"><h3>I. Estado de conformidade</h3><p>A Participa está <b>parcialmente conforme</b> com a norma europeia EN 301 549 (v3.2.1), que corresponde às Diretrizes de Acessibilidade para o Conteúdo da Web (WCAG) 2.1, nível AA. Os conteúdos que ainda não cumprem estão na secção III.</p></div>
- <div class="card"><h3>II. Elaboração desta declaração</h3><p>Declaração elaborada a ${esc(fmtData(d.data))}. A app foi avaliada com o <b>QualWeb</b>, o motor de avaliação usado pelo validador AccessMonitor (regras ACT e técnicas WCAG 2.1, níveis A e AA), em 17 páginas e estados da app (edição, artigo, ler o jornal, ranking, arquivo, mapa, cartas, concurso, agenda, famílias, redação, painel e esta declaração), em ecrã de telemóvel e também com o modo visão reduzida ligado: <b>0 erros</b>. Ficaram por confirmar à mão os pontos que nenhum teste automático decide (foco visível, mensagens de erro, texto ampliado sem cortes e organização dos títulos). Foram feitos testes com teclado, ampliação e leitura em voz alta. Pode repetir a avaliação no <a href="https://accessmonitor.acessibilidade.gov.pt/results/${encodeURIComponent(url)}" rel="noopener">AccessMonitor</a>. A declaração é revista pelo menos uma vez por ano.</p></div>
+ <div class="card"><h3>II. Elaboração desta declaração</h3><p>Declaração elaborada a ${esc(fmtData(d.data))}. A app foi avaliada com o <b>QualWeb</b>, o motor de avaliação usado pelo validador AccessMonitor (regras ACT e técnicas WCAG 2.1, níveis A e AA), em 16 páginas e estados da app (edição, artigo, ler o jornal, ranking, arquivo, cartas, concurso, agenda, famílias, redação, painel e esta declaração), em ecrã de telemóvel e também com o modo visão reduzida ligado: <b>0 erros</b>. Ficaram por confirmar à mão os pontos que nenhum teste automático decide (foco visível, mensagens de erro, texto ampliado sem cortes e organização dos títulos). Foram feitos testes com teclado, ampliação e leitura em voz alta. Pode repetir a avaliação no <a href="https://accessmonitor.acessibilidade.gov.pt/results/${encodeURIComponent(url)}" rel="noopener">AccessMonitor</a>. A declaração é revista pelo menos uma vez por ano.</p></div>
  <div class="card"><h3>III. Conteúdos não acessíveis e alternativas</h3><ul class="decl">
   <li><b>O jornal em PDF</b> (páginas como imagem): a alternativa é o modo <b>"Só texto"</b> da página "Ler o jornal", que mostra o texto de cada artigo e o pode ler em voz alta.</li>
   <li><b>Fotografias</b>: as fotografias dos artigos não estão na app (só no jornal em papel); vota-se pelo número da foto. As fotografias do concurso têm o título dado pelo autor como texto alternativo.</li>
   <li><b>Sopa de letras e palavras cruzadas</b>: dependem da visão. As palavras e as pistas estão escritas por baixo da grelha, e as cruzadas usam-se com o teclado e com o leitor de ecrã.</li>
-  <li><b>Mapa das notícias</b>: o mapa é visual; a mesma informação está na lista por baixo do mapa.</li>
-  <li><b>Conteúdos de terceiros</b>: o mapa usa OpenStreetMap e o corretor de texto usa o LanguageTool, que não controlamos.</li>
+  <li><b>Conteúdos de terceiros</b>: o corretor de texto usa o LanguageTool, que não controlamos.</li>
   <li><b>Gráficos das estatísticas</b> (painel dos professores): os números aparecem também em tabela.</li></ul></div>
  <div class="card"><h3>IV. Funcionalidades de acessibilidade</h3><ul class="decl">
   <li><b>Modo visão reduzida</b>: letra até 160 %, cores de contraste máximo (amarelo ou branco sobre preto, ou preto sobre branco), mais espaço entre linhas e letras, botões maiores, sem animações e botão para ouvir a página.</li>
