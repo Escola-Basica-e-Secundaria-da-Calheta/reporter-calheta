@@ -54,6 +54,18 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px}
 .fotos button{aspect-ratio:1;border-radius:10px;border:1.5px dashed var(--line);background:var(--bg);color:var(--ink);cursor:pointer;display:grid;place-content:center;gap:2px;font:600 0.9375rem "Source Sans 3",sans-serif}
 .fotos button i{font-style:normal;color:var(--mute);font-size:0.875rem}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}
+.gal button{aspect-ratio:1;padding:0;border:0;border-radius:10px;overflow:hidden;background:var(--line);cursor:zoom-in}.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.gv-ov{position:fixed;inset:0;z-index:70;background:#111;color:#fff;display:grid;grid-template-rows:auto minmax(0,1fr) auto;touch-action:pan-y}
+.gv-top{display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top)) 12px 8px}.gv-top b{flex:1 1 auto}
+.gv-ov .btn{border-color:#777;color:#fff}.gv-ov .btn:disabled{opacity:.3}
+.gv-palco{min-height:0;display:flex;align-items:center;justify-content:center;position:relative}.gv-palco img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.gv-bot{display:flex;align-items:center;gap:10px;padding:8px 12px calc(10px + env(safe-area-inset-bottom))}.gv-bot p{flex:1 1 auto;margin:0;text-align:center;font-size:1rem;line-height:1.35;min-height:1.35em}
+.gal-ed{margin:10px 0;padding:12px;border:1.5px dashed var(--line);border-radius:12px}
+.gal-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:10px 0}
+.gal-l figure{margin:0;position:relative}.gal-l img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;background:var(--line);display:block}
+.gal-l input{margin-top:4px;font-size:0.875rem;min-height:36px;padding:4px 8px}
+.gal-l .x{position:absolute;top:4px;right:4px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(17,17,17,.8);color:#fff;font-size:1.125rem;line-height:1;cursor:pointer}
 .fotos button.mine{border:1.5px solid var(--red)}.fotos button.mine i{color:var(--red)}
 .stars{display:flex;gap:4px}
 .stars button{width:48px;height:48px;font-size:2rem;line-height:1;border:0;background:none;color:var(--line);cursor:pointer;padding:0}
@@ -333,7 +345,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6.4</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6.5</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -379,7 +391,7 @@ const ED1={n:1,titulo:'setembro | outubro 2025',ano:'Ano V',artigos:[
  {id:'riso',p:26,s:'Fator de Riso',ti:'Fator de Riso',b:[S('Quanto te fez rir?')]}
 ]};
 
-const TIPOS={reacoes:'Reações',fotos:'Gostos nas fotos',sondagem:'Votação',estrelas:'Estrelas',quiz:'Quiz',comentario:'Comentários',sugestao:'Caixa de sugestões',texto:'Texto (ex.: versão em inglês)',audio:'Áudio',perguntas:'Perguntas dos leitores'};
+const TIPOS={reacoes:'Reações',fotos:'Gostos nas fotos',sondagem:'Votação',estrelas:'Estrelas',quiz:'Quiz',comentario:'Comentários',sugestao:'Caixa de sugestões',texto:'Texto (ex.: versão em inglês)',audio:'Áudio',perguntas:'Perguntas dos leitores',galeria:'Mais fotos (galeria)'};
 const REACOES=[['adoro','❤️','Adoro'],['parabens','👏','Parabéns'],['uau','😮','Uau'],['riso','😂','Divertido']];
 const MAUS=['merda','caralho','puta','foda','fdp','idiota','estupid','burr','otari','cabr'];
 
@@ -519,7 +531,7 @@ function verIndice(e){
  <p class="lead">Cada artigo tem um código QR. Aponta a câmara do telemóvel, vota, reage às fotos e deixa a tua opinião. Também podes escolher o artigo aqui.</p>
  <div id="capa"></div>
  <div id="v13i"></div>
- <ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}</span></span><span class="n">${a.b.map(b=>TIPOS[b.t]).filter((v,i,s)=>s.indexOf(v)===i).slice(0,2).join(' · ')}</span></a></li>`).join('')}</ul>
+ <ul class="list">${e.artigos.map(a=>`<li><a href="#e${e.n}-${esc(a.id)}"><span class="pg">pág. ${esc(a.p)}</span><span><span class="lt">${esc(a.ti)}</span><span class="ls">${esc(a.s)}${galN(a)?' · 📷 mais '+galN(a)+(galN(a)===1?' foto':' fotos'):''}</span></span><span class="n">${a.b.filter(b=>b.t!=='galeria').map(b=>TIPOS[b.t]).filter((v,i,s)=>s.indexOf(v)===i).slice(0,2).join(' · ')}</span></a></li>`).join('')}</ul>
  ${outras.length?`<p class="note" style="margin-top:20px">Edições anteriores: ${outras.map(x=>`<a href="#e${x.n}">N.º${x.n} (${esc(x.titulo)})</a>`).join(' · ')}</p>`:''}
  <p class="note" style="margin-top:28px"><a href="#redacao">Redação: enviar um artigo para o jornal</a> · <a href="#painel">Painel do professor</a> · <a href="#acessibilidade">Acessibilidade</a>${modo==='demo'?' · modo demonstração: os votos ficam só neste aparelho':''}</p>`;
  posIndice(e);v13Indice(e);
@@ -537,7 +549,7 @@ async function verArtigo(e,a){
  <span class="tag">pág. ${esc(a.p)} · ${esc(a.s)}</span>
  <h2 class="t">${esc(a.ti)}</h2>
  <p class="lead">Este artigo está no Repórter da Calheta n.º${e.n}, em papel. Diz-nos o que achaste!</p>
- ${a.b.map((b,bi)=>bloco(b,bi,cont,meus,coms)).join('')}
+ ${a.b.map((b,bi)=>[b,bi]).sort((x,y)=>(y[0].t==='galeria')-(x[0].t==='galeria')).map(([b,bi])=>bloco(b,bi,cont,meus,coms)).join('')}
  <div class="row" id="nav" style="margin-top:22px">
   ${prev?`<a class="btn" href="#e${e.n}-${esc(prev.id)}" style="text-align:center;text-decoration:none;line-height:26px">← ${esc(prev.ti.slice(0,28))}</a>`:''}
   <a class="btn" href="#e${e.n}" style="text-align:center;text-decoration:none;line-height:26px">Todos os artigos</a>
@@ -546,9 +558,65 @@ async function verArtigo(e,a){
  posArtigo(e,a);v13Artigo(e,a);
 }
 const soma=o=>Object.values(o||{}).reduce((x,y)=>x+y,0);
+/* ======== Mais fotos: galeria online de cada artigo ======== */
+const GAL={},GAL_MAX=30;
+const galFotos=b=>(Array.isArray(b&&b.f)?b.f:[]).filter(x=>x&&typeof x.u==='string'&&x.u);
+const galN=a=>(a.b||[]).reduce((n,b)=>n+(b.t==='galeria'?galFotos(b).length:0),0);
+const galSrc=u=>String(u).startsWith('idb:')?`data-media="${esc(u)}"`:`src="${esc(u)}"`;
+function galVer(f,k){
+ const antes=document.activeElement,ov=document.createElement('div');ov.className='gv-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Fotos do artigo');
+ ov.innerHTML=`<div class="gv-top"><b aria-live="polite"></b><button class="btn sm" data-g="x">Fechar</button></div><div class="gv-palco"><img alt=""></div><div class="gv-bot"><button class="btn" data-g="a" aria-label="Foto anterior">←</button><p></p><button class="btn" data-g="s" aria-label="Foto seguinte">→</button></div>`;
+ document.body.appendChild(ov);const im=ov.querySelector('img'),q=x=>ov.querySelector(x);let t0=null;
+ const mostra=async()=>{const x=f[k];q('.gv-top b').textContent=`Foto ${k+1} de ${f.length}`;q('.gv-bot p').textContent=x.l||'';im.alt=x.l||`Foto ${k+1} do artigo`;q('[data-g=a]').disabled=k===0;q('[data-g=s]').disabled=k===f.length-1;
+  const n=k;im.style.opacity='.35';const u=await urlMedia(x.u).catch(()=>'');if(n!==k)return;im.onload=im.onerror=()=>{im.style.opacity='1'};im.src=u;
+  const s=f[k+1];if(s&&!String(s.u).startsWith('idb:'))new Image().src=s.u};
+ const ir=d=>{const n=k+d;if(n<0||n>=f.length)return;k=n;mostra()};
+ const fechar=()=>{removeEventListener('keydown',tecla,true);ov.remove();document.documentElement.style.overflow='';if(antes&&antes.isConnected)antes.focus({preventScroll:true})};
+ const tecla=ev=>{if(ev.key==='Escape'){ev.preventDefault();ev.stopPropagation();fechar()}else if(ev.key==='ArrowLeft')ir(-1);else if(ev.key==='ArrowRight')ir(1)};
+ addEventListener('keydown',tecla,true);document.documentElement.style.overflow='hidden';
+ ov.onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const g=b.dataset.g;if(g==='x')fechar();else ir(g==='a'?-1:1)};
+ ov.addEventListener('touchstart',ev=>{t0=ev.touches.length===1?[ev.touches[0].clientX,ev.touches[0].clientY]:null},{passive:true});
+ ov.addEventListener('touchend',ev=>{if(!t0)return;const t=ev.changedTouches[0],dx=t.clientX-t0[0],dy=t.clientY-t0[1];t0=null;if(Math.abs(dx)>50&&Math.abs(dy)<Math.abs(dx)*.7)ir(dx<0?1:-1)},{passive:true});
+ mostra();q('[data-g=x]').focus();
+}
+document.addEventListener('click',ev=>{const g=ev.target.closest&&ev.target.closest('[data-gal]');if(!g)return;const [bi,k]=g.dataset.gal.split(':').map(Number);if(GAL[bi]&&GAL[bi][k])galVer(GAL[bi],k)});
+/* Painel: reduz a foto (1600 px para ver, 480 px para a grelha), regrava em JPG sem a localização GPS e guarda-a na pasta pública. */
+async function galReduz(src,max,q){const bm=await createImageBitmap(src),s=Math.min(1,max/Math.max(bm.width,bm.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(bm.width*s));c.height=Math.max(1,Math.round(bm.height*s));
+ const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bm,0,0,c.width,c.height);if(bm.close)bm.close();const b=await new Promise(ok=>c.toBlob(ok,'image/jpeg',q));if(!b)throw new Error('imagem');return b}
+async function galSubir(src){const g=await galReduz(src,1600,.85),m=await galReduz(g,480,.8);return {u:await db.subirPublico(g,'jpg'),m:await db.subirPublico(m,'jpg')}}
+let galEstado=null;
+function galEditor(a,i){
+ return a.b.map((b,j)=>{if(b.t!=='galeria')return '';const f=Array.isArray(b.f)?b.f:(b.f=[]),e=galEstado&&galEstado.a===a?galEstado:null;
+  return `<div class="gal-ed"><b>Mais fotos deste artigo</b> <span class="note">· ${f.length} de ${GAL_MAX}</span>
+   <p class="note" style="margin:4px 0 0">Aparecem no artigo online, antes das reações. <b>Ficam públicas na internet</b>: põe só fotos de alunos com autorização de imagem. São reduzidas e ficam sem a localização GPS.</p>
+   ${f.length?`<div class="gal-l">${f.map((x,k)=>`<figure><img ${galSrc(x.m||x.u)} alt="Foto ${k+1}"><button type="button" class="x" data-grm="${i}:${j}:${k}" aria-label="Retirar a foto ${k+1}">×</button><input data-gl="${i}:${j}:${k}" value="${esc(x.l||'')}" maxlength="140" placeholder="Legenda (opcional)" aria-label="Legenda da foto ${k+1}"></figure>`).join('')}</div>`:''}
+   <div class="row" style="align-items:center;margin-top:8px"><button type="button" class="btn sm pri" data-gadd="${i}:${j}" style="flex:0 0 auto" ${e&&e.ocupado?'disabled':''}>+ Escolher fotos</button><button type="button" class="btn sm" data-gred="${i}:${j}" style="flex:0 0 auto" ${e&&e.ocupado?'disabled':''}>Trazer as fotos enviadas na Redação</button><span class="msg ${e&&e.erro?'err':e&&!e.ocupado?'ok':''}" role="status" style="flex:2 1 200px">${e?esc(e.msg):''}</span></div></div>`}).join('');
+}
+const galRedes=()=>{if(rasc&&aba==='edicoes')editor()};
+const galMarca=t=>{let h=5381;for(const c of String(t))h=(h*33^c.charCodeAt(0))>>>0;return h.toString(36)};
+async function galJuntar(a,b,fontes,sync){
+ const f=b.f||(b.f=[]),livres=GAL_MAX-f.length;if(livres<=0){galEstado={a,msg:`A galeria já tem ${GAL_MAX} fotos.`,erro:true};return galRedes()}
+ const lista=fontes.slice(0,livres);let ok=0,falhas=0;
+ galEstado={a,ocupado:true,msg:`A preparar a foto 1 de ${lista.length}…`};sync();galRedes();
+ for(const [n,src] of lista.entries()){const m=document.querySelector('.gal-ed button:disabled~.msg');if(m)m.textContent=`A preparar a foto ${n+1} de ${lista.length}…`;
+  try{const bl=typeof src.blob==='function'?await src.blob():src.blob;if(!bl)throw new Error('sem foto');const r=await galSubir(bl);f.push(Object.assign(r,src.l?{l:src.l}:{},src.o?{o:src.o}:{}));ok++}catch(e){console.warn(e);falhas++}}
+ if(rasc&&aba==='edicoes')sync();galEstado={a,erro:!ok,msg:(ok?`${ok} ${ok===1?'foto acrescentada':'fotos acrescentadas'}. Guarda a edição para ficarem no ar.`:'')+(falhas?` ${falhas} não ${falhas===1?'foi possível':'foram possíveis'} (formato não suportado ou falha de ligação).`:'')+(fontes.length>lista.length?` Só couberam ${lista.length}: o máximo é ${GAL_MAX}.`:'')};galRedes();
+}
+async function galDaRedacao(a,b,sync){
+ galEstado={a,ocupado:true,msg:'A procurar o artigo na Redação…'};sync();galRedes();
+ try{const base=x=>slug(x).replace(/-\d+$/,''),subs=(await db.subs()).filter(x=>(x.fotos||[]).length&&(slug(x.titulo)===a.id||base(x.titulo)===base(a.ti))),su=subs.find(x=>Number(x.edicao)===Number(rasc.n))||subs[0];
+  if(!su){galEstado={a,erro:true,msg:'Não encontrei na Redação um artigo com este título e com fotos.'};return galRedes()}
+  /* cada foto leva uma marca da origem, para não se repetir se voltares a carregar no botão */
+  const ja=new Set((b.f||[]).map(x=>x.o).filter(Boolean)),novas=su.fotos.filter(x=>x&&x.path&&!ja.has(galMarca(x.path)));
+  if(!novas.length){galEstado={a,msg:'As fotos deste artigo já cá estão todas.'};return galRedes()}
+  await galJuntar(a,b,novas.map(x=>({blob:()=>db.blobFoto(x.path),l:x.legenda||'',o:galMarca(x.path)})),sync);
+ }catch(e){console.warn(e);galEstado={a,erro:true,msg:'Não foi possível ir buscar as fotos à Redação.'};galRedes()}
+}
 function bloco(b,bi,cont,meus,coms){
  const ch=String(bi),c=cont[ch]||{},mine=meus[ch];
  if(b.t==='reacoes')return `<div class="card"><h3>Reage a este artigo</h3><div class="react">${REACOES.map(([k,em,lb])=>`<button data-act="vote" data-ch="${ch}" data-op="${k}" data-toggle="1" class="${mine===k?'mine':''}" aria-pressed="${mine===k}"><b>${em}</b>${lb} · ${c[k]||0}</button>`).join('')}</div></div>`;
+ if(b.t==='galeria'){const f=galFotos(b);if(!f.length)return '';GAL[bi]=f;
+  return `<div class="card" id="maisfotos"><h3>${esc(b.q||'Mais fotos')} <span class="note" style="font-weight:400">· ${f.length} ${f.length===1?'foto':'fotos'}</span></h3><div class="gal">${f.map((x,k)=>`<button type="button" data-gal="${bi}:${k}" aria-label="Ver em grande a foto ${k+1} de ${f.length}${x.l?': '+esc(x.l):''}"><img ${galSrc(x.m||x.u)} alt="" loading="lazy"></button>`).join('')}</div><p class="note" style="margin-bottom:0">Fotos que não couberam no jornal em papel. Toca numa para a veres em grande.</p></div>`}
  if(b.t==='fotos'){let h='';for(let k=1;k<=b.n;k++){const kk=bi+':'+k,on=meus[kk]!=null,n=soma(cont[kk]);h+=`<button data-act="foto" data-ch="${kk}" class="${on?'mine':''}" aria-pressed="${on}">Foto ${k}<i>${on?'♥':'♡'} ${n}</i></button>`}
   return `<div class="card"><h3>Qual é a tua foto preferida?</h3><div class="fotos">${h}</div><p class="note">Os números seguem a ordem das fotos na página do jornal, da esquerda para a direita e de cima para baixo. Podes gostar de várias.</p></div>`}
  if(b.t==='sondagem'||b.t==='quiz'){
@@ -717,12 +785,12 @@ function editor(){
  ${r.qrs?'<p class="notaeq" style="margin-bottom:0"><b>Os códigos QR desta edição já foram exportados.</b> Não mudes o número da edição nem apagues artigos: os QR impressos deixariam de os encontrar. Mudar títulos, páginas e blocos não faz mal.</p>':''}</div>
  ${extrasEdicao(r)}
  <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><div style="flex:1 1 100%"><label>Resumo (opcional: aparece no arquivo e na página para partilhar)</label><input data-f="r" data-i="${i}" maxlength="200" value="${esc(a.r||'')}"></div><div style="flex:3 1 300px"><label>Autores (opcional)</label><input data-f="au" data-i="${i}" maxlength="200" value="${esc(a.au||'')}"></div><details style="flex:1 1 100%" ${a.tx?'open':''}><summary class="note">Texto completo (opcional: para ler, ouvir e pesquisar na Participa)</summary><textarea data-f="tx" data-i="${i}" maxlength="20000" style="min-height:120px">${esc(a.tx||'')}</textarea></details><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
-  <div class="chips">${a.b.map((b,j)=>`<span class="chip"><b>${TIPOS[b.t]}</b>${b.t==='fotos'?' · '+b.n+' fotos':b.q?' · '+esc(b.q.slice(0,50)):''}<button data-rmb="${i}:${j}" aria-label="× Remover">×</button></span>`).join('')}</div>
+  <div class="chips">${a.b.map((b,j)=>`<span class="chip"><b>${TIPOS[b.t]}</b>${b.t==='fotos'?' · '+b.n+' fotos':b.t==='galeria'?' · '+galFotos(b).length+' fotos':b.q?' · '+esc(b.q.slice(0,50)):''}<button data-rmb="${i}:${j}" aria-label="× Remover">×</button></span>`).join('')}</div>${galEditor(a,i)}
   <div class="row"><select data-nt="${i}" style="flex:0 1 190px">${Object.entries(TIPOS).map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select><input data-nq="${i}" placeholder="Pergunta (ou nº de fotos)" style="flex:2 1 200px"><input data-no="${i}" placeholder="Opções separadas por vírgula; no quiz, * na certa" style="flex:2 1 220px"><button class="btn sm" data-add="${i}" style="flex:0 0 auto">+ Bloco</button></div></div>`).join('')}</div>
  <div class="row" style="margin-top:18px"><button class="btn pri" id="guardar" style="flex:0 0 auto">${confirmar==='sobre'?'Substituir a edição existente?':'Guardar edição'}</button><button class="btn" id="cancelar" style="flex:0 0 auto">Cancelar</button><span class="msg" id="gMsg"></span></div>`;
- const sync=()=>{r.n=Number($('#en').value)||r.n;r.titulo=$('#et').value.trim();r.ano=$('#ea').value.trim();pane().querySelectorAll('[data-f]').forEach(x=>{r.artigos[x.dataset.i][x.dataset.f]=x.value.trim()})};
- bindExtras(r,sync);
- pane().querySelectorAll('[data-nt]').forEach(sl=>sl.onchange=()=>{const i=sl.dataset.nt,q=pane().querySelector(`[data-nq="${i}"]`),o=pane().querySelector(`[data-no="${i}"]`),P={sopa:['Título (ex.: Sopa de letras do Natal)','Palavras separadas por vírgula'],cruzadas:['Título (ex.: Cruzadas do ambiente)','PALAVRA=pista; PALAVRA=pista; …'],texto:['Título (ex.: In English)','O texto'],fotos:['Número de fotos','']}[sl.value]||['Pergunta (ou nº de fotos)','Opções separadas por vírgula; no quiz, * na certa'];q.placeholder=P[0];o.placeholder=P[1]});
+ const sync=()=>{r.n=Number($('#en').value)||r.n;r.titulo=$('#et').value.trim();r.ano=$('#ea').value.trim();pane().querySelectorAll('[data-f]').forEach(x=>{r.artigos[x.dataset.i][x.dataset.f]=x.value.trim()});pane().querySelectorAll('[data-gl]').forEach(x=>{const [i,j,k]=x.dataset.gl.split(':').map(Number),ft=(((r.artigos[i]||{}).b||[])[j]||{}).f;if(ft&&ft[k]){const v=x.value.trim();if(v)ft[k].l=v;else delete ft[k].l}})};
+ bindExtras(r,sync);resolverMedia(pane());
+ pane().querySelectorAll('[data-nt]').forEach(sl=>sl.onchange=()=>{const i=sl.dataset.nt,q=pane().querySelector(`[data-nq="${i}"]`),o=pane().querySelector(`[data-no="${i}"]`),P={sopa:['Título (ex.: Sopa de letras do Natal)','Palavras separadas por vírgula'],cruzadas:['Título (ex.: Cruzadas do ambiente)','PALAVRA=pista; PALAVRA=pista; …'],texto:['Título (ex.: In English)','O texto'],fotos:['Número de fotos',''],galeria:['Título (ex.: Mais fotos da visita)','']}[sl.value]||['Pergunta (ou nº de fotos)','Opções separadas por vírgula; no quiz, * na certa'];q.placeholder=P[0];o.placeholder=P[1]});
  $('#lerImp').onclick=()=>{sync();const m=$('#impMsg');try{const res=parseImport($('#imp').value);
    if(res.json){const j=res.json,arts=Array.isArray(j)?j:j.artigos;if(!Array.isArray(arts))throw new Error('sem artigos');
     if(!Array.isArray(j)){if(j.n)r.n=Number(j.n);if(j.titulo)r.titulo=j.titulo;if(j.ano)r.ano=j.ano;if(j.capa&&j.capa.q&&Array.isArray(j.capa.o))r.capa={t:'sondagem',q:String(j.capa.q),o:j.capa.o.map(String)};if(Array.isArray(j.caca))r.caca=j.caca.filter(c=>c&&c.q&&Array.isArray(c.o)).map(c=>({id:String(c.id||Math.random().toString(36).slice(2,7)),local:String(c.local||''),q:String(c.q),o:c.o.map(String),c:Number(c.c)||0}));if(typeof j.pdf==='string'&&j.pdf)r.pdf=j.pdf}
@@ -731,11 +799,15 @@ function editor(){
    editor();$('#impMsg').className='msg ok';$('#impMsg').textContent='Artigos acrescentados. Ajusta os blocos de cada um.'}
   catch(e){m.className='msg err';m.textContent='Não percebi o texto colado. Verifica o formato.'}};
  pane().onclick=ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.grm){sync();const [i,j,k]=d.grm.split(':').map(Number),x=r.artigos[i].b[j].f.splice(k,1)[0];(r._galDel=r._galDel||[]).push(x.u,x.m);galEstado=null;return editor()}
+  if(d.gadd){const [i,j]=d.gadd.split(':').map(Number),a=r.artigos[i],bl=a.b[j],inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.multiple=true;inp.onchange=()=>{if(inp.files.length)galJuntar(a,bl,[...inp.files].map(x=>({blob:x})),sync)};inp.click();return}
+  if(d.gred){const [i,j]=d.gred.split(':').map(Number);return galDaRedacao(r.artigos[i],r.artigos[i].b[j],sync)}
   if(d.rm){sync();r.artigos.splice(Number(d.rm),1);editor()}
-  if(d.rmb){sync();const[i,j]=d.rmb.split(':').map(Number);r.artigos[i].b.splice(j,1);editor()}
+  if(d.rmb){sync();const[i,j]=d.rmb.split(':').map(Number),x=r.artigos[i].b.splice(j,1)[0];if(x.t==='galeria')galFotos(x).forEach(y=>(r._galDel=r._galDel||[]).push(y.u,y.m));editor()}
   if(d.add){sync();const i=Number(d.add),t=pane().querySelector(`[data-nt="${i}"]`).value,q=pane().querySelector(`[data-nq="${i}"]`).value.trim(),os=pane().querySelector(`[data-no="${i}"]`).value.split(',').map(x=>x.trim()).filter(Boolean);
    let nb={t};
-   if(t==='fotos')nb.n=Math.max(1,Math.min(40,parseInt(q)||6));
+   if(t==='galeria'){if(r.artigos[i].b.some(x=>x.t==='galeria')){b.textContent='Este artigo já tem galeria';return}nb.q=q||'Mais fotos';nb.f=[]}
+   else if(t==='fotos')nb.n=Math.max(1,Math.min(40,parseInt(q)||6));
    else if(t==='sondagem'||t==='quiz'){if(!q||os.length<2){b.textContent='Falta pergunta ou opções';return}nb.q=q;nb.c=Math.max(0,os.findIndex(o=>o.startsWith('*')));nb.o=os.map(o=>o.replace(/^\*/,'').trim());if(t==='sondagem')delete nb.c}
    else if(t==='texto'){const raw=pane().querySelector(`[data-no="${i}"]`).value.trim();if(!raw){b.textContent='Escreve o texto em Opções';return}nb.q=q||'In English';nb.x=raw}
    else if(t==='audio'){escolherAudio(i,q);return}
@@ -758,7 +830,8 @@ function editor(){
   if(!r.novo&&r.qrs&&r.n!==r.n0&&confirmar!=='renum'){confirmar='renum';m.className='msg err';m.textContent=`Os QR desta edição já foram exportados com o n.º${r.n0}: se mudares para o n.º${r.n}, os QR impressos deixam de funcionar. Carrega outra vez em Guardar para mudar à mesma.`;return}
   if(edicao(r.n)&&(r.novo||r.n!==r.n0)&&confirmar!=='sobre'){confirmar='sobre';editor();$('#gMsg').className='msg err';$('#gMsg').textContent='Já existe uma edição N.º'+r.n+'. Clica outra vez para substituir.';return}
   const e=Object.assign({n:r.n,titulo:r.titulo,ano:r.ano,artigos:r.artigos,capa:(r.capa&&r.capa.q&&(r.capa.o||[]).length>=2)?r.capa:null,caca:(r.caca||[]).filter(p=>p.q&&(p.o||[]).length>=2),pdf:r.pdf||''},r.novo||r.pub===false?{pub:false}:{},r.qrs&&r.n===r.n0?{qrs:r.qrs}:{});
-  try{await db.guardarEdicao(e);await carregar();rasc=null;confirmar=null;edSel=e.n;aba=e.pub===false&&!e.qrs?'qr':'edicoes';await painel();if(r.novo)setTimeout(()=>{const q=$('#qrm');if(q){q.className='msg ok';q.textContent='Edição guardada em rascunho: os leitores ainda não a veem. Descarrega os QR para os pores no Canva.'}},0)}
+  r.artigos.forEach(a=>{a.b.forEach(b=>{if(b.t==='galeria')b.f=galFotos(b).map(x=>Object.assign({u:x.u},x.m?{m:x.m}:{},x.l?{l:x.l}:{},x.o?{o:x.o}:{}))});while(a.b.length&&a.b[a.b.length-1].t==='galeria'&&!a.b[a.b.length-1].f.length)a.b.pop()});
+  try{await db.guardarEdicao(e);if(r._galDel&&db.apagarPublico)db.apagarPublico(r._galDel.filter(Boolean)).catch(er=>console.warn(er));galEstado=null;await carregar();rasc=null;confirmar=null;edSel=e.n;aba=e.pub===false&&!e.qrs?'qr':'edicoes';await painel();if(r.novo)setTimeout(()=>{const q=$('#qrm');if(q){q.className='msg ok';q.textContent='Edição guardada em rascunho: os leitores ainda não a veem. Descarrega os QR para os pores no Canva.'}},0)}
   catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível guardar.'}};
 }
 
@@ -787,7 +860,7 @@ async function pResultados(){
    if(b.t==='sondagem'||b.t==='quiz'){b.o.forEach((o,oi)=>csv.push([a.p,a.ti,TIPOS[b.t],b.q,o,c[oi]||0]));
     return `<p style="margin:10px 0 6px"><b>${esc(b.q)}</b>${b.t==='quiz'&&t?` · ${Math.round((c[b.c]||0)*100/t)}% acertaram`:''}</p><div class="opts res">${b.o.map((o,oi)=>{const p=t?Math.round((c[oi]||0)*100/t):0;return `<div class="opt"><span class="bar" style="width:${p}%"></span><span>${esc(o)}</span><span class="pct">${c[oi]||0} · ${p}%</span></div>`}).join('')}</div>`}
    if(b.t==='estrelas'){let s=0;for(const k in c)s+=Number(k)*c[k];csv.push([a.p,a.ti,TIPOS[b.t],b.q,'media',t?(s/t).toFixed(2):'']);return `<p>${esc(b.q)} <b>${t?(s/t).toFixed(1)+' ★':'sem votos'}</b> <span class="note">(${t})</span></p>`}
-   if(b.t==='texto'||b.t==='audio')return '';if(b.t==='sopa'||b.t==='cruzadas'){csv.push([a.p,a.ti,TIPOS[b.t],b.q||'','resolveram',t]);return `<p>${TIPOS[b.t]}: <b>${t}</b> ${t===1?'leitor resolveu':'leitores resolveram'}</p>`}const n=coms.filter(x=>x.art===a.id&&x.tipo===(b.t==='perguntas'?'pergunta':b.t)).length;return `<p>${TIPOS[b.t]}: <b>${n}</b> recebidos</p>`}).join('');
+   if(b.t==='texto'||b.t==='audio'||b.t==='galeria')return '';if(b.t==='sopa'||b.t==='cruzadas'){csv.push([a.p,a.ti,TIPOS[b.t],b.q||'','resolveram',t]);return `<p>${TIPOS[b.t]}: <b>${t}</b> ${t===1?'leitor resolveu':'leitores resolveram'}</p>`}const n=coms.filter(x=>x.art===a.id&&x.tipo===(b.t==='perguntas'?'pergunta':b.t)).length;return `<p>${TIPOS[b.t]}: <b>${n}</b> recebidos</p>`}).join('');
   return `<div class="card"><span class="tag">pág. ${esc(a.p)}</span> <b>${esc(a.ti)}</b> <span class="note">· ${tot} interações</span>${blocos}</div>`}).join('');
  pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><a class="btn sm" href="#e${e.n}-relatorio" style="flex:0 0 auto;text-decoration:none;line-height:26px">Relatório (PDF)</a><a class="btn sm" href="#e${e.n}-top" style="flex:0 0 auto;text-decoration:none;line-height:26px">Ranking</a><a class="btn sm" href="#tv" style="flex:0 0 auto;text-decoration:none;line-height:26px">Modo TV</a><button class="btn sm" id="melhores" style="flex:0 0 auto">Melhores do ano</button><button class="btn sm" id="csv" style="flex:0 0 auto">Copiar resultados (CSV)</button></div>${html}`;
  bindSel(pResultados);const mb=$('#melhores');if(mb)mb.onclick=()=>melhoresAno(mb);
@@ -811,7 +884,7 @@ function pQR(){
  const e=edicao(edSel||dest);if(!e){pane().innerHTML='<p class="note">Sem edições.</p>';return}
  const base=cfg.base||location.href.split('#')[0];
  const pzs=[];e.artigos.forEach(a=>a.b.forEach((b,bi)=>{if(b.t==='sopa'||b.t==='cruzadas')pzs.push([a,b,bi])}));
- const itens=[{a:null,t:'Participa!',s:'Repórter da Calheta n.º'+e.n,f:'QR-n'+e.n+'-capa'}].concat(e.artigos.map(a=>({a,t:'Dá a tua opinião!',s:'pág. '+a.p+' · '+a.ti,f:'QR-n'+e.n+'-p'+String(a.p).padStart(2,'0')+'-'+a.id}))).concat(extrasQR(e,base));
+ const itens=[{a:null,t:'Participa!',s:'Repórter da Calheta n.º'+e.n,f:'QR-n'+e.n+'-capa'}].concat(e.artigos.map(a=>({a,t:galN(a)?'Vê mais fotos aqui!':'Dá a tua opinião!',s:'pág. '+a.p+' · '+a.ti,f:'QR-n'+e.n+'-p'+String(a.p).padStart(2,'0')+'-'+a.id}))).concat(extrasQR(e,base));
  pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><p class="note" style="flex:2 1 300px;margin:0">Os QR apontam para <b>${esc(base)}</b>. ${cfg.base?'':'Define o endereço público em <b>Ligação</b> antes de imprimir.'}</p></div>
  ${e.pub===false?`<div class="notaeq" style="margin-top:10px"><b>Edição em rascunho.</b> Podes pôr já estes QR no Canva: quem os ler antes de a edição estar no ar vê "Este número ainda não saiu". Quando o jornal estiver pronto, carrega o PDF e põe a edição no ar em <b>Edições</b>.</div>`:''}
  <div class="row" style="align-items:center;margin-top:10px"><button class="btn pri" id="qrzip" style="flex:0 0 auto">Descarregar todos (ZIP)</button><span class="msg" id="qrm" style="flex:2 1 240px">${e.qrs?'Já exportados a '+esc(new Date(e.qrs).toLocaleDateString('pt-PT'))+'.':''}</span></div>
@@ -999,7 +1072,7 @@ const AJ=[
   <p><b>Fechar a edição</b>: <b>Descarregar pacote (ZIP)</b> (artigos.md, fotos com o nome da página, participa.json), <b>Criar edição na Participa</b>, <b>Marcar aceites como publicados</b>.</p>`],
  ['pautas','Pautas',`<p>Assuntos que é preciso cobrir: o quê, data, secção, entidade parceira (Câmara, Casa do Povo…) e detalhes → <b>Publicar pauta</b>. Os jornalistas ficam com uma na Redação.</p>`],
  ['plano','Plano das páginas',`<p>Indicar a edição e o número de páginas. A app estima o espaço de cada artigo (≈450 palavras por página + 0,18 de página por foto). Arrastar cada artigo para uma página ou escolhê-la na lista (no telemóvel). A moldura vermelha avisa que a página está cheia demais.</p>`],
- ['edicoes','Edições: criar, editar, rascunho e no ar',`<p>Cada edição mostra o estado (<b>Rascunho</b> ou <b>No ar</b>), quantos artigos tem, se os QR já foram exportados e se o PDF já foi carregado.</p>
+ ['edicoes','Edições: criar, editar, rascunho e no ar',`<p><b>Mais fotos:</b> em Editar, em cada artigo, escolhe o bloco <b>Mais fotos (galeria)</b> e carrega em “+ Bloco”. Depois usa “+ Escolher fotos” ou “Trazer as fotos enviadas na Redação”, escreve as legendas e guarda a edição. As fotos aparecem no artigo online (o QR desse artigo passa a dizer “Vê mais fotos aqui!”). Ficam públicas na internet: põe só fotos de alunos com autorização de imagem.</p><p>Cada edição mostra o estado (<b>Rascunho</b> ou <b>No ar</b>), quantos artigos tem, se os QR já foram exportados e se o PDF já foi carregado.</p>
   <ul><li><b>Nova edição</b>: número e período já preenchidos; <b>Trazer os artigos aceites da Redação</b>; <b>+ Artigo</b>; ou colar um índice <code>página | secção | título</code>.</li>
   <li><b>Blocos</b> de cada artigo: escolher o tipo, preencher e <b>+ Bloco</b>. No quiz, <b>*</b> antes da opção certa. Sopa de letras: palavras separadas por vírgula. Cruzadas: <code>PALAVRA=pista; PALAVRA=pista</code>.</li>
   <li><b>Pergunta da capa</b>, <b>Caça ao QR</b> (uma pista por QR escondido) e <b>+ Artigo “Quiz da edição”</b>.</li>
@@ -1350,6 +1423,7 @@ Object.assign(local,{
  async guardarProfessor(p){const L=await this.professores(),x=L.find(y=>y.email===p.email);x?Object.assign(x,p):L.push(p);this.save()},
  async apagarProfessor(email){this.d.profs=(await this.professores()).filter(x=>x.email!==email);this.save()},
  async meuEmail(){return 'demo@escola.pt'},
+ async apagarPublico(us){for(const u of us)if(String(u).startsWith('idb:')&&idb.del)await idb.del(u.slice(4)).catch(()=>{})},
  async subirPublico(b,ext){const k='pub/'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)+'.'+ext;await idb.put(k,b);return 'idb:'+k},
  async uid(){return dev}
 });
@@ -1373,6 +1447,7 @@ function extrasSupa(cl,o){
   async guardarProfessor(p){chk(await cl.from('professores').upsert({email:p.email,seccoes:p.seccoes||[]}))},
   async apagarProfessor(email){chk(await cl.from('professores').delete().eq('email',email))},
   async meuEmail(){const {data}=await cl.auth.getSession();return (data.session&&data.session.user&&data.session.user.email)||''},
+  async apagarPublico(us){const ps=us.map(u=>{const m=/\/object\/public\/publico\/(.+)$/.exec(String(u).split('?')[0]);return m?decodeURIComponent(m[1]):''}).filter(Boolean);if(ps.length)chk(await cl.storage.from('publico').remove(ps))},
   async subirPublico(b,ext){const path=new Date().getFullYear()+'/'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)+'.'+ext;chk(await cl.storage.from('publico').upload(path,b,{contentType:b.type||undefined}));return cl.storage.from('publico').getPublicUrl(path).data.publicUrl}
  });
 }
