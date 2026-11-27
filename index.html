@@ -288,8 +288,6 @@ html[data-contraste="1"] .card,html[data-contraste="1"] .opt{border-width:2px}
 .galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}.gf{margin:0;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
 .gf img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--bg)}.gf figcaption{padding:10px;display:grid;gap:6px}
 
-.agenda{list-style:none;padding:0;margin:0}.ev{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line)}
-.evd{text-align:center;border:1.5px solid var(--ink);border-radius:10px;padding:4px 0;line-height:1.1}.evd b{display:block;font:600 1.375rem "Fredoka",sans-serif}.evd span{font-size:0.8125rem;color:var(--mute);text-transform:uppercase}
 
 @media(max-width:600px){.ev{grid-template-columns:48px 1fr}.ev .btn{grid-column:2}}
 .rvl{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:10px}.rvl li{border-left:4px solid var(--hl);padding:4px 0 4px 10px}.rvl mark,mark.an{background:var(--hls);color:inherit;border-bottom:2px solid #e0a800}
@@ -311,7 +309,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5.2</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5.3</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -471,7 +469,6 @@ function route(){
  if(h==='familias')return verFamilias();
  if(h==='concurso')return verConcurso();
  if(h==='cartas')return verCartas();
- if(h==='agenda')return verAgenda();
  if(h==='acessibilidade')return verAcessibilidade();
  const mc=h.match(/^caca-(\d+)-(.+)$/);if(mc)return verCaca(Number(mc[1]),mc[2]);
  const mx=h.match(/^e(\d+)-(top|ler|relatorio)$/);if(mx){const ee=edicao(Number(mx[1]));if(ee){atual=null;main.classList.remove('wide');$('#edmeta').textContent='N.º'+ee.n+' · '+(ee.titulo||'');window.scrollTo(0,0);return ({top:verTop,ler:verLer,relatorio:verRelatorio})[mx[2]](ee)}}
@@ -605,7 +602,7 @@ async function painel(){
    <li><b>Moderar</b> comentários, cartas e perguntas antes de aparecerem</li>
    <li><b>Ver o que a escola lê</b>: estatísticas, ranking das turmas e relatório em PDF</li>
    <li><b>Gerar os códigos QR</b> e as imagens para as redes</li>
-   <li><b>Animar a comunidade</b>: concurso de fotografia, agenda e avisos no telemóvel</li></ul>
+   <li><b>Animar a comunidade</b>: concurso de fotografia e avisos no telemóvel</li></ul>
    <p class="note">Não tens conta? Pede a um professor do jornal para te acrescentar em <b>Escola → Equipa de professores</b>.</p>
    <p class="note"><a href="#inicio">← Voltar ao jornal</a></p></div></div>`;
   const pw=$('#pw'),m=$('#lg-m'),bt=$('#lg-b'),err=t=>{m.className='msg err';m.textContent=t};
@@ -1517,13 +1514,12 @@ async function passaporte(e){
 /* --- extras na página da edição --- */
 async function v13Indice(e){
  const box=$('#v13i');if(!box)return;
- const [pass,conc,ag]=await Promise.all([passaporte(e),db.getDef('concurso',{}).catch(()=>({})),db.getDef('agenda',[]).catch(()=>[])]);
+ const [pass,conc]=await Promise.all([passaporte(e),db.getDef('concurso',{}).catch(()=>({}))]);
  if(!$('#v13i'))return;
- const hoje=new Date().toISOString().slice(0,10),prox=(ag||[]).filter(x=>x.d>=hoje).sort((a,b)=>(a.d+a.h)<(b.d+b.h)?-1:1);
  const temPz=e.artigos.find(a=>a.b.some(b=>b.t==='sopa'||b.t==='cruzadas'));
  const at=[conc&&(conc.aberto||conc.votacao)?['#concurso','Concurso de fotografia',conc.tema?'Tema: '+conc.tema:'Envia e vota nas fotos']:null,
   temPz?[`#e${e.n}-${temPz.id}`,'Passatempos','Sopa de letras e palavras cruzadas']:null,
-  ['#cartas','Cartas ao jornal','Escreve à redação'],prox.length?['#agenda','Agenda',prox[0].t+' · '+fmtData(prox[0].d)]:['#agenda','Agenda','O que vem aí na escola']].filter(Boolean);
+  ['#cartas','Cartas ao jornal','Escreve à redação']].filter(Boolean);
  box.innerHTML=(pass||'')+`<div class="atalhos">${at.map(([u,t,s])=>`<a href="${u}"><b>${esc(t)}</b><span>${esc(s)}</span></a>`).join('')}</div><div id="avisos"></div>`;
  botaoAvisos($('#avisos'));
 }
@@ -1728,23 +1724,6 @@ async function verCartas(){
   const b=f.querySelector('button');b.disabled=true;try{await db.comentar({ed:e.n,art:'_cartas',tipo:'carta',nome:n.slice(0,30),turma:$('#kt').value.trim().slice(0,10),texto:t.slice(0,1500)});f.reset();m.className='msg ok';m.textContent='Obrigado! A equipa do jornal vai ler a tua carta.'}catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível enviar.'}b.disabled=false};
 }
 
-/* --- 12: agenda da escola --- */
-const icsData=d=>d.replace(/-/g,'');
-function ics(evs){const z=s=>String(s||'').replace(/([,;\\])/g,'\\$1').replace(/\n/g,'\\n'),now=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
- return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Reporter da Calheta//Participa//PT','CALSCALE:GREGORIAN'].concat(...evs.map(e=>{const fim=e.h?null:new Date(new Date(e.d+'T12:00').getTime()+864e5).toISOString().slice(0,10);
-  return ['BEGIN:VEVENT','UID:'+e.id+'@reporter-calheta','DTSTAMP:'+now,e.h?'DTSTART:'+icsData(e.d)+'T'+e.h.replace(':','')+'00':'DTSTART;VALUE=DATE:'+icsData(e.d),e.h?'DURATION:PT1H':'DTEND;VALUE=DATE:'+icsData(fim),'SUMMARY:'+z(e.t),e.l?'LOCATION:'+z(e.l):'',e.x?'DESCRIPTION:'+z(e.x):'','END:VEVENT'].filter(Boolean)}),['END:VCALENDAR']).join('\r\n')}
-async function verAgenda(){
- atual=null;main.classList.remove('wide');$('#edmeta').textContent='Agenda';window.scrollTo(0,0);
- const ag=(await db.getDef('agenda',[]).catch(()=>[]))||[];if(location.hash!=='#agenda')return;
- const hoje=new Date().toISOString().slice(0,10),L=ag.slice().sort((a,b)=>(a.d+(a.h||''))<(b.d+(b.h||''))?-1:1),prox=L.filter(x=>x.d>=hoje),pass=L.filter(x=>x.d<hoje).reverse().slice(0,10);
- const mes=d=>new Date(d+'T12:00').toLocaleDateString('pt-PT',{month:'long',year:'numeric'}),item=x=>`<li class="ev"><div class="evd"><b>${new Date(x.d+'T12:00').getDate()}</b><span>${new Date(x.d+'T12:00').toLocaleDateString('pt-PT',{weekday:'short'})}</span></div><div><span class="lt">${esc(x.t)}</span><span class="ls">${x.h?esc(x.h)+' · ':''}${esc(x.l||'')}</span>${x.x?`<p style="margin:4px 0 0">${esc(x.x)}</p>`:''}</div><button type="button" class="btn sm" data-ics="${esc(x.id)}">+ Calendário</button></li>`;
- let h='',m='';prox.forEach(x=>{const mm=mes(x.d);if(mm!==m){if(m)h+='</ul>';h+=`<h3 style="margin-top:18px">${esc(mm.charAt(0).toUpperCase()+mm.slice(1))}</h3><ul class="agenda">`;m=mm}h+=item(x)});if(m)h+='</ul>';
- main.innerHTML=`<span class="tag">Agenda</span><h2 class="t">O que vem aí na escola</h2><p class="lead">Atividades, visitas, dias especiais e prazos. Toca em "+ Calendário" para guardar no telemóvel.</p>
- ${prox.length?`<button type="button" class="btn sm" id="ag-all">Guardar tudo no calendário</button>${h}`:'<p class="note">Não há nada marcado para os próximos dias.</p>'}
- ${pass.length?`<details style="margin-top:22px"><summary>Já aconteceu</summary><ul class="agenda">${pass.map(item).join('')}</ul></details>`:''}`;
- main.onclick=ev=>{if(location.hash!=='#agenda')return;const b=ev.target.closest('[data-ics]');if(b){const x=ag.find(y=>y.id===b.dataset.ics);if(x)baixar(new Blob([ics([x])],{type:'text/calendar'}),slug(x.t)+'.ics')}if(ev.target.id==='ag-all')baixar(new Blob([ics(prox)],{type:'text/calendar'}),'agenda-escola.ics')};
-}
-
 /* --- 14: app instalável e avisos no telemóvel --- */
 let swReg=null;
 if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').then(r=>swReg=r).catch(e=>console.warn(e))}
@@ -1853,13 +1832,13 @@ async function pEstat(){
  $('#st-csv').onclick=async ev=>{const t=[['pagina','artigo','aberturas','leitores','pelo_qr','interacoes']].concat(rows.map(r=>[r.a.p,r.a.ti,r.v,r.l,r.qr,r.inter])).map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');try{await navigator.clipboard.writeText(t);ev.target.textContent='Copiado!'}catch(e){ev.target.textContent='Não deu para copiar'}};
 }
 
-/* --- 8, 10, 12, 14: separador Comunidade (concurso, cartas, agenda, avisos) --- */
+/* --- 8, 10, 12, 14: separador Comunidade (concurso, cartas, avisos) --- */
 async function pComunidade(){
- const [info,ag,cartas,nsub]=await Promise.all([db.getDef('concurso',{}).catch(()=>({})),db.getDef('agenda',[]).catch(()=>[]),db.comentarios({tipo:'carta'}).catch(()=>[]),db.totalSubscricoes().catch(()=>null)]);
+ const [info,cartas,nsub]=await Promise.all([db.getDef('concurso',{}).catch(()=>({})),db.comentarios({tipo:'carta'}).catch(()=>[]),db.totalSubscricoes().catch(()=>null)]);
  const ci=info||{},fotos=ci.id?await db.concursoFotos(ci.id).catch(()=>[]):[],cont=ci.id?await db.contagensConcurso(ci.id).catch(()=>({})):{};
  const pend=fotos.filter(f=>f.estado==='pendente'||f.estado==='retido'),apr=fotos.filter(f=>f.estado==='aprovado').sort((a,b)=>(cont[b.id]||0)-(cont[a.id]||0));
  const urls=await db.urlsConcurso(pend.concat(apr).map(f=>f.path)).catch(()=>({}));
- const capr=cartas.filter(c=>c.estado==='aprovado'),agL=(ag||[]).slice().sort((a,b)=>(a.d+(a.h||''))<(b.d+(b.h||''))?-1:1),e=edicao(dest)||eds[eds.length-1];
+ const capr=cartas.filter(c=>c.estado==='aprovado'),e=edicao(dest)||eds[eds.length-1];
  pane().innerHTML=`<div class="card"><h3>Concurso de fotografia</h3><form id="cc"><div class="row"><div style="flex:2 1 240px"><label for="cc-t" style="margin-top:0">Tema</label><input id="cc-t" maxlength="80" value="${esc(ci.tema||'')}" placeholder="ex.: O outono em São Jorge"></div><div style="flex:0 1 180px"><label for="cc-a" style="margin-top:0">Envios até</label><input id="cc-a" type="date" value="${esc(ci.ate||'')}"></div></div>
   <label for="cc-d">Regras ou descrição</label><input id="cc-d" maxlength="300" value="${esc(ci.desc||'')}" placeholder="ex.: Fotografias na horizontal, sem caras. A vencedora sai na capa.">
   <label class="chk"><input type="checkbox" id="cc-o" ${ci.aberto?'checked':''}> A receber fotografias</label><label class="chk" style="margin-top:6px"><input type="checkbox" id="cc-v" ${ci.votacao?'checked':''}> Votação aberta (cada leitor vota em até 3)</label>
@@ -1867,25 +1846,20 @@ async function pComunidade(){
   ${pend.length?`<h3 style="margin-top:16px">À espera de aprovação (${pend.length})</h3><div class="thumbs">${pend.map(f=>`<div class="th">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="${esc(f.legenda||'')}">`:''}<b>${esc(f.legenda||'')}</b><span class="ls">${esc(f.nome||'')}${f.turma?' · '+esc(f.turma):''}${f.estado==='retido'?' · <span class="flag">verificar linguagem</span>':''}</span><div class="thb"><button class="btn sm pri" data-fa="${esc(f.id)}">Aprovar</button><button class="btn sm" data-fr="${esc(f.id)}">Rejeitar</button></div></div>`).join('')}</div>`:''}
   ${apr.length?`<h3 style="margin-top:16px">Na galeria, por votos</h3><div class="thumbs">${apr.map((f,i)=>`<div class="th">${urls[f.path]?`<img src="${esc(urls[f.path])}" alt="${esc(f.legenda||'')}">`:''}<b>${i<3?['🥇','🥈','🥉'][i]+' ':''}${esc(f.legenda||'')}</b><span class="ls">${esc(f.nome||'')}${f.turma?' · '+esc(f.turma):''} · ${cont[f.id]||0} ♥</span><div class="thb"><button class="btn sm" data-fd="${esc(f.id)}">Descarregar</button><button class="btn sm" data-fx="${esc(f.id)}">${confirmar==='foto'+f.id?'Confirmar?':'Apagar'}</button></div></div>`).join('')}</div>`:''}</div>
  <div class="card"><h3>Cartas ao jornal</h3><p class="note" style="margin-top:0">As cartas novas aparecem na Moderação. Aqui ficam as aprovadas, prontas para o jornal.</p>${capr.length?`<ul class="coms">${capr.slice(0,20).map(c=>`<li><div class="txt">${esc(c.texto)}</div><small>${esc(c.nome||'Anónimo')}${c.turma?' · '+esc(c.turma):''} · ${palavras(c.texto)} palavras</small></li>`).join('')}</ul><button class="btn sm" id="ct-c" style="margin-top:10px">Copiar as cartas para o jornal</button>`:'<p class="note">Ainda não há cartas aprovadas.</p>'}</div>
- <div class="card"><h3>Agenda da escola</h3><form id="ag"><div class="row"><div style="flex:0 1 170px"><label for="ag-d" style="margin-top:0">Dia</label><input id="ag-d" type="date" required></div><div style="flex:0 1 120px"><label for="ag-h" style="margin-top:0">Hora (opcional)</label><input id="ag-h" type="time"></div><div style="flex:2 1 220px"><label for="ag-t" style="margin-top:0">O quê</label><input id="ag-t" maxlength="100" required placeholder="ex.: Corta-mato escolar"></div><div style="flex:1 1 160px"><label for="ag-l" style="margin-top:0">Onde</label><input id="ag-l" maxlength="80" placeholder="ex.: Pavilhão"></div></div>
-  <label for="ag-x">Detalhes (opcional)</label><input id="ag-x" maxlength="200"><div class="row" style="margin-top:10px"><button class="btn sm pri" style="flex:0 0 auto">Acrescentar</button><a class="btn sm" href="#agenda" style="flex:0 0 auto;text-decoration:none;line-height:26px">Ver a agenda</a><span class="msg" id="ag-m"></span></div></form>
-  ${agL.length?`<table class="t" style="margin-top:12px"><tbody>${agL.map(x=>`<tr><td style="white-space:nowrap">${esc(fmtData(x.d))}${x.h?' · '+esc(x.h):''}</td><td>${esc(x.t)}${x.l?' <span class="note">· '+esc(x.l)+'</span>':''}</td><td class="nu"><button class="btn sm" data-agrm="${esc(x.id)}">Retirar</button></td></tr>`).join('')}</tbody></table>`:''}</div>
  <div class="card"><h3>Avisos no telemóvel</h3><p class="note" style="margin-top:0">${nsub==null?'Disponível só online.':`<b>${nsub}</b> ${nsub===1?'aparelho recebe':'aparelhos recebem'} avisos. Os leitores ativam-nos na página da edição.`}</p>
-  <form id="av"><label for="av-t" style="margin-top:0">Título</label><input id="av-t" maxlength="60" value="${esc(e?'Saiu o Repórter da Calheta n.º'+e.n+'!':'Repórter da Calheta')}"><label for="av-x">Mensagem</label><input id="av-x" maxlength="140" value="Lê, vota e participa: o QR está em cada página."><label for="av-u">Abrir</label><select id="av-u"><option value="${e?'#e'+e.n:''}">A edição em destaque</option><option value="#concurso">O concurso de fotografia</option><option value="#agenda">A agenda</option><option value="#cartas">As cartas ao jornal</option></select>
+  <form id="av"><label for="av-t" style="margin-top:0">Título</label><input id="av-t" maxlength="60" value="${esc(e?'Saiu o Repórter da Calheta n.º'+e.n+'!':'Repórter da Calheta')}"><label for="av-x">Mensagem</label><input id="av-x" maxlength="140" value="Lê, vota e participa: o QR está em cada página."><label for="av-u">Abrir</label><select id="av-u"><option value="${e?'#e'+e.n:''}">A edição em destaque</option><option value="#concurso">O concurso de fotografia</option><option value="#cartas">As cartas ao jornal</option></select>
   <div class="row" style="margin-top:10px"><button class="btn sm pri" style="flex:0 0 auto">${confirmar==='avisar'?'Confirmar: enviar a todos?':'Enviar aviso'}</button><span class="msg" id="av-m"></span></div></form></div>`;
  const msg=(id,t,ok)=>{const el=$(id);if(el){el.className='msg '+(ok?'ok':'err');el.textContent=t}};
  const novoCI=()=>({id:ci.id||('c'+Date.now().toString(36)),tema:$('#cc-t').value.trim(),ate:$('#cc-a').value||'',desc:$('#cc-d').value.trim(),aberto:$('#cc-o').checked,votacao:$('#cc-v').checked});
  $('#cc').onsubmit=async ev=>{ev.preventDefault();try{await db.setDef('concurso',novoCI());pComunidade()}catch(e){console.warn(e);msg('#cc-m','Não foi possível guardar.')}};
  const ccn=$('#cc-n');if(ccn)ccn.onclick=async()=>{if(confirmar!=='novocc'){confirmar='novocc';return pComunidade()}confirmar=null;try{await db.setDef('concurso',{id:'c'+Date.now().toString(36),tema:'',aberto:false,votacao:false});pComunidade()}catch(e){console.warn(e)}};
  const ctc=$('#ct-c');if(ctc)ctc.onclick=async()=>{const t='CARTAS AO JORNAL\n\n'+capr.map(c=>c.texto+'\n'+(c.nome||'Anónimo')+(c.turma?', '+c.turma:'')).join('\n\n');try{await navigator.clipboard.writeText(t);ctc.textContent='Copiado!'}catch(e){ctc.textContent='Não deu para copiar'}};
- $('#ag').onsubmit=async ev=>{ev.preventDefault();const t=$('#ag-t').value.trim(),d=$('#ag-d').value;if(!t||!d)return msg('#ag-m','Falta o dia ou o título.');const L=(ag||[]).concat({id:Date.now().toString(36),d,h:$('#ag-h').value||'',t,l:$('#ag-l').value.trim(),x:$('#ag-x').value.trim()});try{await db.setDef('agenda',L);pComunidade()}catch(e){console.warn(e);msg('#ag-m','Não foi possível guardar.')}};
  $('#av').onsubmit=async ev=>{ev.preventDefault();if(confirmar!=='avisar'){confirmar='avisar';ev.submitter&&(ev.submitter.textContent='Confirmar: enviar a todos?');return}confirmar=null;const b=ev.submitter;if(b)b.disabled=true;
   try{const r=await db.avisar({titulo:$('#av-t').value.trim(),texto:$('#av-x').value.trim(),url:(cfg.base||location.href.split('#')[0])+$('#av-u').value});msg('#av-m',`Enviado para ${r&&r.enviados!=null?r.enviados:'os'} ${r&&r.enviados===1?'aparelho':'aparelhos'}.`,1)}catch(e){console.warn(e);msg('#av-m',e.message||'Não foi possível enviar.')}if(b){b.disabled=false;b.textContent='Enviar aviso'}};
  pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset,f=fotos.find(x=>x.id===(d.fa||d.fr||d.fd||d.fx));try{
   if(d.fa||d.fr){b.disabled=true;await db.moderarFoto(f.id,d.fa?'aprovado':'rejeitado');return pComunidade()}
   if(d.fd){const bl=await db.blobConcurso(f.path);if(bl)baixar(bl,'concurso-'+slug(f.legenda||'foto')+'-'+slug(f.nome||'')+'.jpg');return}
-  if(d.fx){if(confirmar!=='foto'+f.id){confirmar='foto'+f.id;return pComunidade()}confirmar=null;await db.apagarFotoConcurso(f);return pComunidade()}
-  if(d.agrm){await db.setDef('agenda',(ag||[]).filter(x=>x.id!==d.agrm));return pComunidade()}}catch(e){console.warn(e)}};
+  if(d.fx){if(confirmar!=='foto'+f.id){confirmar='foto'+f.id;return pComunidade()}confirmar=null;await db.apagarFotoConcurso(f);return pComunidade()}}catch(e){console.warn(e)}};
 }
 
 /* --- 25: imagem para as redes sociais --- */
@@ -1913,7 +1887,7 @@ const IC={
  jornal:'<path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12h7M7 15h4"/>',
  ranking:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
  jogos:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16"/>',
- agenda:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+ ler:'<path d="M12 6c-2-1.3-4.5-2-8-2v14c3.5 0 6 .7 8 2 2-1.3 4.5-2 8-2V4c-3.5 0-6 .7-8 2z"/><path d="M12 6v14"/>',
  mais:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>'};
 const icone=k=>`<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
 
@@ -1926,9 +1900,9 @@ function barraBaixo(){
  let nav=$('#bnav');const h=location.hash;
  if(!eds.length||h==='#painel'||h==='#tv'){if(nav)nav.remove();document.body.classList.remove('combnav');return}
  const e=edAtual(),pz=pzDe(e);
- const it=[['jornal','Jornal','#e'+e.n],['ranking','Ranking','#e'+e.n+'-top'],pz?['jogos','Jogos','#e'+e.n+'-'+pz.id]:['agenda','Agenda','#agenda'],['mais','Mais',null]];
+ const it=[['jornal','Jornal','#e'+e.n],['ranking','Ranking','#e'+e.n+'-top'],pz?['jogos','Jogos','#e'+e.n+'-'+pz.id]:['ler','Ler','#e'+e.n+'-ler'],['mais','Mais',null]];
  if(!nav){nav=document.createElement('nav');nav.id='bnav';nav.className='bnav';nav.setAttribute('aria-label','Navegação principal');document.body.appendChild(nav)}
- const ativo=k=>k==='jornal'?(h===''||h==='#inicio'||/^#e\d+(-(?!top$|ler$|relatorio$)[^]*)?$/.test(h)&&!(pz&&h==='#e'+e.n+'-'+pz.id)):k==='ranking'?/-top$/.test(h):k==='jogos'?(pz&&h==='#e'+e.n+'-'+pz.id):k==='agenda'?h==='#agenda':false;
+ const ativo=k=>k==='jornal'?(h===''||h==='#inicio'||/^#e\d+(-(?!top$|ler$|relatorio$)[^]*)?$/.test(h)&&!(pz&&h==='#e'+e.n+'-'+pz.id)):k==='ranking'?/-top$/.test(h):k==='jogos'?(pz&&h==='#e'+e.n+'-'+pz.id):k==='ler'?/-ler$/.test(h):false;
  nav.innerHTML=it.map(([k,l,u])=>u?`<a href="${u}" class="${ativo(k)?'on':''}" ${ativo(k)?'aria-current="page"':''}>${icone(k)}<span>${l}</span></a>`:`<button type="button" id="bmais" aria-haspopup="dialog">${icone(k)}<span>${l}</span></button>`).join('');
  document.body.classList.add('combnav');
  $('#bmais').onclick=menuMais;
@@ -1936,8 +1910,8 @@ function barraBaixo(){
 function menuMais(){
  if($('#folha'))return fecharFolha();
  const e=edAtual(),pz=pzDe(e),ios=/iphone|ipad|ipod/i.test(navigator.userAgent),inst=window.matchMedia&&matchMedia('(display-mode: standalone)').matches;
- const L=[pz?['#e'+e.n+'-'+pz.id,'Passatempos','Sopa de letras e palavras cruzadas']:['#agenda','Agenda','O que vem aí na escola'],['#concurso','Concurso de fotografia','Envia e vota nas fotos'],['#cartas','Cartas ao jornal','Escreve à redação'],
-  ['#e'+e.n+'-ler','Ler o jornal','A edição completa no ecrã'],['#arquivo','Arquivo','Procura nas edições antigas'],['#familias','Famílias','O mural das famílias'],['#redacao','Redação','Escreve para o jornal'],['#acessibilidade','Acessibilidade','Declaração e contacto'],['#painel','Painel do professor','Só para professores']];
+ const L=[pz?['#e'+e.n+'-'+pz.id,'Passatempos','Sopa de letras e palavras cruzadas']:null,['#concurso','Concurso de fotografia','Envia e vota nas fotos'],['#cartas','Cartas ao jornal','Escreve à redação'],
+  ['#e'+e.n+'-ler','Ler o jornal','A edição completa no ecrã'],['#arquivo','Arquivo','Procura nas edições antigas'],['#familias','Famílias','O mural das famílias'],['#redacao','Redação','Escreve para o jornal'],['#acessibilidade','Acessibilidade','Declaração e contacto'],['#painel','Painel do professor','Só para professores']].filter(Boolean);
  const f=document.createElement('div');f.id='folha';f.className='folha-fundo';
  f.innerHTML=`<div class="folha" role="dialog" aria-modal="true" aria-label="Mais opções"><div class="pega" aria-hidden="true"></div>
  <div class="folha-l">${L.map(([u,t,s])=>`<a href="${u}"><b>${esc(t)}</b><span>${esc(s)}</span></a>`).join('')}</div>
@@ -2218,11 +2192,17 @@ function leitorTotal(e,doc,n0){
 const CORES={'':'Do sistema',pb:'Preto sobre branco',bp:'Branco sobre preto',ap:'Amarelo sobre preto'};
 Object.assign(ACC,Object.assign({vr:0,cores:''},LS.get('rc-acc',{})));
 if(LS.get('rc-acc',null)===null&&window.matchMedia&&matchMedia('(prefers-contrast: more)').matches)ACC.contraste=1;
+if(!ACC.vr&&ACC.cores==='ap'&&!LS.get('rc-acc-vr153',0)){ACC.cores='';if(ACC.fs==2)ACC.fs=1;LS.set('rc-acc',ACC)}
+LS.set('rc-acc-vr153',1);
 const aplicarAcc0=aplicarAcc;
 aplicarAcc=function(){aplicarAcc0();const r=document.documentElement;r.dataset.vr=ACC.vr?'1':'';r.dataset.cores=ACC.cores||'';
  if(ACC.vr&&!ACC.font){const l=$('#fonte-leg');if(!l){const k=document.createElement('link');k.id='fonte-leg';k.rel='stylesheet';k.href='https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap';document.head.appendChild(k)}}
  botaoOuvirPagina()};
-function ligarVR(on){ACC.vr=on?1:0;if(on){if(!ACC.cores)ACC.cores='ap';if(ACC.fs<2)ACC.fs=2}LS.set('rc-acc',ACC);aplicarAcc();anunciar(on?'Modo visão reduzida ligado.':'Modo visão reduzida desligado.')}
+/* ao ligar, guarda as cores e o tamanho que estavam; ao desligar, repõe-nos (antes ficavam o amarelo sobre preto e a letra grande) */
+function ligarVR(on){ACC.vr=on?1:0;
+ if(on){ACC.ant={cores:ACC.cores||'',fs:ACC.fs};if(!ACC.cores)ACC.cores='ap';if(ACC.fs<2)ACC.fs=2}
+ else{const a=ACC.ant||{cores:'',fs:1};ACC.cores=a.cores||'';ACC.fs=a.fs||1;delete ACC.ant}
+ LS.set('rc-acc',ACC);aplicarAcc();anunciar(on?'Modo visão reduzida ligado.':'Modo visão reduzida desligado.')}
 /* o painel "Opções de leitura" ganha o modo visão reduzida, as cores, a leitura da página e a declaração */
 const painelAcc0=painelAcc;
 painelAcc=function(){
@@ -2240,7 +2220,7 @@ painelAcc=function(){
   if(b.dataset.tema!==undefined){ACC.cores='';LS.set('rc-acc',ACC);aplicarAcc()}
   if(b.id==='acc-r'){ACC.vr=0;ACC.cores='';LS.set('rc-acc',ACC);aplicarAcc()}
   if(b.id==='acc-ouvir'){p.remove();lerPagina()}
-  if(b.dataset.cores!==undefined||b.id==='acc-vr'){const ps=p.querySelectorAll('[data-cores]');ps.forEach(x=>x.classList.toggle('on',x.dataset.cores===ACC.cores));const v=$('#acc-vr');if(v){v.classList.toggle('pri',!!ACC.vr);v.setAttribute('aria-pressed',!!ACC.vr);v.textContent=ACC.vr?'✓ Modo visão reduzida ligado':'Ligar o modo visão reduzida'}}
+  if(b.dataset.cores!==undefined||b.id==='acc-vr'){p.querySelectorAll('[data-fs]').forEach(x=>x.classList.toggle('on',Number(x.dataset.fs)===Number(ACC.fs)));const ps=p.querySelectorAll('[data-cores]');ps.forEach(x=>x.classList.toggle('on',x.dataset.cores===ACC.cores));const v=$('#acc-vr');if(v){v.classList.toggle('pri',!!ACC.vr);v.setAttribute('aria-pressed',!!ACC.vr);v.textContent=ACC.vr?'✓ Modo visão reduzida ligado':'Ligar o modo visão reduzida'}}
  });
 };
 
@@ -2299,7 +2279,7 @@ async function verAcessibilidade(){
  main.innerHTML=`<span class="tag">Acessibilidade</span><h2 class="t">Declaração de acessibilidade</h2>
  <p class="lead">A ${esc(d.entidade)} compromete-se a tornar a Participa (${esc(url)}) acessível, de acordo com o Decreto-Lei n.º 83/2018, de 19 de outubro, que transpõe a Diretiva (UE) 2016/2102 relativa à acessibilidade dos sítios web e das aplicações móveis de organismos do setor público.</p>
  <div class="card"><h3>I. Estado de conformidade</h3><p>A Participa está <b>parcialmente conforme</b> com a norma europeia EN 301 549 (v3.2.1), que corresponde às Diretrizes de Acessibilidade para o Conteúdo da Web (WCAG) 2.1, nível AA. Os conteúdos que ainda não cumprem estão na secção III.</p></div>
- <div class="card"><h3>II. Elaboração desta declaração</h3><p>Declaração elaborada a ${esc(fmtData(d.data))}. A app foi avaliada com o <b>QualWeb</b>, o motor de avaliação usado pelo validador AccessMonitor (regras ACT e técnicas WCAG 2.1, níveis A e AA), em 16 páginas e estados da app (edição, artigo, ler o jornal, ranking, arquivo, cartas, concurso, agenda, famílias, redação, painel e esta declaração), em ecrã de telemóvel e também com o modo visão reduzida ligado: <b>0 erros</b>. Ficaram por confirmar à mão os pontos que nenhum teste automático decide (foco visível, mensagens de erro, texto ampliado sem cortes e organização dos títulos). Foram feitos testes com teclado, ampliação e leitura em voz alta. Pode repetir a avaliação no <a href="https://accessmonitor.acessibilidade.gov.pt/results/${encodeURIComponent(url)}" rel="noopener">AccessMonitor</a>. A declaração é revista pelo menos uma vez por ano.</p></div>
+ <div class="card"><h3>II. Elaboração desta declaração</h3><p>Declaração elaborada a ${esc(fmtData(d.data))}. A app foi avaliada com o <b>QualWeb</b>, o motor de avaliação usado pelo validador AccessMonitor (regras ACT e técnicas WCAG 2.1, níveis A e AA), em 15 páginas e estados da app (edição, artigo, ler o jornal, ranking, arquivo, cartas, concurso, famílias, redação, painel e esta declaração), em ecrã de telemóvel e também com o modo visão reduzida ligado: <b>0 erros</b>. Ficaram por confirmar à mão os pontos que nenhum teste automático decide (foco visível, mensagens de erro, texto ampliado sem cortes e organização dos títulos). Foram feitos testes com teclado, ampliação e leitura em voz alta. Pode repetir a avaliação no <a href="https://accessmonitor.acessibilidade.gov.pt/results/${encodeURIComponent(url)}" rel="noopener">AccessMonitor</a>. A declaração é revista pelo menos uma vez por ano.</p></div>
  <div class="card"><h3>III. Conteúdos não acessíveis e alternativas</h3><ul class="decl">
   <li><b>O jornal em PDF</b> (páginas como imagem): a alternativa é o modo <b>"Só texto"</b> da página "Ler o jornal", que mostra o texto de cada artigo e o pode ler em voz alta.</li>
   <li><b>Fotografias</b>: as fotografias dos artigos não estão na app (só no jornal em papel); vota-se pelo número da foto. As fotografias do concurso têm o título dado pelo autor como texto alternativo.</li>
