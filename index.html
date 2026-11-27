@@ -309,7 +309,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.5.5</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -455,7 +455,9 @@ async function init(){
  }
  await carregar();route();barraBaixo();
 }
-async function carregar(){try{eds=await db.edicoes();dest=(await db.destaque())||(eds.length?eds[eds.length-1].n:1)}catch(e){console.warn(e);eds=[]}}
+/* Edições em rascunho (pub:false) só aparecem aos professores; as antigas, sem o campo, estão no ar. */
+let ocultas=[];
+async function carregar(){try{const t=await db.edicoes();ocultas=t.filter(e=>e.pub===false).map(e=>e.n);eds=prof?t:t.filter(e=>e.pub!==false);dest=(await db.destaque())||(eds.length?eds[eds.length-1].n:1);if(!edicao(dest)&&eds.length)dest=eds[eds.length-1].n}catch(e){console.warn(e);eds=[]}}
 const edicao=n=>eds.find(e=>e.n===n);
 const urlArtigo=(e,a)=>(cfg.base||location.href.split('#')[0])+'#e'+e.n+(a?'-'+a.id:'');
 
@@ -470,6 +472,7 @@ function route(){
  if(h==='concurso')return verConcurso();
  if(h==='cartas')return verCartas();
  if(h==='acessibilidade')return verAcessibilidade();
+ {const mo=h.match(/^(?:e|caca-)(\d+)/),no=mo&&Number(mo[1]);if(no&&!edicao(no)&&ocultas.includes(no)){const ed=edicao(dest)||eds[eds.length-1];atual=null;main.classList.remove('wide');$('#edmeta').textContent='N.º'+no;window.scrollTo(0,0);main.innerHTML=`<span class="tag">N.º${no}</span><h2 class="t">Este número ainda não saiu</h2><p class="lead">O Repórter da Calheta n.º${no} está a ser preparado. Volta quando o jornal chegar à escola!</p>${ed?`<p><a class="btn pri" href="#e${ed.n}" style="text-decoration:none">Ler o n.º${ed.n}</a></p>`:''}`;return}}
  const mc=h.match(/^caca-(\d+)-(.+)$/);if(mc)return verCaca(Number(mc[1]),mc[2]);
  const mx=h.match(/^e(\d+)-(top|ler|relatorio)$/);if(mx){const ee=edicao(Number(mx[1]));if(ee){atual=null;main.classList.remove('wide');$('#edmeta').textContent='N.º'+ee.n+' · '+(ee.titulo||'');window.scrollTo(0,0);return ({top:verTop,ler:verLer,relatorio:verRelatorio})[mx[2]](ee)}}
  const m=h.match(/^e(\d+)(?:-(.+))?$/);
@@ -478,6 +481,7 @@ function route(){
  $('#edmeta').textContent='N.º'+e.n+' · '+(e.titulo||'');
  const a=m&&m[2]?e.artigos.find(x=>x.id===m[2]):null;
  a?verArtigo(e,a):verIndice(e);
+ if(e.pub===false)main.insertAdjacentHTML('afterbegin',`<div class="notaeq" role="note" style="margin:0 0 12px"><b>Rascunho:</b> só os professores veem esta edição. Os leitores veem-na quando carregares em <b>Pôr no ar</b> (painel → Edições).</div>`);
  window.scrollTo(0,0);
 }
 window.addEventListener('hashchange',route);
@@ -579,7 +583,7 @@ function novaPalavraPasse(){
 let aba='edicoes',rasc=null,edSel=null,verTodos=false,verRet=false,confirmar=null,pubTexto=true;
 async function painel(){
  atual=null;$('#edmeta').textContent='Painel do professor';main.classList.add('wide');
- if(!prof&&modo==='online'&&!recuperar){try{const {data}=await db.cl.auth.getSession(),u=data.session&&data.session.user;if(u&&!u.is_anonymous){const ok=await db.cl.rpc('e_professor');if(ok.data===true)prof=true}}catch(e){console.warn(e)}if(location.hash!=='#painel')return}
+ if(!prof&&modo==='online'&&!recuperar){try{const {data}=await db.cl.auth.getSession(),u=data.session&&data.session.user;if(u&&!u.is_anonymous){const ok=await db.cl.rpc('e_professor');if(ok.data===true){prof=true;await carregar()}}}catch(e){console.warn(e)}if(location.hash!=='#painel')return}
  if(recuperar)return novaPalavraPasse();
  if(!prof){
   const online=modo==='online';
@@ -619,13 +623,13 @@ async function painel(){
      const ok=await db.cl.rpc('e_professor');if(!ok.data){await db.cl.auth.signOut();await db.cl.auth.signInAnonymously();bt.disabled=false;bt.textContent='Entrar';return err('Esta conta existe, mas não está autorizada como professor do jornal.')}
      LS.set('rc-prof-email',em)}catch(e){console.warn(e);bt.disabled=false;bt.textContent='Entrar';return err('Não foi possível entrar. Verifica a ligação à internet.')}}
    else if(pw.value!==cfg.pinDemo){pw.select();return err('Código errado.')}
-   prof=true;painel()});
+   prof=true;await carregar();painel()});
   return}
  const pend=(await db.comentarios({estado:'pendente'}).catch(()=>[])).length;
  const novos=(await db.subs().catch(()=>[])).filter(s=>s.estado==='recebido').length,bd={moderacao:pend,redacao:novos};
  const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['estatisticas','Estatísticas'],['comunidade','Comunidade'],['escola','Escola'],['ligacao','Ligação']];
  main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Ver o jornal</a>${modo==='online'?'<button class="btn sm" id="sair" style="flex:none">Terminar sessão</button>':''}</div><div id="pane"></div>`;
- {const sb=$('#sair');if(sb)sb.onclick=async()=>{sb.disabled=true;try{await db.cl.auth.signOut();await db.cl.auth.signInAnonymously()}catch(e){console.warn(e)}prof=false;painel()}}
+ {const sb=$('#sair');if(sb)sb.onclick=async()=>{sb.disabled=true;try{await db.cl.auth.signOut();await db.cl.auth.signInAnonymously()}catch(e){console.warn(e)}prof=false;await carregar();painel()}}
  main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;rasc=aba==='edicoes'?rasc:null;painel()});
  ({estatisticas:pEstat,comunidade:pComunidade,pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,ligacao:pLigacao})[aba]();
 }
@@ -636,14 +640,27 @@ const bindSel=f=>{const s=$('#selEd');if(s)s.onchange=()=>{edSel=Number(s.value)
 /* --- Edições: lista, importar, editar --- */
 function pEdicoes(){
  if(rasc)return editor();
- pane().innerHTML=`<div class="row"><h3 style="flex:1 1 auto;margin:0">Edições do jornal</h3><button class="btn pri" id="novapdf" style="flex:0 0 auto">Nova edição a partir do PDF</button><button class="btn" id="nova" style="flex:0 0 auto">Importar índice ou JSON</button></div>
- ${eds.map(e=>`<div class="card"><div class="row" style="align-items:center"><div style="flex:2 1 260px"><span class="tag">N.º${e.n}</span> <b>${esc(e.titulo)}</b> <span class="note">· ${e.artigos.length} artigos ${e.n===dest?'· <b>em destaque</b>':''}</span></div>
-  <div style="flex:0 0 auto;display:flex;gap:6px;flex-wrap:wrap">${e.n!==dest?`<button class="btn sm" data-dest="${e.n}">Pôr em destaque</button>`:''}<button class="btn sm" data-edit="${e.n}">Editar</button><button class="btn sm" data-json="${e.n}">Copiar JSON</button><button class="btn sm" data-del="${e.n}">${confirmar==='del'+e.n?'Confirmar apagar?':'Apagar'}</button></div></div></div>`).join('')||'<p class="note">Ainda não há edições.</p>'}
- <p class="note">A edição em destaque é a que abre na página inicial. As anteriores continuam acessíveis pelos QR já impressos.</p>`;
+ pane().innerHTML=`<div class="row"><h3 style="flex:1 1 auto;margin:0">Edições do jornal</h3><button class="btn pri" id="nova" style="flex:0 0 auto">Nova edição</button><button class="btn" id="novapdf" style="flex:0 0 auto">Nova edição a partir do PDF</button></div>
+ <details class="card" ${eds.some(e=>e.pub===false)?'':'open'}><summary><b>Como fazer uma edição</b></summary><ol style="margin:10px 0 0;padding-left:20px;line-height:1.6">
+  <li><b>Receber os artigos</b> na Redação e aceitá-los com a edição e a página.</li>
+  <li><b>Criar a edição na app</b>: <b>Nova edição</b> → "Trazer os artigos aceites da Redação" → Guardar edição. Fica em <b>rascunho</b>: os leitores ainda não a veem.</li>
+  <li><b>Fazer o jornal no Canva</b> com o pacote ZIP da Redação (textos e fotos).</li>
+  <li><b>Exportar os códigos QR</b>: Códigos QR → "Descarregar todos (ZIP)".</li>
+  <li><b>Pôr os QR no Canva</b>, junto a cada artigo, e exportar o jornal em PDF Padrão.</li>
+  <li><b>Carregar o PDF</b>: Editar a edição → "Carregar o PDF da edição". A app junta cada artigo do PDF ao que já existe, por isso os QR continuam a funcionar.</li>
+  <li><b>Pôr no ar</b>: a edição passa a ser a da página inicial e os QR impressos abrem os artigos.</li></ol></details>
+ ${eds.map(e=>`<div class="card"><div class="row" style="align-items:center"><div style="flex:2 1 260px"><span class="tag">N.º${e.n}</span> <b>${esc(e.titulo)}</b> ${e.pub===false?'<span class="est est-alteracoes">Rascunho</span>':'<span class="est est-publicado">No ar</span>'}<span class="note" style="display:block;margin-top:4px">${e.artigos.length} artigos · ${e.qrs?'QR exportados':'QR por exportar'} · ${e.pdf?'PDF carregado':'sem PDF'}${e.n===dest&&e.pub!==false?' · <b>em destaque</b>':''}</span><span class="msg" id="edm${e.n}"></span></div>
+  <div style="flex:1 1 260px;display:flex;gap:6px;flex-wrap:wrap">${e.pub===false?`<button class="btn sm pri" data-noar="${e.n}">${confirmar==='noar'+e.n?(e.pdf?'Confirmar: pôr no ar?':'Ainda sem PDF. Pôr no ar à mesma?'):'Pôr no ar'}</button><button class="btn sm" data-qrs="${e.n}">Códigos QR</button>`:e.n!==dest?`<button class="btn sm" data-dest="${e.n}">Pôr em destaque</button>`:''}<button class="btn sm" data-edit="${e.n}">Editar</button><button class="btn sm" data-json="${e.n}">Copiar JSON</button>${e.pub!==false?`<button class="btn sm" data-tirar="${e.n}">${confirmar==='tirar'+e.n?'Confirmar: voltar a rascunho?':'Tirar do ar'}</button>`:''}<button class="btn sm" data-del="${e.n}">${confirmar==='del'+e.n?'Confirmar apagar?':'Apagar'}</button></div></div></div>`).join('')||'<p class="note">Ainda não há edições.</p>'}
+ <p class="note">A edição em destaque é a que abre na página inicial. As anteriores continuam acessíveis pelos QR já impressos. Uma edição em rascunho só é vista pelos professores com a sessão iniciada; quem ler um QR dela antes de estar no ar vê "Este número ainda não saiu".</p>`;
  $('#novapdf').onclick=()=>{rasc={n:(eds.reduce((m,e)=>Math.max(m,e.n),0)+1),titulo:'',ano:eds.length?eds[eds.length-1].ano:'',artigos:[],novo:true};abrirPDF=true;painel()};
- $('#nova').onclick=()=>{rasc={n:(eds.reduce((m,e)=>Math.max(m,e.n),0)+1),titulo:'',ano:eds.length?eds[eds.length-1].ano:'',artigos:[],novo:true};painel()};
- pane().onclick=async ev=>{const b=ev.target.closest('button');if(!b)return;const d=b.dataset;try{
+ $('#nova').onclick=()=>{rasc={n:(eds.reduce((m,e)=>Math.max(m,e.n),0)+1),titulo:periodosSug()[0],ano:eds.length?eds[eds.length-1].ano:'',artigos:[],novo:true};painel()};
+ pane().onclick=async ev=>{const ir=ev.target.closest('[data-ir]');if(ir){ev.preventDefault();aba=ir.dataset.ir;return painel()}const b=ev.target.closest('button');if(!b)return;const d=b.dataset;try{
   if(d.dest){await db.setDestaque(Number(d.dest));dest=Number(d.dest);painel()}
+  if(d.qrs){edSel=Number(d.qrs);aba='qr';painel()}
+  if(d.noar){const n=Number(d.noar);if(confirmar!=='noar'+n){confirmar='noar'+n;return painel()}confirmar=null;b.disabled=true;
+   const e=JSON.parse(JSON.stringify(edicao(n)));e.pub=true;await db.guardarEdicao(e);await db.setDestaque(n);dest=n;await carregar();await painel();
+   const m=$('#edm'+n);if(m){m.className='msg ok';m.innerHTML=`No ar! É agora a edição da página inicial. Falta: <a href="#" data-ir="comunidade">enviar um aviso</a> e, na <a href="#" data-ir="redacao">Redação</a>, "Marcar aceites como publicados".`}}
+  if(d.tirar){const n=Number(d.tirar);if(confirmar!=='tirar'+n){confirmar='tirar'+n;return painel()}confirmar=null;const e=JSON.parse(JSON.stringify(edicao(n)));e.pub=false;await db.guardarEdicao(e);await carregar();if(dest===n){const v=eds.filter(x=>x.pub!==false&&x.n!==n).pop();if(v){dest=v.n;await db.setDestaque(v.n).catch(er=>console.warn(er))}}painel()}
   if(d.edit){rasc=JSON.parse(JSON.stringify(edicao(Number(d.edit))));painel()}
   if(d.json){try{await navigator.clipboard.writeText(JSON.stringify(edicao(Number(d.json)),null,1));b.textContent='Copiado!'}catch(e){b.textContent='Não deu para copiar'}}
   if(d.del){if(confirmar==='del'+d.del){await db.apagarEdicao(Number(d.del));confirmar=null;await carregar();if(!edicao(dest)&&eds.length){dest=eds[eds.length-1].n;await db.setDestaque(dest).catch(e=>console.warn(e))}}else confirmar='del'+d.del;painel()}}catch(e){console.warn(e);b.textContent='Não foi possível: tenta outra vez'}};
@@ -661,10 +678,11 @@ let abrirPDF=false;
 function alertaEd(t){setTimeout(()=>{const m=$('#gMsg');if(m){m.className=/^Feito/.test(t)?'msg ok':'msg err';m.textContent=t;m.scrollIntoView({block:'center',behavior:'smooth'})}},0)}
 function editor(){
  const r=rasc;if(!r.novo&&r.n0==null)r.n0=r.n;
- pane().innerHTML=`<h3>${r.novo?'Importar nova edição':'Editar edição N.º'+r.n}</h3>
+ pane().innerHTML=`<h3>${r.novo?'Nova edição N.º'+r.n:'Editar edição N.º'+r.n}${r.pub===false||r.novo?' <span class="est est-alteracoes">Rascunho</span>':''}</h3>
  <div class="card"><div class="row"><div style="flex:0 1 110px"><label for="en">Número</label><input id="en" type="number" min="1" value="${esc(r.n)}"></div><div><label for="et">Período</label><input id="et" list="et-l" value="${esc(r.titulo)}" placeholder="${esc(periodosSug()[0])}"><datalist id="et-l">${periodosSug().map(x=>`<option value="${esc(x)}">`).join('')}</datalist></div><div style="flex:0 1 140px"><label for="ea">Ano</label><input id="ea" value="${esc(r.ano)}" placeholder="Ano V"></div></div>
  <label for="imp">Colar o índice ou o JSON da edição</label><textarea id="imp" placeholder="Uma linha por artigo:  página | secção | título&#10;2 | Notícias | Visita de estudo ao Pico&#10;5 | Ambiente | Brigada Eco-escola&#10;&#10;Ou cola o JSON que o Claude gera a partir do Canva."></textarea>
- <div class="row" style="margin-top:8px"><button class="btn" id="lerImp" style="flex:0 0 auto">Acrescentar artigos</button><span class="msg" id="impMsg"></span></div></div>
+ <div class="row" style="margin-top:8px"><button class="btn" id="lerImp" style="flex:0 0 auto">Acrescentar artigos</button><button class="btn" id="daRed" style="flex:0 0 auto">Trazer os artigos aceites da Redação</button><button class="btn" id="maisArt" style="flex:0 0 auto">+ Artigo</button><span class="msg" id="impMsg"></span></div>
+ ${r.qrs?'<p class="notaeq" style="margin-bottom:0"><b>Os códigos QR desta edição já foram exportados.</b> Não mudes o número da edição nem apagues artigos: os QR impressos deixariam de os encontrar. Mudar títulos, páginas e blocos não faz mal.</p>':''}</div>
  ${extrasEdicao(r)}
  <div id="arts">${r.artigos.map((a,i)=>`<div class="art"><div class="row"><div style="flex:0 1 80px"><label>Pág.</label><input data-f="p" data-i="${i}" value="${esc(a.p)}"></div><div style="flex:1 1 160px"><label>Secção</label><input data-f="s" data-i="${i}" value="${esc(a.s)}"></div><div style="flex:3 1 260px"><label>Título</label><input data-f="ti" data-i="${i}" value="${esc(a.ti)}"></div><div style="flex:1 1 100%"><label>Resumo (opcional: aparece no arquivo e na página para partilhar)</label><input data-f="r" data-i="${i}" maxlength="200" value="${esc(a.r||'')}"></div><div style="flex:3 1 300px"><label>Autores (opcional)</label><input data-f="au" data-i="${i}" maxlength="200" value="${esc(a.au||'')}"></div><details style="flex:1 1 100%" ${a.tx?'open':''}><summary class="note">Texto completo (opcional: para ler, ouvir e pesquisar na Participa)</summary><textarea data-f="tx" data-i="${i}" maxlength="20000" style="min-height:120px">${esc(a.tx||'')}</textarea></details><button class="btn sm" data-rm="${i}" style="flex:0 0 auto">Remover</button></div>
   <div class="chips">${a.b.map((b,j)=>`<span class="chip"><b>${TIPOS[b.t]}</b>${b.t==='fotos'?' · '+b.n+' fotos':b.q?' · '+esc(b.q.slice(0,50)):''}<button data-rmb="${i}:${j}" aria-label="× Remover">×</button></span>`).join('')}</div>
@@ -694,12 +712,21 @@ function editor(){
    else if(t!=='reacoes')nb.q=q||({estrelas:'Que nota dás?',comentario:'Deixa a tua opinião',sugestao:'Tens uma sugestão?',perguntas:'Que pergunta gostavas de fazer?'})[t];
    r.artigos[i].b.push(nb);editor()}};
  $('#cancelar').onclick=()=>{rasc=null;confirmar=null;painel()};
+ $('#maisArt').onclick=()=>{sync();r.artigos.push({id:'',p:'',s:'Notícias',ti:'Novo artigo',b:[{t:'reacoes'},{t:'comentario',q:'Deixa a tua opinião'}]});editor();const t=pane().querySelectorAll('[data-f="ti"]'),u=t[t.length-1];if(u){u.focus();u.select()}};
+ $('#daRed').onclick=async ev=>{sync();const bt=ev.target,m=$('#impMsg');bt.disabled=true;try{
+  const l=(await db.subs()).filter(s=>s.estado==='aceite'&&Number(s.edicao)===Number(r.n)).sort((a,b)=>(parseInt(a.pagina)||999)-(parseInt(b.pagina)||999));
+  if(!l.length){m.className='msg err';m.textContent=`Não há artigos aceites para o n.º${r.n}. Na Redação, abre cada artigo, escolhe "Aceite" e indica a edição ${r.n} e a página.`;bt.disabled=false;return}
+  const novo=edicaoDe(l,r.n),ids=new Set(r.artigos.map(a=>a.id)),tis=new Set(r.artigos.map(a=>norm(a.ti)));let k=0;
+  novo.artigos.forEach(a=>{if(!ids.has(a.id)&&!tis.has(norm(a.ti))){r.artigos.push(a);k++}});r.artigos.sort((a,b)=>(parseInt(a.p)||999)-(parseInt(b.p)||999));
+  await publicarAudios(r,bt);editor();const mm=$('#impMsg');if(mm){mm.className='msg ok';mm.textContent=k?`${k} ${k===1?'artigo trazido':'artigos trazidos'} da Redação. Revê os blocos e carrega em Guardar edição.`:'Os artigos aceites já estão todos nesta edição.'}}
+  catch(e){console.warn(e);m.className='msg err';m.textContent='Não foi possível ler a Redação.';bt.disabled=false}};
  $('#guardar').onclick=async()=>{sync();const m=$('#gMsg');
   if(!r.artigos.length){m.className='msg err';m.textContent='A edição não tem artigos.';return}
   const ids=new Set();r.artigos.forEach(a=>{a.id=slug(a.id||a.ti);let id=a.id,k=2;while(ids.has(id))id=a.id+'-'+k++;a.id=id;ids.add(id)});
+  if(!r.novo&&r.qrs&&r.n!==r.n0&&confirmar!=='renum'){confirmar='renum';m.className='msg err';m.textContent=`Os QR desta edição já foram exportados com o n.º${r.n0}: se mudares para o n.º${r.n}, os QR impressos deixam de funcionar. Carrega outra vez em Guardar para mudar à mesma.`;return}
   if(edicao(r.n)&&(r.novo||r.n!==r.n0)&&confirmar!=='sobre'){confirmar='sobre';editor();$('#gMsg').className='msg err';$('#gMsg').textContent='Já existe uma edição N.º'+r.n+'. Clica outra vez para substituir.';return}
-  const e={n:r.n,titulo:r.titulo,ano:r.ano,artigos:r.artigos,capa:(r.capa&&r.capa.q&&(r.capa.o||[]).length>=2)?r.capa:null,caca:(r.caca||[]).filter(p=>p.q&&(p.o||[]).length>=2),pdf:r.pdf||''};
-  try{await db.guardarEdicao(e);if(r.novo){await db.setDestaque(e.n);dest=e.n}await carregar();rasc=null;confirmar=null;edSel=e.n;aba='qr';painel()}
+  const e=Object.assign({n:r.n,titulo:r.titulo,ano:r.ano,artigos:r.artigos,capa:(r.capa&&r.capa.q&&(r.capa.o||[]).length>=2)?r.capa:null,caca:(r.caca||[]).filter(p=>p.q&&(p.o||[]).length>=2),pdf:r.pdf||''},r.novo||r.pub===false?{pub:false}:{},r.qrs&&r.n===r.n0?{qrs:r.qrs}:{});
+  try{await db.guardarEdicao(e);await carregar();rasc=null;confirmar=null;edSel=e.n;aba=e.pub===false&&!e.qrs?'qr':'edicoes';await painel();if(r.novo)setTimeout(()=>{const q=$('#qrm');if(q){q.className='msg ok';q.textContent='Edição guardada em rascunho: os leitores ainda não a veem. Descarrega os QR para os pores no Canva.'}},0)}
   catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível guardar.'}};
 }
 
@@ -739,10 +766,11 @@ async function pResultados(){
 function qrImg(url,titulo,sub){
  if(!window.qrcode)return '';
  const qr=window.qrcode(0,'M');qr.addData(url);qr.make();
- const n=qr.getModuleCount(),cell=10,m=4*cell,W=n*cell+2*m,H=W+64;
+ const n=qr.getModuleCount(),cell=10,m=4*cell,W=n*cell+2*m,H=titulo==null?W:W+64;
  const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
  x.fillStyle='#fff';x.fillRect(0,0,W,H);x.fillStyle='#16181d';
  for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(qr.isDark(r,k))x.fillRect(m+k*cell,m+r*cell,cell,cell);
+ if(titulo==null)return c.toDataURL('image/png');
  x.textAlign='center';x.font='600 26px Fredoka, sans-serif';x.fillText(titulo,W/2,W+14);
  x.font='18px "Source Sans 3", sans-serif';let s=sub;while(x.measureText(s).width>W-24&&s.length>4)s=s.slice(0,-2);if(s!==sub)s=s.trim()+'…';x.fillText(s,W/2,W+44);
  return c.toDataURL('image/png');
@@ -753,10 +781,19 @@ function pQR(){
  const pzs=[];e.artigos.forEach(a=>a.b.forEach((b,bi)=>{if(b.t==='sopa'||b.t==='cruzadas')pzs.push([a,b,bi])}));
  const itens=[{a:null,t:'Participa!',s:'Repórter da Calheta n.º'+e.n,f:'QR-n'+e.n+'-capa'}].concat(e.artigos.map(a=>({a,t:'Dá a tua opinião!',s:'pág. '+a.p+' · '+a.ti,f:'QR-n'+e.n+'-p'+String(a.p).padStart(2,'0')+'-'+a.id}))).concat(extrasQR(e,base));
  pane().innerHTML=`<div class="row" style="align-items:center"><div>${selEd()}</div><p class="note" style="flex:2 1 300px;margin:0">Os QR apontam para <b>${esc(base)}</b>. ${cfg.base?'':'Define o endereço público em <b>Ligação</b> antes de imprimir.'}</p></div>
- <p class="note">Descarrega cada imagem e arrasta-a para o Canva, junto ao artigo. O primeiro é para a capa e abre a lista de todos os artigos.</p>
+ ${e.pub===false?`<div class="notaeq" style="margin-top:10px"><b>Edição em rascunho.</b> Podes pôr já estes QR no Canva: quem os ler antes de a edição estar no ar vê "Este número ainda não saiu". Quando o jornal estiver pronto, carrega o PDF e põe a edição no ar em <b>Edições</b>.</div>`:''}
+ <div class="row" style="align-items:center;margin-top:10px"><button class="btn pri" id="qrzip" style="flex:0 0 auto">Descarregar todos (ZIP)</button><span class="msg" id="qrm" style="flex:2 1 240px">${e.qrs?'Já exportados a '+esc(new Date(e.qrs).toLocaleDateString('pt-PT'))+'.':''}</span></div>
+ <p class="note">O ZIP tem duas pastas: <b>com-legenda</b> (o QR com "Dá a tua opinião!" e o título, pronto a colar) e <b>so-codigo</b> (só o quadrado, para fazeres a tua moldura no Canva), e uma LISTA.txt com o artigo de cada ficheiro. Os nomes levam a página (ex.: <i>QR-n${e.n}-p04-…</i>). Arrasta-os para o Canva, junto ao artigo; o da capa abre a lista de todos os artigos. Depois de os pores no Canva, não mudes o número da edição nem apagues artigos.</p>
  <div class="qrgrid">${itens.map((it,i)=>{const url=it.url||urlArtigo(e,it.a),src=qrImg(url,it.t,it.s);return `<div class="card"><img src="${src}" alt="Código QR: ${esc(it.s)}"><p style="margin:8px 0 4px;font-weight:700;line-height:1.25">${esc(it.a?it.a.ti:(it.nome||'Capa: todos os artigos'))}</p><p class="note" style="margin:0 0 8px">${it.a?'pág. '+esc(it.a.p):'N.º'+e.n}</p><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><a class="btn sm" href="${src}" download="${esc(it.f)}.png" style="text-decoration:none;line-height:26px">Descarregar</a><button class="btn sm" data-url="${esc(url)}">Copiar ligação</button>${it.a?`<button class="btn sm" data-social="${i}">Imagem para redes</button>`:''}</div></div>`}).join('')}</div>
  ${pzs.length?`<h3 style="margin-top:22px">Passatempos para o jornal em papel</h3><p class="note">A grelha é a mesma que os leitores resolvem na Participa. A solução vai para o número seguinte.</p><div class="qrgrid">${pzs.map(([a,b,bi])=>`<div class="card"><img src="${pngPassatempo(b,false)}" alt="${esc(TIPOS[b.t])}"><p style="margin:8px 0 4px;font-weight:700">${esc(b.q||TIPOS[b.t])}</p><p class="note" style="margin:0 0 8px">pág. ${esc(a.p)} · ${esc(a.ti)}</p><div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><button class="btn sm" data-pzpng="${esc(a.id)}:${bi}:0">Grelha (PNG)</button><button class="btn sm" data-pzpng="${esc(a.id)}:${bi}:1">Solução (PNG)</button>${b.t==='cruzadas'?`<button class="btn sm" data-pztx="${esc(a.id)}:${bi}">Copiar pistas</button>`:''}</div></div>`).join('')}</div>`:''}`;
  bindSel(pQR);
+ $('#qrzip').onclick=async ev=>{const bt=ev.target,m=$('#qrm');bt.disabled=true;m.className='msg';m.textContent='A preparar…';try{
+  if(!window.JSZip)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+  const z=new window.JSZip();let lista='Códigos QR do Repórter da Calheta n.º'+e.n+(e.titulo?' · '+e.titulo:'')+'\n\n';
+  itens.forEach(it=>{const url=it.url||urlArtigo(e,it.a),nome=String(it.f).replace(/[^\w.-]+/g,'-');z.file('com-legenda/'+nome+'.png',d2b(qrImg(url,it.t,it.s)));z.file('so-codigo/'+nome+'.png',d2b(qrImg(url,null)));lista+=nome+'.png  →  '+(it.a?'pág. '+it.a.p+' · '+it.a.ti:(it.nome||'Capa: todos os artigos'))+'\n   '+url+'\n'});
+  z.file('LISTA.txt',lista);await baixar(await z.generateAsync({type:'blob'}),'QR-n'+e.n+'.zip');
+  if(prof&&!e.qrs){const c=JSON.parse(JSON.stringify(e));c.qrs=Date.now();await db.guardarEdicao(c).catch(er=>console.warn(er));await carregar()}
+  m.className='msg ok';m.textContent=`ZIP com ${itens.length} códigos pronto.`}catch(err){console.warn(err);m.className='msg err';m.textContent='Não foi possível criar o ZIP.'}bt.disabled=false};
  pane().onclick=async ev=>{
   const dl=ev.target.closest('a[download]');
   if(dl&&window.claude&&window.claude.use){ev.preventDefault();try{const d=await window.claude.use('downloads');if(!d)throw 0;const blob=await (await fetch(dl.href)).blob();await d.save({filename:dl.getAttribute('download'),data:blob})}catch(e){dl.textContent='Clica com o botão direito na imagem'}return}
@@ -1393,10 +1430,12 @@ function bindExtras(r,sync){
  $('#quized').onclick=()=>{tudo();if(!r.artigos.some(a=>a.s==='Quiz da edição'))r.artigos.push({id:'quiz-da-edicao',p:'',s:'Quiz da edição',ti:'Quiz da edição: leste o jornal todo?',b:[]});editor()};
  $('#pdfb').onclick=()=>$('#pdff').click();
  $('#pdff').onchange=()=>{const f=$('#pdff').files[0];if(!f)return;tudo();importarPDF(r,f,()=>{editor();const c=$('#pdfcard');if(c&&r._pdf&&!r._pdf.prog)c.scrollIntoView({block:'start',behavior:'smooth'})})};
- const pc=$('#pdfcriar');if(pc)pc.onclick=()=>{tudo();const A=r._pdf.arts;pane().querySelectorAll('[data-pt]').forEach(x=>A[x.dataset.pt].ti=x.value.trim()||A[x.dataset.pt].ti);pane().querySelectorAll('[data-ps]').forEach(x=>A[x.dataset.ps].s=x.value.trim()||'Notícias');pane().querySelectorAll('[data-pp]').forEach(x=>A[x.dataset.pp].p=parseInt(x.value)||A[x.dataset.pp].p);
+ const pc=$('#pdfcriar');if(pc)pc.onclick=()=>{tudo();const A=r._pdf.arts;pane().querySelectorAll('[data-pt]').forEach(x=>A[x.dataset.pt].ti=x.value.trim()||A[x.dataset.pt].ti);pane().querySelectorAll('[data-ps]').forEach(x=>A[x.dataset.ps].s=x.value.trim()||'Notícias');pane().querySelectorAll('[data-pp]').forEach(x=>A[x.dataset.pp].p=parseInt(x.value)||A[x.dataset.pp].p);pane().querySelectorAll('[data-pm]').forEach(x=>A[x.dataset.pm].m=Number(x.value));
+  {const usado={};let rep2='';A.forEach((a,k)=>{const c=pane().querySelector(`[data-pk="${k}"]`);if(a.m>=0&&c&&c.checked){if(usado[a.m])rep2=r.artigos[a.m].ti;usado[a.m]=1}});if(rep2){alertaEd('Dois artigos do PDF estão ligados ao mesmo artigo ("'+rep2+'"). Escolhe outro em "Corresponde a".');return}}
   const sel=A.filter((a,k)=>{const c=pane().querySelector(`[data-pk="${k}"]`);return c&&c.checked});const res=juntarPDF(r,sel);r._pdf=null;editor();alertaEd(`Feito: ${res.novos} ${res.novos===1?'artigo criado':'artigos criados'}${res.atual?' e '+res.atual+' atualizados':''}. Revê os blocos e carrega em Guardar edição.`);const g=$('#gMsg');if(g){g.className='msg ok';setTimeout(()=>{g.className='msg ok'},5)}};
  const pdd=$('#pdfdesc');if(pdd)pdd.onclick=()=>{tudo();r._pdf=null;editor()};
- pane().querySelectorAll('[data-pk]').forEach(c=>c.onchange=()=>{const n=pane().querySelectorAll('[data-pk]:checked').length;const b=$('#pdfcriar');if(b)b.textContent=`Criar ${n} ${n===1?'artigo':'artigos'} na Participa`});
+ pane().querySelectorAll('[data-pk]').forEach(c=>c.onchange=()=>{const n=pane().querySelectorAll('[data-pk]:checked').length,t=r.artigos.length>0;const b=$('#pdfcriar');if(b)b.textContent=`${t?'Juntar':'Criar'} ${n} ${n===1?'artigo':'artigos'} ${t?'à edição':'na Participa'}`});
+ pane().querySelectorAll('[data-pm]').forEach(x=>x.onchange=()=>{const k=Number(x.dataset.pm),c=pane().querySelector(`[data-pk="${k}"]`);if(Number(x.value)>=0&&c&&!c.checked){c.checked=true;c.onchange()}});
  if(abrirPDF){abrirPDF=false;setTimeout(()=>$('#pdff').click(),50)}
  const rm=$('#pdfrm');if(rm)rm.onclick=()=>{tudo();r.pdf='';editor()};
 }
@@ -2066,12 +2105,25 @@ function blocosPara(a){
  b.push({t:'comentario',q:a.au?'Deixa uma mensagem aos autores':'Deixa a tua opinião'});
  return b;
 }
+/* Liga cada artigo lido do PDF a um artigo que já existe na edição (pelas palavras do título; a página só desempata),
+   para que o artigo mantenha o seu id e os QR já impressos continuem a abri-lo. */
+const palavrasTit=t=>new Set(norm(t).replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>2));
+function parecido(x,y){const a=norm(x).replace(/[^a-z0-9]/g,''),b=norm(y).replace(/[^a-z0-9]/g,'');if(a&&a===b)return 1;if((a.length>12&&b.includes(a))||(b.length>12&&a.includes(b)))return .9;
+ const A=palavrasTit(x),B=palavrasTit(y);if(!A.size||!B.size)return 0;let c=0;A.forEach(w=>{if(B.has(w))c++});return c/Math.min(A.size,B.size)*(c>=2?1:.6)}
+function corresponder(r,A){
+ const usados=new Set(),pares=[];
+ A.forEach((a,k)=>r.artigos.forEach((x,i)=>{const sc=parecido(x.ti,a.ti)+(String(x.p)===String(a.p)?.15:0);if(sc>=.5)pares.push([sc,k,i])}));
+ pares.sort((u,v)=>v[0]-u[0]);A.forEach(a=>a.m=-1);
+ pares.forEach(([sc,k,i])=>{if(A[k].m<0&&!usados.has(i)){A[k].m=i;usados.add(i)}});
+ A.forEach(a=>{if(a.m>=0)a.ok=true});
+}
 function juntarPDF(r,sel){
  const mesmo=(x,y)=>{const a=norm(x).replace(/[^a-z0-9 ]/g,''),b=norm(y).replace(/[^a-z0-9 ]/g,'');return a===b||(a.length>12&&b.includes(a))||(b.length>12&&a.includes(b))};
  let novos=0,atual=0;
- sel.forEach(a=>{const ex=r.artigos.find(x=>mesmo(x.ti,a.ti));
-  if(ex){ex.p=ex.p||String(a.p);if(!ex.tx&&a.tx)ex.tx=a.tx;if(!ex.r&&a.r)ex.r=a.r;if(!ex.au&&a.au)ex.au=a.au;ex.pb=a.pb;ex.pp=a.p;if(a.fotos>=2&&!ex.b.some(b=>b.t==='fotos'))ex.b.splice(1,0,{t:'fotos',n:a.fotos});atual++}
-  else{r.artigos.push({id:slug(a.ti),p:String(a.p),s:a.s,ti:a.ti,r:a.r,au:a.au,tx:a.tx,pb:a.pb,pp:a.p,b:blocosPara(a)});novos++}});
+ const fixos=r.artigos.slice();
+ sel.forEach(a=>{const ex=a.m!=null?(a.m>=0?fixos[a.m]:null):r.artigos.find(x=>mesmo(x.ti,a.ti));
+  if(ex){ex.p=a.m!=null&&a.m>=0?String(a.p):(ex.p||String(a.p));if(!ex.tx&&a.tx)ex.tx=a.tx;if(!ex.r&&a.r)ex.r=a.r;if(!ex.au&&a.au)ex.au=a.au;ex.pb=a.pb;ex.pp=a.p;if(a.fotos>=2&&!ex.b.some(b=>b.t==='fotos'))ex.b.splice(1,0,{t:'fotos',n:a.fotos});atual++}
+  else{let id=slug(a.ti),k=2;while(r.artigos.some(x=>x.id===id))id=slug(a.ti)+'-'+k++;r.artigos.push({id,p:String(a.p),s:a.s,ti:a.ti,r:a.r,au:a.au,tx:a.tx,pb:a.pb,pp:a.p,b:blocosPara(a)});novos++}});
  r.artigos.sort((x,y)=>(parseInt(x.p)||999)-(parseInt(y.p)||999));
  return {novos,atual};
 }
@@ -2079,14 +2131,17 @@ function previaPDF(r){
  const z=r._pdf;if(!z)return '';
  if(z.erro)return `<p class="err">${esc(z.erro)}</p>`;
  if(z.prog)return `<div class="pdfprog"><span style="width:${Math.round(z.prog*100)}%"></span></div><p class="note">${esc(z.msg||'A ler o PDF…')}</p>`;
- const A=z.arts,sel=A.filter(a=>a.ok).length;
+ const A=z.arts,tem=r.artigos.length>0;if(tem&&!z._m){corresponder(r,A);z._m=1}const sel=A.filter(a=>a.ok).length;
+ const ligados=tem?A.filter(a=>a.m>=0).length:0,soltos=tem?r.artigos.filter((x,i)=>!A.some(a=>a.m===i)):[];
  return `<div class="pdfprev"><p><b>Li ${z.paginas} páginas e encontrei ${A.length} ${A.length===1?'artigo':'artigos'}.</b>${z.info.n||z.info.titulo?` Capa: ${z.info.n?'n.º'+esc(z.info.n):''}${z.info.titulo?' · '+esc(z.info.titulo):''}${z.info.ano?' · Ano '+esc(z.info.ano):''}.`:''} Confirma os títulos e as secções; os que têm pouco texto vêm desmarcados.</p>
+ ${tem?`<div class="notaeq" style="margin-bottom:10px"><b>${ligados} de ${A.length} ligados a artigos que já existem</b> (mantêm o QR que já está no papel). Em cada um, confirma em <b>Corresponde a</b>; "Artigo novo" cria um artigo sem QR no papel (só abre pelo índice e pelo PDF).${soltos.length?`<br><b>Sem correspondência no PDF:</b> ${soltos.map(x=>'pág. '+esc(x.p)+' · '+esc(x.ti)).join('; ')}. Continuam na edição e o QR funciona, mas não ficam tocáveis no PDF.`:''}</div>`:''}
  <div class="pdfarts">${A.map((a,k)=>`<div class="pdfa ${a.ok?'':'fraco'}"><label class="chk" style="margin:0"><input type="checkbox" data-pk="${k}" ${a.ok?'checked':''} aria-label="Importar ${esc(a.ti)}"></label>
   <div class="pdfa-c"><div class="row" style="gap:6px"><input data-pp="${k}" value="${esc(a.p)}" aria-label="Página" style="flex:0 0 60px"><input data-ps="${k}" value="${esc(a.s)}" list="p-sl2" aria-label="Secção" style="flex:1 1 120px"></div>
   <input data-pt="${k}" value="${esc(a.ti)}" aria-label="Título" style="margin-top:6px;font-weight:600">
+  ${tem?`<label for="pm${k}" style="margin-top:6px">Corresponde a</label><select id="pm${k}" data-pm="${k}"><option value="-1" ${a.m<0?'selected':''}>Artigo novo (sem QR no papel)</option>${r.artigos.map((x,i)=>`<option value="${i}" ${a.m===i?'selected':''}>pág. ${esc(x.p)} · ${esc(x.ti.slice(0,60))}</option>`).join('')}</select>`:''}
   <p class="note" style="margin:4px 0 0">${a.palavras} palavras${a.fotos?' · '+a.fotos+(a.fotos===1?' foto':' fotos'):''}${a.au?' · '+esc(a.au):''}${a.r?' · «'+esc(a.r.slice(0,90))+(a.r.length>90?'…':'')+'»':''}</p></div></div>`).join('')}</div>
  <datalist id="p-sl2">${secoes().map(s=>`<option value="${esc(s)}">`).join('')}</datalist>
- <div class="row" style="margin-top:12px"><button type="button" class="btn pri" id="pdfcriar" style="flex:0 0 auto">Criar ${sel} ${sel===1?'artigo':'artigos'} na Participa</button><button type="button" class="btn" id="pdfdesc" style="flex:0 0 auto">Fechar</button></div>
+ <div class="row" style="margin-top:12px"><button type="button" class="btn pri" id="pdfcriar" style="flex:0 0 auto">${tem?'Juntar':'Criar'} ${sel} ${sel===1?'artigo':'artigos'} ${tem?'à edição':'na Participa'}</button><button type="button" class="btn" id="pdfdesc" style="flex:0 0 auto">Fechar</button></div>
  <p class="note">Cada artigo fica com reações (ou estrelas, nas crónicas e textos criativos), gostos nas fotos e comentários, mais o texto para ler, ouvir e pesquisar. Os títulos ficam tocáveis no PDF. Depois podes juntar perguntas e quizzes a cada um.</p></div>`;
 }
 async function importarPDF(r,f,redesenhar){
