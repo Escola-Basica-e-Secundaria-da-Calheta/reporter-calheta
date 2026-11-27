@@ -75,7 +75,17 @@ textarea{min-height:96px;resize:vertical}
 .n{font-size:0.875rem;color:var(--mute);white-space:nowrap}
 .tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;border-bottom:1.5px solid var(--line);margin-bottom:14px}
 .tabs .btn{flex:none;border-color:var(--line)}.tabs .btn.on{border-color:var(--ink);background:var(--hls)}
-@media(min-width:701px){.tabs{flex-wrap:wrap;overflow:visible;row-gap:8px}.tabs .fim{margin-left:auto}}
+@media(min-width:701px){.tabs{flex-wrap:wrap;overflow:visible;row-gap:8px}}
+.pn{display:grid;gap:10px;padding:4px 0 12px;border-bottom:1.5px solid var(--line);margin-bottom:14px}
+.pn-c{display:flex;gap:8px 12px;align-items:center;flex-wrap:wrap}
+.pn-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;flex:1 1 320px;max-width:540px;padding:3px;background:var(--paper);border:1.5px solid var(--line);border-radius:999px}
+.pn-g button{font:600 0.9375rem "Source Sans 3",sans-serif;min-height:40px;padding:4px 6px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer;white-space:nowrap}
+.pn-g button.on{background:var(--ink);color:var(--bg)}
+.pn-a{display:flex;gap:6px;margin-left:auto}.pn-a .btn{border-color:var(--line)}
+.pn-t{display:flex;gap:6px;flex-wrap:wrap}.pn-t .btn{border-color:var(--line)}.pn-t .btn.on{border-color:var(--ink);background:var(--hls)}
+@media(max-width:700px){.pn-g{flex-basis:100%;max-width:none}.pn-a{order:-1;width:100%;justify-content:flex-end}.pn-t .btn{flex:1 1 30%;min-height:44px;padding:4px 8px}}
+@media(max-width:360px){.pn-g button{font-size:0.8125rem;padding:4px 2px}}
+html[data-vr="1"] .pn-g{border-width:2.5px;border-color:var(--ink)}html[data-vr="1"] .pn-g button{min-height:52px}
 .fe-ov{position:fixed;inset:0;z-index:70;background:#111;color:#fff;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
 .fe-top{display:flex;gap:8px;align-items:center;padding:8px 12px}.fe-top b{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fe-ov .btn{border-color:#777;color:#fff;flex:none}.fe-ov .btn.pri{background:#fff;color:#111;border-color:#fff}.fe-ov .btn.on{background:var(--hl);color:#111;border-color:var(--hl)}
@@ -323,7 +333,7 @@ pre{overflow-x:auto;background:var(--paper);padding:12px;border-radius:10px;font
 <body>
 <header class="mast">
   <h1><a href="#inicio">Repórter da Calheta</a></h1>
-  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6.3</span></p>
+  <p class="sub">Jornal da Escola Básica e Secundária da Calheta · <b>Participa</b> <span class="ver" title="Versão da webapp">v1.6.4</span></p>
   <div class="rule"></div>
   <div class="meta"><span>Calheta · São Jorge</span><span id="edmeta"></span></div>
 </header>
@@ -594,7 +604,7 @@ function novaPalavraPasse(){
  $('#npf').onsubmit=async ev=>{ev.preventDefault();const a=$('#np1').value,b=$('#np2').value,m=$('#np-m');if(a.length<8){m.textContent='Usa pelo menos 8 caracteres.';return}if(a!==b){m.textContent='As duas palavras-passe não são iguais.';return}
   try{const r=await db.cl.auth.updateUser({password:a});if(r.error)throw r.error;recuperar=false;const ok=await db.cl.rpc('e_professor');prof=ok.data===true;history.replaceState(null,'','#painel');painel()}catch(e){console.warn(e);m.textContent='Não foi possível guardar. Pede um email novo.'}}
 }
-let aba='edicoes',rasc=null,edSel=null,verTodos=false,verRet=false,confirmar=null,pubTexto=true;
+let aba='edicoes',abaG={},rasc=null,edSel=null,verTodos=false,verRet=false,confirmar=null,pubTexto=true;
 async function painel(){
  atual=null;$('#edmeta').textContent='Painel do professor';main.classList.add('wide');
  if(!prof&&modo==='online'&&!recuperar){try{const {data}=await db.cl.auth.getSession(),u=data.session&&data.session.user;if(u&&!u.is_anonymous){const ok=await db.cl.rpc('e_professor');if(ok.data===true){prof=true;await carregar()}}}catch(e){console.warn(e)}if(location.hash!=='#painel')return}
@@ -641,10 +651,17 @@ async function painel(){
   return}
  const pend=(await db.comentarios({estado:'pendente'}).catch(()=>[])).length;
  const novos=(await db.subs().catch(()=>[])).filter(s=>s.estado==='recebido').length,bd={moderacao:pend,redacao:novos};
- const T=[['redacao','Redação'],['pautas','Pautas'],['plano','Plano'],['edicoes','Edições'],['moderacao','Moderação'],['resultados','Resultados'],['qr','Códigos QR'],['word','Fotos do Word'],['estatisticas','Estatísticas'],['comunidade','Comunidade'],['escola','Escola'],['ligacao','Ligação'],['ajuda','Ajuda']];
- main.innerHTML=`<div class="tabs">${T.map(([k,l])=>`<button class="btn sm ${aba===k?'on':''}" data-aba="${k}">${l}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}<a class="btn sm fim" href="#inicio" style="text-decoration:none;line-height:26px;flex:none">Ver o jornal</a>${modo==='online'?'<button class="btn sm" id="sair" style="flex:none">Terminar sessão</button>':''}</div>${AJ_ABA[aba]?`<p class="note" style="margin:0 0 10px;text-align:right"><a href="#" id="ajlink">❓ Ajuda: como funciona «${esc((T.find(x=>x[0]===aba)||[])[1]||'')}»</a></p>`:''}<div id="pane"></div>`;
+ /* Menu em dois níveis, igual em todos os ecrãs: três grupos em cima, os separadores do grupo por baixo (sem barras de deslocamento). */
+ const N={redacao:'Redação',pautas:'Pautas',plano:'Plano',edicoes:'Edições',qr:'Códigos QR',word:'Fotos do Word',moderacao:'Moderação',resultados:'Resultados',estatisticas:'Estatísticas',comunidade:'Comunidade',escola:'Escola',ligacao:'Ligação',ajuda:'Ajuda'};
+ const G=[['Fazer o jornal',['redacao','pautas','plano','edicoes','qr','word']],['Leitores',['moderacao','resultados','estatisticas','comunidade']],['Mais',['escola','ligacao','ajuda']]];
+ const gi=Math.max(0,G.findIndex(g=>g[1].includes(aba)));abaG[gi]=aba;
+ main.innerHTML=`<nav class="pn" aria-label="Menu do painel"><div class="pn-c"><div class="pn-g">${G.map(([l,ks],i)=>{const n=ks.reduce((t,k)=>t+(bd[k]||0),0);return `<button type="button" class="${i===gi?'on':''}" aria-pressed="${i===gi}" data-grp="${i}">${l}${n?`<span class="badge">${n}</span>`:''}</button>`}).join('')}</div>
+  <div class="pn-a"><a class="btn sm" href="#inicio" style="text-decoration:none;line-height:26px">Ver o jornal</a>${modo==='online'?'<button class="btn sm" id="sair">Terminar sessão</button>':''}</div></div>
+  <div class="pn-t">${G[gi][1].map(k=>`<button class="btn sm ${aba===k?'on':''}" ${aba===k?'aria-current="page"':''} data-aba="${k}">${N[k]}${bd[k]?`<span class="badge">${bd[k]}</span>`:''}</button>`).join('')}</div></nav>${AJ_ABA[aba]?`<p class="note" style="margin:0 0 10px;text-align:right"><a href="#" id="ajlink">❓ Ajuda: como funciona «${esc(N[aba])}»</a></p>`:''}<div id="pane"></div>`;
  {const sb=$('#sair');if(sb)sb.onclick=async()=>{sb.disabled=true;try{await db.cl.auth.signOut();await db.cl.auth.signInAnonymously()}catch(e){console.warn(e)}prof=false;await carregar();painel()}}
- main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>{aba=b.dataset.aba;if(aba==='ajuda')ajudaSec='fluxo';rasc=aba==='edicoes'?rasc:null;painel()});
+ const irAba=k=>{aba=k;if(aba==='ajuda')ajudaSec='fluxo';rasc=aba==='edicoes'?rasc:null;return painel()};
+ main.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>irAba(b.dataset.aba));
+ main.querySelectorAll('[data-grp]').forEach(b=>b.onclick=async()=>{const i=Number(b.dataset.grp);if(i===gi)return;await irAba(abaG[i]||G[i][1][0]);const n=main.querySelector('.pn-g .on');if(n)n.focus({preventScroll:true})});
  {const al=$('#ajlink');if(al)al.onclick=ev=>{ev.preventDefault();ajudaSec=AJ_ABA[aba];aba='ajuda';rasc=null;painel()}}
  ({estatisticas:pEstat,comunidade:pComunidade,pautas:pPautas,plano:pPlano,escola:pEscola,redacao:pRedacao,edicoes:pEdicoes,moderacao:pModeracao,resultados:pResultados,qr:pQR,word:pWord,ligacao:pLigacao,ajuda:pAjuda})[aba]();
 }
