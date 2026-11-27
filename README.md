@@ -10,11 +10,11 @@ Webapp interativa do jornal da Escola Básica e Secundária da Calheta. Cada art
 - v1.5: "Nova edição a partir do PDF" (painel → Edições): a app lê o PDF exportado do Canva e cria os artigos (título, secção, página, texto, autores, fotos, zonas tocáveis), com pré-visualização para confirmar. "Ler o jornal" com páginas contínuas, ecrã inteiro com zoom e deslizar, "Só texto" e retomar a leitura. Modo visão reduzida e declaração de acessibilidade em `#acessibilidade` (DL 83/2018, EN 301 549 / WCAG 2.1 AA).
 - v1.5.2: retirado o mapa das notícias (`#mapa`, o campo "Onde aconteceu" no painel e a biblioteca Leaflet).
 - v1.5.3: retirada a agenda da escola (`#agenda` e o cartão "Agenda da escola" no painel → Comunidade; na barra de baixo, sem passatempos, aparece "Ler"). Ao desligar o modo visão reduzida, as cores e o tamanho da letra voltam ao que estavam antes de o ligar.
-- v1.5.4: correções encontradas por revisão — leitor (deslizar no índice, caça ao QR, "Ver a solução" já não dá pontos, "Repor" com visão reduzida, palavras longas com letra grande) e painel (renumerar edição sem apagar outra, importar JSON completo, destaque ao apagar edição, PDF depois de uma falha, ano da capa, moderação e edições sem botões presos). `v14.sql`: regras de segurança na base de dados.
+- v1.5.4: correções encontradas por revisão — leitor (deslizar no índice, caça ao QR, "Ver a solução" já não dá pontos, "Repor" com visão reduzida, palavras longas com letra grande) e painel (renumerar edição sem apagar outra, importar JSON completo, destaque ao apagar edição, PDF depois de uma falha, ano da capa, moderação e edições sem botões presos). `v14.sql`: regras de segurança na base de dados (aplicado a 27/11/2026).
 - Outras páginas: `#e<N.º>-top` (ranking e concurso entre turmas), `#tv` (modo TV para a entrada), `#e<N.º>-ler` (página para partilhar e PDF da edição), `#e<N.º>-relatorio` (relatório para imprimir), `#arquivo`, `#familias`, `#caca-<N.º>-<pista>` (caça ao QR).
 
 ## Base de dados
-Supabase. O esquema está em `supabase.sql`, a Redação em `redacao.sql` a versão 1.2 em `v12.sql` a 1.3 em `v13.sql` e as regras de segurança de `v14.sql` (correr por esta ordem; `v14.sql` ainda não foi aplicado) e a edição n.º1 em `seed-edicao-1.sql`.
+Supabase. O esquema está em `supabase.sql`, a Redação em `redacao.sql` a versão 1.2 em `v12.sql` a 1.3 em `v13.sql` e as regras de segurança de `v14.sql` (correr por esta ordem; todos aplicados, o `v14.sql` a 27/11/2026) e a edição n.º1 em `seed-edicao-1.sql`.
 No Supabase é preciso ativar **Authentication → Sign In / Providers → Anonymous sign-ins** (os alunos entram sem conta) e autorizar cada professor:
 
 ```sql
