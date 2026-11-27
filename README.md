@@ -13,7 +13,7 @@ Webapp interativa do jornal da Escola Básica e Secundária da Calheta. Cada art
 - Outras páginas: `#e<N.º>-top` (ranking e concurso entre turmas), `#tv` (modo TV para a entrada), `#e<N.º>-ler` (página para partilhar e PDF da edição), `#e<N.º>-relatorio` (relatório para imprimir), `#arquivo`, `#familias`, `#caca-<N.º>-<pista>` (caça ao QR).
 
 ## Base de dados
-Supabase. O esquema está em `supabase.sql`, a Redação em `redacao.sql` a versão 1.2 em `v12.sql` e a 1.3 em `v13.sql` (correr por esta ordem) e a edição n.º1 em `seed-edicao-1.sql`.
+Supabase. O esquema está em `supabase.sql`, a Redação em `redacao.sql` a versão 1.2 em `v12.sql` a 1.3 em `v13.sql` e as regras de segurança de `v14.sql` (correr por esta ordem; `v14.sql` ainda não foi aplicado) e a edição n.º1 em `seed-edicao-1.sql`.
 No Supabase é preciso ativar **Authentication → Sign In / Providers → Anonymous sign-ins** (os alunos entram sem conta) e autorizar cada professor:
 
 ```sql
